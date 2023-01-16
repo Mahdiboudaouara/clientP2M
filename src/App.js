@@ -9,9 +9,9 @@ import CreateEvent from "./components/CreateEvent";
 import Navbar from "./components/Navbar";
 import Event from "./components/Event";
 import Footer from "./components/Footer";
-import NoAccess from "./components/NoAccess";
 import jwtDecode from "jwt-decode";
 import { useNavigate } from "react-router-dom";
+
 
 function App() {
   const navigate = useNavigate();
