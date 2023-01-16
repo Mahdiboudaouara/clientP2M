@@ -8,6 +8,7 @@ import Register from "./components/Register";
 import CreateEvent from "./components/CreateEvent";
 import Navbar from "./components/Navbar";
 import Event from "./components/Event";
+import Footer from "./components/Footer";
 import NoAccess from "./components/NoAccess";
 import jwtDecode from "jwt-decode";
 import { useNavigate } from "react-router-dom";
@@ -39,12 +40,14 @@ function App() {
     <>
       <Navbar auth={isAuthenticated} />
       <Routes>
-        <Route path="/" element={isAuthenticated===true ? <Home /> : <NoAccess/>} />
+        {/* <Route path="/" element={isAuthenticated===true ? <Home /> : <NoAccess/>} /> */}
+        <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/create" element={<CreateEvent />} />
         <Route path="/index" element={<Event />} />
       </Routes>
+      <Footer/>
     </>
   );
 }

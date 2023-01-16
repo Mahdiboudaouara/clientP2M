@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import Card from "./Card";
+import CategoryCard from './CategoryCard';
 
 const Home = () => {
   const [quote, setQuote] = useState("");
@@ -22,7 +24,11 @@ const Home = () => {
 
   return (
     <div>
-      <h1>Your quote: {quote || "No quote found"}</h1>
+      
+      <Card />
+        <CategoryCard />
+        <h1>Your quote: {quote || "No quote found"}</h1>
+      
     </div>
   );
 };
