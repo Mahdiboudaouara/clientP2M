@@ -81,6 +81,25 @@ const Styles = styled.div`
 `;
 
 export function Form(props) {
+  const [userId, setUserId] = React.useState("");
+  React.useEffect(async () => {
+    console.log("dkhal lel populate");
+    const req = await fetch("http://localhost:3001/api/verifytoken", {
+      headers: {
+        "auth-token": localStorage.getItem("token"),
+      },
+    });
+
+    const data = await req.json();
+    console.log(data);
+    if (data) {
+      setUserId(data.id);
+    } else {
+      alert(data);
+    }
+  }, []);
+
+
   const [productName, setProductName] = React.useState("");
   const [productDescription, setProductDescription] = React.useState("");
   const [productImage, setProductImage] = React.useState();
@@ -108,7 +127,9 @@ export function Form(props) {
     await formData.append("productName", productName);
     await formData.append("productDescription", productDescription);
     await formData.append("startingPrice", startingPrice);
+    await formData.append("auctionDate", auctionDate);
     await formData.append("fileName", productImageNameBack);
+    await formData.append("userId", userId);
 
     e.preventDefault();
 
