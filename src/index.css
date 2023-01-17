@@ -159,3 +159,30 @@ body, ul, li, p, a, label, input, div {
 
 /* Extra large devices (large desktops, 1200px and up)*/
 @media (min-width: 1200px) {}
+
+.centered {
+  position: absolute;
+  background: #fff;
+  border-radius: 10px;
+  top: 80%;
+  left: 50%;
+  min-width: 60%;
+  min-height: 10%;
+  transform: translate(-50%, -50%);
+  padding-top: 12px;
+  color: grey;
+  font-size: 2.5em;
+
+}
+.container {
+  font-size: 2.5em;
+  position: relative;
+  text-align: center;
+}
+.divider:after,
+.divider:before {
+content: "";
+flex: 1;
+height: 1px;
+background: #eee;
+}
