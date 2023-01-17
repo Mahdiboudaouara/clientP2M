@@ -38,7 +38,7 @@ function App() {
   }, []);
   return (
     <>
-      <Navbar auth={isAuthenticated} />
+      <Navbar isAuthenticated={isAuthenticated} />
       <Routes>
         {/* <Route path="/" element={isAuthenticated===true ? <Home /> : <NoAccess/>} /> */}
         <Route path="/" element={<Home />} />
