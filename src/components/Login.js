@@ -95,13 +95,6 @@ export default function Login() {
       </MDBValidationItem>
    
       </div>
-
-      
-         
-          
-
-
-
         <button type='submit' className="btn btn-primary" onClick={LoginUser} >Sign In</button>
     </MDBValidation>
    

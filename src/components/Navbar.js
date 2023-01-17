@@ -8,10 +8,7 @@ import { useNavigate } from "react-router-dom";
 
 export default function Navbar() {
     const navigate = useNavigate();
-    const Logout = async () => {
-        localStorage.clear();
-        navigate("/login");
-      };
+  
     const [isAuthenticated, setIsAuthenticated] = React.useState(false);
   React.useEffect(() => {
     const token = localStorage.getItem("token");
@@ -65,13 +62,13 @@ if(isAuthenticated)
                     </ul>
                 </div>
                 <div className="">
-                <button onClick={Logout()}>
+                <button >
 
-                    <FaSignOutAlt  onClick={()=>console.log("hey")}/>
+                    <FaSignOutAlt  />
                     </button>
-                  <a>
+                  <button>
                     <FaHistory/>
-                    </a>
+                    </button>
                 </div>
             </div>
 
