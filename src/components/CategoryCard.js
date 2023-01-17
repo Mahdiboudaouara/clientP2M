@@ -10,7 +10,8 @@ export default function categoryCard(props) {
                 <p className="text-center"><a className="btn btn-success">Go Shop</a></p>
             </div>
             
+
         
-      
+
   )
 }
