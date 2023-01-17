@@ -3,10 +3,13 @@ import React from 'react'
 import { FaHistory, FaPlus, FaSignInAlt, FaSignOutAlt } from "react-icons/fa";
 
 
-
-
-
 export default function Navbar(props) {
+    const Logout = async () => {
+        localStorage.clear();
+    };
+
+   
+
     return (
         <nav className="navbar navbar-expand-lg navbar-light shadow">
             <div className="container d-flex justify-content-between align-items-center">
@@ -35,9 +38,9 @@ export default function Navbar(props) {
                         </ul>
                     </div>
                     <div className="">
-                        {props.isAuthenticated === true ? <div><a className="mx-3" onClick={() => console.log("tthht")}><FaHistory /></a>   <a className='mx-3'><FaSignOutAlt /> </a> <a className='mx-3'><FaPlus /></a>
+                        {props.isAuthenticated === true ? <div><a className="mx-3" href='/create'><FaPlus /></a>   <a className='mx-3' href='/history'> <FaHistory /></a> <a href='/' className='mx-3'onClick={Logout}><FaSignOutAlt /></a>
 
-                        </div> : <a>jhhj</a>}
+                        </div> : <a href='/login'><FaSignInAlt /></a>}
 
 
                     </div>
