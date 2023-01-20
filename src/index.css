@@ -205,3 +205,18 @@ background: #eee;
   
  
 }
+@media (max-height: 500px) {
+  .a{
+    min-height: 700px;
+  }
+  img {
+    display: none;
+  }
+  
+ 
+}
+
+.color{
+  color:red;
+  font-size: large;
+}

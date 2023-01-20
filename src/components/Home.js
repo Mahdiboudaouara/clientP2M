@@ -3,7 +3,8 @@ import Card from "./Card";
 import CategoryCard from './CategoryCard';
 
 const Home = () => {
- 
+
+
   const [quote, setQuote] = useState("");
 
   React.useEffect(async () => {
@@ -38,7 +39,7 @@ const Home = () => {
           </div>
           <div className="row">
             <Card date={new Date()} name=" Cloud Nike Shoes" description=" Aenean gravida dignissim finibus. Nullam ipsum diam, posuere
-                  vitae pharetra sed, commodo ullamcorper."  bidding_price="480" />
+                  vitae pharetra sed, commodo ullamcorper."  bidding_price="480" id="ahla"/>
             <Card date={new Date()} name=" Cloud Nike Shoes" description=" Aenean gravida dignissim finibus. Nullam ipsum diam, posuere
                   vitae pharetra sed, commodo ullamcorper."  bidding_price="480" />
             <Card date={new Date()} name=" Cloud Nike Shoes" description=" Aenean gravida dignissim finibus. Nullam ipsum diam, posuere
