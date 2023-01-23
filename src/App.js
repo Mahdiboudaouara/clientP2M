@@ -12,6 +12,7 @@ import Footer from "./components/Footer";
 import jwtDecode from "jwt-decode";
 import { useNavigate } from "react-router-dom";
 import NoAccess from "./components/NoAccess"
+import Place_bid from "./components/Place_bid";
 
 
 function App() {
@@ -47,6 +48,8 @@ function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/create" element={isAuthenticated===true ? <CreateEvent isAuthenticated={isAuthenticated} /> : <NoAccess/> } />
         <Route path="/index" element={<Event />} />
+        <Route  path="/make_a_bid/:productid"  element={<Place_bid isAuthenticated={isAuthenticated} />}  />
+
       </Routes>
       <Footer/>
     </>

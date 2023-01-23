@@ -8,6 +8,9 @@ export default function Card(props) {
   let name = props.name
   let description = props.description
   let bidding_price = props.bidding_price
+  let id=props.id
+  let ch=`/make_a_bid/${id}`
+
   const [timeLeft, setTimeLeft] = useState(calculateTimeLeft(date));
   React.useEffect(() => {
     setTimeout(() => setTimeLeft(calculateTimeLeft(date)), 1000);
@@ -17,7 +20,7 @@ export default function Card(props) {
           <div className="col-12 col-md-4 mb-4">
             <div className="card h-100">
               <div class="container">
-                <a href="shop-single.html">
+                <a href={ch}>
                   <img
                     src="https://loremflickr.com/640/480/abstract"
                     className="card-img-top"
@@ -41,7 +44,7 @@ export default function Card(props) {
                   <li className="text-muted text-right">{bidding_price}</li>
                 </ul>
                 <a
-                  href="shop-single.html"
+                  href={ch}
                   className="h2 text-decoration-none text-dark"
                 >
                   {name}

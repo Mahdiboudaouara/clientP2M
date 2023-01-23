@@ -2,177 +2,138 @@ import React from "react";
 import { useState } from "react";
 import Axios from "axios";
 import { useNavigate } from "react-router-dom";
-import {Formik, Field, Form, ErrorMessage} from 'formik';
-import * as Yup from 'yup';
 import 'mdb-react-ui-kit/dist/css/mdb.min.css';
+import {
+  MDBInput
+} from 'mdb-react-ui-kit';
+import { toast } from "react-hot-toast";
+
 
 export default function Register() {
-  const validationSchema = Yup.object().shape({
-    firstName: Yup.string()
-        .min(5, "trop petit")
-        .max(50, "trop long!")
-        .required("Ce champ est obligatoire"),
-    email: Yup.string()
-        .email("email invalide")
-        .required("l'email est obligatoire"),
-    password: Yup.string()
-        .required("Mot de passe est obligatoire")
-        .min(8, "Mot de passe doit être plus grand que 8 caractères")
-        .max(50, "Mot de passe doit être plus petit que 50 caractères"),
-    confirmPassword: Yup.string()
-        .required("Confirmation de mot de passe est obligatoire")
-        .oneOf(
-            [Yup.ref("password"), null],
-            "Le mot de passe de confirmation ne correspond pas"
-        ),
-});
-const initialValues = {
-  firstName: "",
-  lastName: "",
-  email: "",
-  password: "",
-  confirmPassword: "",
-  acceptTerms: false,
-};
-const handleSubmit = (values) => {
-  console.log(initialValues)
-  addUser(values)
+  const [formValue, setFormValue] = useState({
+    name: '',
+    email: '',
+    password: '',
+    confirmpassword: '',
+  });
+  const onChange = (e) => {
+    setFormValue({ ...formValue, [e.target.name]: e.target.value });
+  };
 
-};
+
+
   const navigate = useNavigate();
 
 
-  const addUser = async (values) => {
+  const addUser = async (e) => {
+    e.preventDefault();
+    if(formValue.email!='' || formValue.name!=''|| formValue.password!='')
+    {
+    if (formValue.password === formValue.confirmpassword) {
 
- 
       try {
-        
+        console.log(formValue)
         await Axios.post("http://localhost:3001/api/user/register", {
-          name: values.firstName,
-          email: values.email,
-          password: values.password,
+          name: formValue.name,
+          email: formValue.email,
+          password: formValue.password,
         });
-        navigate("/login");
+
+        window.location.href = '/login';
       } catch (error) {
         if (error.response) {
           console.log(error.response.data.msg);
         }
       }
-    
-      console.log("Passwords don't match!");
-    }
-  
-  return (
-    <section class="vh-100">
-    <div className="container py-5 h-100">
-      <div className="row d-flex align-items-center justify-content-center h-100">
-        <div className="col-md-8 col-lg-7 col-xl-6">
-          <img src="https://media.istockphoto.com/id/1281553891/vector/auction-hammer-with-sold-text-line-icon-finance-concept-hitting-wooden-gavel-in-auction-sign.jpg?s=612x612&w=0&k=20&c=dnaIP5TRgGm_CJEL8cZUuivbUEfVZ20ESILJsiWGcIg="
-            className="img-fluid" style={{width:'80%'}} alt="Phone image" />
-        </div>
-        <div className="col-md-7 col-lg-5 col-xl-5 offset-xl-1">
-          <h1>Register</h1>
-            <Formik
-                initialValues={initialValues}
-                validationSchema={validationSchema}
-                onSubmit={(values) =>handleSubmit(values)}
-            >
-                {({ resetForm }) => (
-                    <Form>
-                        <div className="form-group mb-3">
-                        <label  htmlFor="loginName">
-                                Prénoms:
-                            </label>
-                            <Field
-                                type="text"
-                                id="firstName"
-                                name="firstName"
-                                class="form-control"
-                            />
-                            
-                            <ErrorMessage
-                                name="firstName"
-                                component="small"
-                                className="text-danger"
-                            />
-                        </div>
-                       
-                        <div className="form-group mb-3">
-                            <label htmlFor="email">
-                                Email:
-                            </label>
-                            <Field
-                                type="email"
-                                id="email"
-                                name="email"
-                                className="form-control"
-                                
-                               
-                            />
-                            <ErrorMessage
-                                name="email"
-                                component="small"
-                                className="text-danger"
-                            />
-                        </div>
-                        <div className="form-group mb-3">
-                            <label htmlFor="password">
-                                Mot de passe:
-                            </label>
-                            <Field
-                                type="password"
-                                id="password"
-                                name="password"
-                                className="form-control"
-                            />
-                            <ErrorMessage
-                                name="password"
-                                component="small"
-                                className="text-danger"
-                            />
-                        </div>
-                        <div className="form-group mb-3">
-                            <label htmlFor="confirmPassword">
-                                Confirmer le mot de
-                                passe:
-                            </label>
-                            <Field
-                                type="password"
-                                id="confirmPassword"
-                                name="confirmPassword"
-                                className="form-control"
-                            />
-                            <ErrorMessage
-                                name="confirmPassword"
-                                component="small"
-                                className="text-danger"
-                            />
-                        </div>
-                     
-                        <div className="form-group d-flex justify-content-end gap-3">
-                            <button
-                                type="submit"
-                                className="btn btn-primary"
-                            >
-                                S'inscrire
-                            </button>
-                            <button
-                                type="button"
-                                onClick={resetForm}
-                                className="btn btn-danger"
-                            >
-                                Annuler
-                            </button>
-                        </div>
-                    </Form>
-                )}
-            </Formik>
-      </div>
-    </div>
-    
-  </div>
 
-</section>
+    }
+    else {
+      toast.error('Password dont match');
+    }}
+    else{
+      toast.error('all field are required');
+
+    }
+  }
+
+  return (
+    <section class="vh-100 a">
+      <div className="container py-5 h-100">
+        <div className="row d-flex align-items-center justify-content-center h-100">
+          <div className="col-md-8 col-lg-7 col-xl-6">
+            <img src="https://media.istockphoto.com/id/1281553891/vector/auction-hammer-with-sold-text-line-icon-finance-concept-hitting-wooden-gavel-in-auction-sign.jpg?s=612x612&w=0&k=20&c=dnaIP5TRgGm_CJEL8cZUuivbUEfVZ20ESILJsiWGcIg="
+              className=" a"  alt="Phone image" />
+          </div>
+          <div className="col-md-7 col-lg-5 col-xl-5 offset-xl-1 ">
+
+            <form>
+            <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">Sign up</p>
+
+
+              <div class="form-outline mb-4">
+
+                <MDBInput
+                  value={formValue.name}
+                  name='name'
+                  onChange={onChange}
+                  id='validationCustom01'
+                  required
+                  label='Name'
+                />
+              </div>
+
+              <div class="form-outline mb-4">
+
+                <MDBInput
+                  value={formValue.email}
+                  name='email'
+                  onChange={onChange}
+                  id='validationCustom01'
+                  required
+                  label='Email'
+                />
+              </div>
+
+              <div class="form-outline mb-4">
+
+                <MDBInput
+                  value={formValue.password}
+                  name='password'
+                  onChange={onChange}
+                  type='password'
+                  required
+                  label='Password'
+                />
+
+              </div>
+              <div class="form-outline mb-4">
+
+                <MDBInput
+                  value={formValue.confirmpassword}
+                  name='confirmpassword'
+                  onChange={onChange}
+                  type='password'
+                  required
+                  label='confirmpassword'
+                />
+
+              </div>
+              
+              <button type='submit' className="btn btn-primary btn-block" onClick={addUser} >Register</button>
+
+            </form>
+
+            <div class="divider d-flex align-items-center my-4">
+              <p class="text-center fw-bold mx-3 mb-0 text-muted">You have an account ?</p>
+            </div>
+            <p> <a href="/register" class="link-info text-right">LOG IN</a></p>
+          </div>
+        </div>
+
+      </div>
+
+
+    </section>
 
   );
 }
