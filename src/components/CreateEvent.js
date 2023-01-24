@@ -46,6 +46,13 @@ const Styles = styled.div`
     padding: 10px;
     width: 100%;
   }
+  select {
+    border: 1px solid #d9d9d9;
+    border-radius: 4px;
+    box-sizing: border-box;
+    padding: 10px;
+    width: 100%;
+  }
   textarea {
     border: 1px solid #d9d9d9;
     border-radius: 4px;
@@ -99,14 +106,14 @@ export function Form(props) {
     }
   }, []);
 
-
   const [productName, setProductName] = React.useState("");
+  const [productCategory, setProductCategory] = React.useState("");
   const [productDescription, setProductDescription] = React.useState("");
   const [productImage, setProductImage] = React.useState();
   const [productImageBack, setProductImageBack] = React.useState("");
   const [productImageNameBack, setProductImageNameBack] = React.useState("");
   const [auctionDate, setAuctionDate] = React.useState("");
-  const [startingPrice, setStartingPrice] = React.useState(0);
+  const [startingPrice, setStartingPrice] = React.useState(0.01);
   const hiddenFileInput = React.useRef(null);
 
   const handleChange = (event) => {
@@ -125,6 +132,7 @@ export function Form(props) {
 
     await formData.append("file", productImageBack);
     await formData.append("productName", productName);
+    await formData.append("productCategory", productCategory);
     await formData.append("productDescription", productDescription);
     await formData.append("startingPrice", startingPrice);
     await formData.append("auctionDate", auctionDate);
@@ -132,6 +140,7 @@ export function Form(props) {
     await formData.append("userId", userId);
 
     e.preventDefault();
+    //foncti
 
     await Axios.post(
       "http://localhost:3001/api/auction/create",
@@ -143,7 +152,7 @@ export function Form(props) {
         },
       }
     );
-    console.log("kamalt")
+    console.log("kamalt");
   }
 
   return (
@@ -158,6 +167,48 @@ export function Form(props) {
       />
       <br></br>
 
+      <label>Product Category</label>
+      <select
+        name="productCategory"
+        value={productCategory}
+        onChange={(event) => {
+          setProductCategory(event.target.value);
+        }}
+      >
+        <option value="" disabled selected>
+          Select Product Category
+        </option>
+        <option value="1">
+          Electronics (smartphones, laptops, tablets, etc.)
+        </option>
+
+        <option value="2">Fashion (clothing, shoes, accessories, etc.)</option>
+        <option value="3">
+          Home & Garden (furniture, home décor, appliances, etc.)
+        </option>
+        <option value="4">
+          Collectibles (sports memorabilia, stamps, coins, etc.)
+        </option>
+        <option value="5">Art (paintings, sculptures, prints, etc.)</option>
+        <option value="6">Jewelry (diamonds, gold, silver, etc.)</option>
+
+        <option value="7">
+          Antiques (vintage furniture, pottery, glassware, etc.)
+        </option>
+        <option value="8">Automotive (cars, motorcycles, boats, etc.)</option>
+        <option value="9">Books (rare books, first editions, etc.)</option>
+        <option value="10">Music (vinyl records, CDs, etc.)</option>
+        <option value="11">Sporting Goods (golf clubs, bicycles, etc.)</option>
+        <option value="12">Tools (power tools, hand tools, etc.)</option>
+        <option value="13">
+          Toys & Hobbies (action figures, models, etc.)
+        </option>
+        <option value="14">
+          Travel (airline tickets, vacation packages, etc.)
+        </option>
+      </select>
+      <br></br>
+
       <label>Product description</label>
       <textarea
         name="productDescription"
@@ -165,24 +216,26 @@ export function Form(props) {
           setProductDescription(event.target.value);
         }}
       />
+
       <br></br>
 
       <label>Date</label>
       <input
         name="date"
-        type="date"
-        max={moment().format("YYYY-MM-DD")}
+        type="datetime-local"
+        min={moment().format("YYYY-MM-DDTHH:MM")}
         onChange={(event) => {
           setAuctionDate(event.target.value);
         }}
       />
       <br></br>
 
-      <label>Order Number</label>
+      <label>Starting Price (DT)</label>
       <input
         type="number"
-        min="1"
-        step="any"
+        min="0.01"
+        value={startingPrice}
+        step="0.01"
         name="startingPrice"
         onChange={(event) => {
           setStartingPrice(event.target.value);

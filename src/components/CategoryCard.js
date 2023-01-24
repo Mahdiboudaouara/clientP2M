@@ -1,13 +1,17 @@
 import React from 'react'
 
 export default function categoryCard(props) {
-    let name_category=props.name_category
+    let categoryName=props.categoryName
+    let categoryImage=props.categoryImage
+    let id=props.categoryId
+    let ch = `/category/${id}`;
+
   return (
   
             <div className="col-12 col-md-4 p-5 mt-3">
-                <a href="#"><img src="https://loremflickr.com/640/480/abstract" className="rounded-circle img-fluid border"></img></a>
-                <h5 className="text-center mt-3 mb-3">{name_category}</h5>
-                <p className="text-center"><a className="btn btn-success">Go Shop</a></p>
+                <a href={ch}><img src={categoryImage} width="222px" height="222px"></img></a>
+                <h5 href={ch} className="text-center mt-3 mb-3">{categoryName}</h5>
+                <p className="text-center"><a href={ch} className="btn btn-success">Go Shop</a></p>
             </div>
             
 
