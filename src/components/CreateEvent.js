@@ -88,23 +88,29 @@ const Styles = styled.div`
 `;
 
 export function Form(props) {
+
   const [userId, setUserId] = React.useState("");
+  const [categories, setCategories] = React.useState([]);
+
+
   React.useEffect(async () => {
-    console.log("dkhal lel populate");
     const req = await fetch("http://localhost:3001/api/verifytoken", {
       headers: {
         "auth-token": localStorage.getItem("token"),
       },
     });
-
     const data = await req.json();
-    console.log(data);
+    await Axios.get("http://localhost:3001/api/auction/categories")
+      .then((res) => setCategories(res.data))
+
     if (data) {
       setUserId(data.id);
     } else {
       alert(data);
     }
   }, []);
+
+
 
   const [productName, setProductName] = React.useState("");
   const [productCategory, setProductCategory] = React.useState("");
@@ -168,6 +174,7 @@ export function Form(props) {
       <br></br>
 
       <label>Product Category</label>
+
       <select
         name="productCategory"
         value={productCategory}
@@ -178,34 +185,9 @@ export function Form(props) {
         <option value="" disabled selected>
           Select Product Category
         </option>
-        <option value="1">
-          Electronics (smartphones, laptops, tablets, etc.)
-        </option>
-
-        <option value="2">Fashion (clothing, shoes, accessories, etc.)</option>
-        <option value="3">
-          Home & Garden (furniture, home décor, appliances, etc.)
-        </option>
-        <option value="4">
-          Collectibles (sports memorabilia, stamps, coins, etc.)
-        </option>
-        <option value="5">Art (paintings, sculptures, prints, etc.)</option>
-        <option value="6">Jewelry (diamonds, gold, silver, etc.)</option>
-
-        <option value="7">
-          Antiques (vintage furniture, pottery, glassware, etc.)
-        </option>
-        <option value="8">Automotive (cars, motorcycles, boats, etc.)</option>
-        <option value="9">Books (rare books, first editions, etc.)</option>
-        <option value="10">Music (vinyl records, CDs, etc.)</option>
-        <option value="11">Sporting Goods (golf clubs, bicycles, etc.)</option>
-        <option value="12">Tools (power tools, hand tools, etc.)</option>
-        <option value="13">
-          Toys & Hobbies (action figures, models, etc.)
-        </option>
-        <option value="14">
-          Travel (airline tickets, vacation packages, etc.)
-        </option>
+        {categories.map((category) => (
+          <option value={category.id}>{category.category}{category.options}</option>
+        ))}
       </select>
       <br></br>
 
