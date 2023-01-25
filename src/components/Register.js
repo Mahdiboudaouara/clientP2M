@@ -2,10 +2,10 @@ import React from "react";
 import { useState } from "react";
 import Axios from "axios";
 import { useNavigate } from "react-router-dom";
-import 'mdb-react-ui-kit/dist/css/mdb.min.css';
-import {
-  MDBInput
-} from 'mdb-react-ui-kit';
+// import 'mdb-react-ui-kit/dist/css/mdb.min.css';
+// import {
+//   MDBInput
+// } from 'mdb-react-ui-kit';
 import { toast } from "react-hot-toast";
 
 
@@ -72,7 +72,7 @@ export default function Register() {
 
               <div class="form-outline mb-4">
 
-                <MDBInput
+                <input
                   value={formValue.name}
                   name='name'
                   onChange={onChange}
@@ -84,7 +84,7 @@ export default function Register() {
 
               <div class="form-outline mb-4">
 
-                <MDBInput
+                <input
                   value={formValue.email}
                   name='email'
                   onChange={onChange}
@@ -96,7 +96,7 @@ export default function Register() {
 
               <div class="form-outline mb-4">
 
-                <MDBInput
+                <input
                   value={formValue.password}
                   name='password'
                   onChange={onChange}
@@ -108,7 +108,7 @@ export default function Register() {
               </div>
               <div class="form-outline mb-4">
 
-                <MDBInput
+                <input
                   value={formValue.confirmpassword}
                   name='confirmpassword'
                   onChange={onChange}

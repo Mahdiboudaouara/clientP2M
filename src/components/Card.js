@@ -10,12 +10,12 @@ export default function Card(props) {
   let image = props.image;
   let bidding_price = props.bidding_price;
   let category_id=props.category_id;
+  console.log('category_id',category_id)
   let id = props.id;
   let ch = `/bid/${id}`;
   const [categoryName, setCategoryName] = useState([]);
   const [startBid, setStartBid] = useState(date> Date.now()  ? false : true);
    console.log(startBid)
-
 
   const getCategoryName = async (category_id) => {
     try {
@@ -41,64 +41,46 @@ export default function Card(props) {
     setTimeout(() => setTimeLeft(date> Date.now() ? calculateTimeLeft(date) : calculateTimeIn(date) ), 1000);
     setStartBid(date> Date.now()  ? false : true)
   }, [timeLeft]);
-  const [startTime, setStartTime] = useState(new Date(date));
-  const [elapsedTime, setElapsedTime] = useState(Date.now() - startTime.getTime());
-
-  useEffect(() => {
-    const intervalId = setInterval(() => {
-      setElapsedTime(Date.now() - startTime.getTime());
-    }, 1000);
-    return () => clearInterval(intervalId);
-  }, [startTime]);
-
-  function getTime() {
-    const hours = Math.floor(elapsedTime / (60 * 60 * 1000));
-    const minutes = Math.floor((elapsedTime % (60 * 60 * 1000)) / (60 * 1000));
-    const seconds = Math.floor((elapsedTime % (60 * 1000)) / 1000);
-    return { hours, minutes, seconds };
-  }
-
-  const { hours, minutes, seconds } = getTime();
   return (
     <div className="col-12 col-md-4 mb-4 ">
       <div className="card h-100 ">
         <div class="container ">
           <a href={ch}>
-            <img src={image} width="150px" height="250px" className="card-img-top" alt="..."></img>
+            <img
+              src={image}
+              width="150px"
+              height="250px"
+              className="card-img-top"
+              alt="..."
+            ></img>
           </a>
-
-          <div  class="centered" style={startBid ? {backgroundColor:"#32c36c"} :  {}}>
-            <p   style={startBid ? {color:"white"} :  {}}>
-              
-
+          <div
+            class="centered"
+            style={startBid ? { backgroundColor: "#32c36c" } : {}}
+          >
+            <p style={startBid ? { color: "white" } : {}}>
               {String(timeLeft.days).padStart(2, "0")}D:{" "}
               {String(timeLeft.hours).padStart(2, "0")}H:{" "}
               {String(timeLeft.minutes).padStart(2, "0")}M:{" "}
-              {String(timeLeft.seconds).padStart(2, "0")}S
+              {String(timeLeft.seconds).padStart(2, "0")}S:{" "}
             </p>
-          </div>: <div class="centered heyh">  <p>
-              {String(hours).padStart(2, "0")}H:{" "}
-              {String(minutes).padStart(2, "0")}M:{" "}
-              {String(seconds).padStart(2, "0")}S
-            </p></div>
-}
+          </div>
+          
         </div>
         <div className="card-body ">
           <ul className="list-unstyled d-flex justify-content-between">
-            <li>
-            
-            </li>
+            <li></li>
             <li className="text-muted text-right">{bidding_price}DT</li>
           </ul>
           <div className="right">
-          <a href={ch} className="h2 text-decoration-none text-dark">
-            {name}
-          </a>
-          <p className="card-text">{description}</p>
+            <a href={ch} className="h2 text-decoration-none text-dark">
+              {name}
+            </a>
+            <p className="card-text">{description}</p>
 
-          <p className="card-text">category : {categoryName}</p>
-          <p className="text-muted">{startBid ? "Start Bidding Now" :  ""}</p>
-
+            <p className="card-text">category : {categoryName}</p>
+            <p className="text-muted">{startBid ? "Start Bidding Now" : ""}</p>
+          </div>
         </div>
       </div>
     </div>
