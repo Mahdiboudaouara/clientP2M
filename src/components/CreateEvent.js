@@ -133,6 +133,8 @@ export function Form(props) {
     event.preventDefault();
     hiddenFileInput.current?.click();
   };
+
+
   async function addAuction(e) {
     const formData = new FormData();
 
@@ -146,6 +148,12 @@ export function Form(props) {
     await formData.append("userId", userId);
 
     e.preventDefault();
+    const currentDate = new Date();
+    const selectedDate = new Date(auctionDate);
+    if (selectedDate < currentDate) {
+      alert("Please select a time that is equal to or later than the current time.");
+      return;
+    }
     //foncti
 
     await Axios.post(
@@ -159,6 +167,7 @@ export function Form(props) {
       }
     );
     console.log("kamalt");
+    window.location.href = '/';
   }
 
   return (
@@ -205,7 +214,7 @@ export function Form(props) {
       <input
         name="date"
         type="datetime-local"
-        min={moment().format("YYYY-MM-DDTHH:MM")}
+        min={moment().format("YYYY-MM-DDTHH:mm")}
         onChange={(event) => {
           setAuctionDate(event.target.value);
         }}

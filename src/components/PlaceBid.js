@@ -3,29 +3,48 @@ import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import Axios from "axios";
 import { formatedTimestamp } from "../utils/utils.ts";
+import { calculateTimeLeft, calculateTimeIn } from "../utils/utils.ts";
 import { MDBInput } from "mdb-react-ui-kit";
-import { calculateTimeLeft } from "../utils/utils.ts";
+import NotAvailable from "./NotAvailable";
+import ReactDOM from "react-dom/client";
+import Navbar from "./Navbar";
+import Footer from "./Footer";
 
 export default function PlaceBid(props) {
-  let isAuthenticated = props.isAuthenticated;
-
   const [product, setProduct] = useState(false);
   const [categoryName, setCategoryName] = useState([]);
   const [price, setPrice] = useState();
 
   let { product_id } = useParams();
-  console.log(product_id);
+
+  // Fetch product information by product id
   const fetchProduct = async (product_id) => {
     try {
       const res = await Axios.get(
         `http://localhost:3001/api/auction/displayproduct/${product_id}`
       );
-      setProduct(res.data);
-      setPrice(res.data.startingPrice);
+      if (res.data) {
+        setProduct(res.data);
+        setPrice(res.data.startingPrice);
+        console.log(res.data.date)
+        timer(new Date(res.data.date))
+
+      } else {
+        const root = ReactDOM.createRoot(document.getElementById("root"));
+        return root.render(
+          <>
+            <Navbar isAuthenticated={props.isAuthenticated} />
+            <NotAvailable />
+            <Footer />
+          </>
+        );
+      }
     } catch (err) {
       console.log(err);
     }
   };
+
+  // Get last bid on the product
   const getLastBid = async (product_id) => {
     try {
       const res = await Axios.get(
@@ -38,19 +57,35 @@ export default function PlaceBid(props) {
       console.log(err);
     }
   };
+  const date = new Date(product.date);
+  const [timeLeft, setTimeLeft] = useState(
+    date > Date.now() ? calculateTimeLeft(date) : calculateTimeIn(date)
+  );
+  const [startBid, setStartBid] = useState(date > Date.now() ? false : true);
+  timer(date);
 
-  React.useEffect(() => {
+  useEffect(() => {
     fetchProduct(product_id);
     getLastBid(product_id);
+    timer(date)
   }, []);
-  const date = new Date(product.date);
+  async function timer (date)  {
+    if (date > Date.now()) {
+      await setTimeout(() => setTimeLeft(calculateTimeLeft(date), 1000));
+      await setStartBid(false);
+    } else {
+      await setTimeout(() => setTimeLeft(calculateTimeIn(date), 1000));
+      await setStartBid(true);
+    }
+  }
 
-  const [timeLeft, setTimeLeft] = useState(calculateTimeLeft(date));
 
-  React.useEffect(() => {
-     setTimeout(() => setTimeLeft(calculateTimeLeft(date)), 1000);
+  // Update time left and bid status every second
+  useEffect(() => {
+    timer(date);
   }, [timeLeft]);
 
+  // Get the category name for the product
   const getCategoryName = async (category_id) => {
     try {
       const res = await Axios.get(
@@ -66,12 +101,15 @@ export default function PlaceBid(props) {
     getCategoryName(product.category_id);
   }
 
+  // State for bid input
   const [inputPrice, setInputPrice] = React.useState(0);
+
+  // Handle input changes
   function onChange(e) {
     setInputPrice(e.target.value);
-    console.log(e.target.value);
   }
 
+  // Add bid to the product
   async function addBid(e) {
     e.preventDefault();
     await Axios.post("http://localhost:3001/api/bid/create", {
@@ -95,19 +133,19 @@ export default function PlaceBid(props) {
                 id={product.id}
               />
             </div>
-            
           </div>
           <div class="col-lg-7 mt-5">
-            
             <div class="card">
-              
+            
               <div class="card-body">
-              <h3>
-                    {String(timeLeft.days).padStart(2, "0")}D:{" "}
-                    {String(timeLeft.hours).padStart(2, "0")}H:{" "}
-                    {String(timeLeft.minutes).padStart(2, "0")}M:{" "}
-                    {String(timeLeft.seconds).padStart(2, "0")}S
-                  </h3>
+              { timeLeft.days!==undefined  ? 
+                <h3>
+                  {String(timeLeft.days).padStart(2, "0")}D:{" "}
+                  {String(timeLeft.hours).padStart(2, "0")}H:{" "}
+                  {String(timeLeft.minutes).padStart(2, "0")}M:{" "}
+                  {String(timeLeft.seconds).padStart(2, "0")}S
+                </h3> : <h3></h3>
+              }
 
                 <h1 class="h2">{product.productName}</h1>
                 <p class="h3 py-2">
@@ -149,18 +187,29 @@ export default function PlaceBid(props) {
                         />
                       </ul>
                     </div>
-                    
+
                     <div class="row pb-3">
                       <div class="col d-grid">
-                        <button
-                          type="submit"
-                          class="btn btn-success btn-lg"
-                          name="submit"
-                          value="addtocard"
-                          onClick={addBid}
-                        >
-                          Place a Bid
-                        </button>
+
+                        {timeLeft.days!==undefined ? startBid ? (
+                          <button
+                            type="submit"
+                            class="btn btn-success btn-lg"
+                            name="submit"
+                            value="addtocard"
+                            onClick={addBid}
+                          >
+                            Place a Bid
+                          </button>
+                        ) : (
+                          <button
+                            type="text"
+                            class="btn btn-warning btn-lg"
+                            name="submit"
+                          >
+                            The bidding has not started yet!
+                          </button>
+                        ): <></>}
                       </div>
                     </div>
                   </div>

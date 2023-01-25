@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { calculateTimeLeft } from "../utils/utils.ts";
+import { calculateTimeLeft , calculateTimeIn } from "../utils/utils.ts";
 import "../../src/index.css";
 
 export default function Card(props) {
@@ -14,6 +14,8 @@ export default function Card(props) {
   let id = props.id;
   let ch = `/bid/${id}`;
   const [categoryName, setCategoryName] = useState([]);
+  const [startBid, setStartBid] = useState(date> Date.now()  ? false : true);
+   console.log(startBid)
 
   const getCategoryName = async (category_id) => {
     try {
@@ -25,14 +27,19 @@ export default function Card(props) {
       console.log(err);
     }
   };
+  const [timeLeft, setTimeLeft] = useState(date> Date.now() ? calculateTimeLeft(date) : calculateTimeIn(date));
+
   React.useEffect(() => {
     getCategoryName(category_id)
+    setTimeout(() => setTimeLeft(date> Date.now()  ? calculateTimeLeft(date) : calculateTimeIn(date) ), 1000);
+    setStartBid(date> Date.now()  ? false : true)
+
   }, []);
 
 
-  const [timeLeft, setTimeLeft] = useState(calculateTimeLeft(date));
   React.useEffect(() => {
-    setTimeout(() => setTimeLeft(calculateTimeLeft(date)), 1000);
+    setTimeout(() => setTimeLeft(date> Date.now() ? calculateTimeLeft(date) : calculateTimeIn(date) ), 1000);
+    setStartBid(date> Date.now()  ? false : true)
   }, [timeLeft]);
   return (
     <div className="col-12 col-md-4 mb-4">
@@ -41,8 +48,9 @@ export default function Card(props) {
           <a href={ch}>
             <img src={image} width="300px" height="430px" className="card-img-top" alt="..."></img>
           </a>
-          <div class="centered">
-            <p>
+          <div  class="centered" style={startBid ? {backgroundColor:"#32c36c"} :  {}}>
+            <p   style={startBid ? {color:"white"} :  {}}>
+              
               {String(timeLeft.days).padStart(2, "0")}D:{" "}
               {String(timeLeft.hours).padStart(2, "0")}H:{" "}
               {String(timeLeft.minutes).padStart(2, "0")}M:{" "}
@@ -66,7 +74,7 @@ export default function Card(props) {
           </a>
           <p className="card-text">{description}</p>
           <p className="card-text">category : {categoryName}</p>
-          <p className="text-muted">Reviews (48)</p>
+          <p className="text-muted">{startBid ? "Start Bidding Now" :  ""}</p>
         </div>
       </div>
     </div>
