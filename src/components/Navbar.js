@@ -13,7 +13,7 @@ export default function Navbar(props) {
     return (
         <nav className="navbar navbar-expand-lg navbar-light shadow">
             <div className="container d-flex justify-content-between align-items-center">
-                <a className="navbar-brand text-success logo h1 align-self-center" href="index.html">
+                <a className="navbar-brand text-success logo h1 align-self-center" href="/">
                     Auction
                 </a>
                 <button className="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#templatemo_main_nav" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -24,23 +24,22 @@ export default function Navbar(props) {
                     <div className="flex-fill">
                         <ul className="nav navbar-nav d-flex justify-content-between mx-lg-auto">
                             <li className="nav-item">
-                                <a className="nav-link" href="index.html">Home</a>
+                                <a className="nav-link" href="/"> Home</a>
                             </li>
+                            
                             <li className="nav-item">
-                                <a className="nav-link" href="about.html">About</a>
+                                <a className="nav-link float-right" href="/shop">shop</a>
                             </li>
+                          
                             <li className="nav-item">
-                                <a className="nav-link" href="shop.html">Shop</a>
-                            </li>
-                            <li className="nav-item">
-                                <a className="nav-link" href="contact.html">Contact</a>
+                                <a className="nav-link float-right" href="/contact">Contact</a>
                             </li>
                         </ul>
                     </div>
                     <div className="">
-                        {props.isAuthenticated === true ? <div><a className="mx-3" href='/create'><FaPlus /></a>   <a className='mx-3' href='/history'> <FaHistory /></a> <a href='/' className='mx-3'onClick={Logout}><FaSignOutAlt /></a>
+                        {props.isAuthenticated === true ? <div><a className="mx-3" title='Create New Auction' href='/create'><FaPlus /></a>   <a className='mx-3'title='Show History' href='/history'> <FaHistory /></a> <a title='Log Out' href='/' className='mx-3'onClick={Logout}><FaSignOutAlt /></a>
 
-                        </div> : <a href='/login'><FaSignInAlt /></a>}
+                        </div> : <a title='Sign in' href='/login'><FaSignInAlt /></a>}
 
 
                     </div>

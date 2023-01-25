@@ -3,6 +3,7 @@ import React from "react";
 import styled from "styled-components";
 import moment from "moment";
 import Axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const Button = styled.button`
   background-color: #32c36c;
@@ -88,6 +89,8 @@ const Styles = styled.div`
 `;
 
 export function Form(props) {
+  const navigate = useNavigate();
+
   const [userId, setUserId] = React.useState("");
   React.useEffect(async () => {
     console.log("dkhal lel populate");
@@ -152,7 +155,8 @@ export function Form(props) {
         },
       }
     );
-    console.log("kamalt");
+    window.location.href = '/';
+
   }
 
   return (

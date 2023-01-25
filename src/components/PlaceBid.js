@@ -4,15 +4,17 @@ import { useState, useEffect } from "react";
 import Axios from "axios";
 import { formatedTimestamp } from "../utils/utils.ts";
 import { MDBInput } from "mdb-react-ui-kit";
+import { calculateTimeLeft } from "../utils/utils.ts";
 
 export default function Place_bid(props) {
   let isAuthenticated = props.isAuthenticated;
 
   const [product, setProduct] = useState(false);
   const [categoryName, setCategoryName] = useState([]);
+  const [timeLeft, setTimeLeft] = useState({});
 
-
-  console.log(isAuthenticated);
+ 
+  console.log(product);
 
   let { product_id } = useParams();
   console.log(product_id);
@@ -22,6 +24,8 @@ export default function Place_bid(props) {
         `http://localhost:3001/api/auction/displayproduct/${product_id}`
       );
       setProduct(res.data);
+      setTimeLeft( calculateTimeLeft(res.data.date));
+      
     } catch (err) {
       console.log(err);
     }
@@ -29,7 +33,7 @@ export default function Place_bid(props) {
 
   useEffect(() => {
     fetchProduct(product_id);
-  }, []);
+  }, [timeLeft]);
   const [price, setPrice] = useState(product.startingPrice);
   const onChange = (e) => {
     setPrice(e.target.value);
@@ -40,6 +44,7 @@ export default function Place_bid(props) {
         `http://localhost:3001/api/auction/getcategory/${category_id}`
       );
       setCategoryName(res.data.category);
+      setTimeout(() => setTimeLeft(calculateTimeLeft(product.date)), 1000);
     } catch (err) {
       console.log(err);
     }
@@ -58,6 +63,26 @@ export default function Place_bid(props) {
     });
     console.log("kamalt");
   }
+  const [startTime, setStartTime] = useState(new Date(product.date));
+  const [elapsedTime, setElapsedTime] = useState(Date.now() - startTime.getTime());
+  console.log((elapsedTime))
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      setElapsedTime(Date.now() - startTime.getTime());
+    }, 1000);
+    return () => clearInterval(intervalId);
+  }, [startTime]);
+
+  function getTime() {
+    const hours = Math.floor(elapsedTime / (60 * 60 * 1000));
+    const minutes = Math.floor((elapsedTime % (60 * 60 * 1000)) / (60 * 1000));
+    const seconds = Math.floor((elapsedTime % (60 * 1000)) / 1000);
+    return { hours, minutes, seconds };
+  }
+
+  const { hours, minutes, seconds } = getTime();
+
 
   return (
     <section class="bg-light">
@@ -88,6 +113,20 @@ export default function Place_bid(props) {
           <div class="col-lg-7 mt-5">
             <div class="card">
               <div class="card-body">
+              { timeLeft.days!==undefined  ?
+          <div >
+            <p>
+              {String(timeLeft.days).padStart(2, "0")}D:{" "}
+              {String(timeLeft.hours).padStart(2, "0")}H:{" "}
+              {String(timeLeft.minutes).padStart(2, "0")}M:{" "}
+              {String(timeLeft.seconds).padStart(2, "0")}S
+            </p>
+          </div>:  <div class="">  <p>
+              {String(hours).padStart(2, "0")}H:{" "}
+              {String(minutes).padStart(2, "0")}M:{" "}
+              {String(seconds).padStart(2, "0")}S
+            </p></div> 
+}
                 <h1 class="h2">{product.productName}</h1>
                 <p class="h3 py-2">
                   Current Price Point : {price || product.startingPrice}DT
