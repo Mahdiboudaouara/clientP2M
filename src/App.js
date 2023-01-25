@@ -42,7 +42,7 @@ function App() {
   return (
     <>
       <Navbar isAuthenticated={isAuthenticated} />
-      <Routes>
+      <Routes >
         {/* <Route path="/" element={isAuthenticated===true ? <Home /> : <NoAccess/>} /> */}
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
@@ -51,6 +51,7 @@ function App() {
         <Route path="/index" element={<Event />} />
         <Route  path="/bid/:product_id"  element={<PlaceBid isAuthenticated={isAuthenticated} />}  />
         <Route  path="/category/:category_id"  element={<DisplayByCategory isAuthenticated={isAuthenticated} />}  />
+        <Route path="*" element={<NoAccess />} />
 
 
       </Routes>

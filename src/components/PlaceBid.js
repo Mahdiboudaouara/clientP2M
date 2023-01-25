@@ -3,37 +3,89 @@ import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import Axios from "axios";
 import { formatedTimestamp } from "../utils/utils.ts";
+import { calculateTimeLeft, calculateTimeIn } from "../utils/utils.ts";
 import { MDBInput } from "mdb-react-ui-kit";
+import NotAvailable from "./NotAvailable";
+import ReactDOM from "react-dom/client";
+import Navbar from "./Navbar";
+import Footer from "./Footer";
 
-export default function Place_bid(props) {
-  let isAuthenticated = props.isAuthenticated;
-
+export default function PlaceBid(props) {
   const [product, setProduct] = useState(false);
   const [categoryName, setCategoryName] = useState([]);
-
-
-  console.log(isAuthenticated);
+  const [price, setPrice] = useState();
 
   let { product_id } = useParams();
-  console.log(product_id);
+
+  // Fetch product information by product id
   const fetchProduct = async (product_id) => {
     try {
       const res = await Axios.get(
         `http://localhost:3001/api/auction/displayproduct/${product_id}`
       );
-      setProduct(res.data);
+      if (res.data) {
+        setProduct(res.data);
+        setPrice(res.data.startingPrice);
+        console.log(res.data.date)
+        timer(new Date(res.data.date))
+
+      } else {
+        const root = ReactDOM.createRoot(document.getElementById("root"));
+        return root.render(
+          <>
+            <Navbar isAuthenticated={props.isAuthenticated} />
+            <NotAvailable />
+            <Footer />
+          </>
+        );
+      }
     } catch (err) {
       console.log(err);
     }
   };
 
+  // Get last bid on the product
+  const getLastBid = async (product_id) => {
+    try {
+      const res = await Axios.get(
+        `http://localhost:3001/api/bid/${product_id}`
+      );
+      if (res.data.bidAmount) {
+        setPrice(res.data.bidAmount);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  const date = new Date(product.date);
+  const [timeLeft, setTimeLeft] = useState(
+    date > Date.now() ? calculateTimeLeft(date) : calculateTimeIn(date)
+  );
+  const [startBid, setStartBid] = useState(date > Date.now() ? false : true);
+  timer(date);
+
   useEffect(() => {
     fetchProduct(product_id);
+    getLastBid(product_id);
+    timer(date)
   }, []);
-  const [price, setPrice] = useState(product.startingPrice);
-  const onChange = (e) => {
-    setPrice(e.target.value);
-  };
+  async function timer (date)  {
+    if (date > Date.now()) {
+      await setTimeout(() => setTimeLeft(calculateTimeLeft(date), 1000));
+      await setStartBid(false);
+    } else {
+      await setTimeout(() => setTimeLeft(calculateTimeIn(date), 1000));
+      await setStartBid(true);
+    }
+  }
+
+
+  // Update time left and bid status every second
+  useEffect(() => {
+    timer(date);
+  }, [timeLeft]);
+
+  // Get the category name for the product
   const getCategoryName = async (category_id) => {
     try {
       const res = await Axios.get(
@@ -44,19 +96,28 @@ export default function Place_bid(props) {
       console.log(err);
     }
   };
-  if(product){
+
+  if (product) {
     getCategoryName(product.category_id);
   }
 
+  // State for bid input
+  const [inputPrice, setInputPrice] = React.useState(0);
+
+  // Handle input changes
+  function onChange(e) {
+    setInputPrice(e.target.value);
+  }
+
+  // Add bid to the product
   async function addBid(e) {
     e.preventDefault();
     await Axios.post("http://localhost:3001/api/bid/create", {
       productId: product_id,
       userId: product.owner_id,
-      bidAmount: price,
+      bidAmount: inputPrice,
       date: formatedTimestamp(),
     });
-    console.log("kamalt");
   }
 
   return (
@@ -72,22 +133,20 @@ export default function Place_bid(props) {
                 id={product.id}
               />
             </div>
-            <div class="row">
-              <div
-                id="multi-item-example"
-                class="col-10 carousel slide carousel-multi-item"
-                data-bs-ride="carousel"
-              >
-                <div
-                  class="carousel-inner product-links-wap"
-                  role="listbox"
-                ></div>
-              </div>
-            </div>
           </div>
           <div class="col-lg-7 mt-5">
             <div class="card">
+            
               <div class="card-body">
+              { timeLeft.days!==undefined  ? 
+                <h3>
+                  {String(timeLeft.days).padStart(2, "0")}D:{" "}
+                  {String(timeLeft.hours).padStart(2, "0")}H:{" "}
+                  {String(timeLeft.minutes).padStart(2, "0")}M:{" "}
+                  {String(timeLeft.seconds).padStart(2, "0")}S
+                </h3> : <h3></h3>
+              }
+
                 <h1 class="h2">{product.productName}</h1>
                 <p class="h3 py-2">
                   Current Price Point : {price || product.startingPrice}DT
@@ -117,28 +176,40 @@ export default function Place_bid(props) {
                     <div class="col-auto">
                       <ul class="list-inline pb-3">
                         <MDBInput
-                          value={price}
-                          onChange={onChange}
+                          placeholder={price + 0.1}
                           name="price"
                           type="number"
-                          step="0.01"
-                          min={price}
+                          step="0.1"
+                          onChange={onChange}
+                          min={price + 0.1}
                           required
                           label="place a bid"
                         />
                       </ul>
                     </div>
+
                     <div class="row pb-3">
                       <div class="col d-grid">
-                        <button
-                          type="submit"
-                          class="btn btn-success btn-lg"
-                          name="submit"
-                          value="addtocard"
-                          onClick={addBid}
-                        >
-                          Place a Bid
-                        </button>
+
+                        {timeLeft.days!==undefined ? startBid ? (
+                          <button
+                            type="submit"
+                            class="btn btn-success btn-lg"
+                            name="submit"
+                            value="addtocard"
+                            onClick={addBid}
+                          >
+                            Place a Bid
+                          </button>
+                        ) : (
+                          <button
+                            type="text"
+                            class="btn btn-warning btn-lg"
+                            name="submit"
+                          >
+                            The bidding has not started yet!
+                          </button>
+                        ): <></>}
                       </div>
                     </div>
                   </div>
