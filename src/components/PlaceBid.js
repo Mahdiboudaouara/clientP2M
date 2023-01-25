@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import Axios from "axios";
 import { formatedTimestamp } from "../utils/utils.ts";
 import { calculateTimeLeft, calculateTimeIn } from "../utils/utils.ts";
-// import { MDBInput } from "mdb-react-ui-kit";
+import { MDBInput } from "mdb-react-ui-kit";
 import NotAvailable from "./NotAvailable";
 import ReactDOM from "react-dom/client";
 import Navbar from "./Navbar";
@@ -175,7 +175,7 @@ export default function PlaceBid(props) {
                   <div class="row">
                     <div class="col-auto">
                       <ul class="list-inline pb-3">
-                        <input
+                        <MDBInput
                           placeholder={price + 0.1}
                           name="price"
                           type="number"

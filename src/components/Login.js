@@ -5,9 +5,9 @@ import { toast } from "react-hot-toast";
 
 
 
-// import {
-//   MDBInput
-// } from 'mdb-react-ui-kit';
+import {
+  MDBInput
+} from 'mdb-react-ui-kit';
 
 export default function Login() {
   const [formValue, setFormValue] = useState({
@@ -69,7 +69,7 @@ export default function Login() {
 
         <div class="form-outline mb-4">
 
-        <input
+        <MDBInput
           value={formValue.email}
           name='email'
           onChange={onChange}
@@ -81,7 +81,7 @@ export default function Login() {
 
       <div class="form-outline mb-4">
 
-        <input
+        <MDBInput
           value={formValue.password}
           name='password'
           onChange={onChange}
