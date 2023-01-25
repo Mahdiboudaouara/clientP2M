@@ -14,6 +14,7 @@ import { useNavigate } from "react-router-dom";
 import NoAccess from "./components/NoAccess"
 import PlaceBid from "./components/PlaceBid";
 import DisplayByCategory from "./components/DisplayByCategory"
+import Shop from "./components/shop"
 
 
 function App() {
@@ -45,12 +46,16 @@ function App() {
       <Routes >
         {/* <Route path="/" element={isAuthenticated===true ? <Home /> : <NoAccess/>} /> */}
         <Route path="/" element={<Home />} />
+        <Route path="/shop" element={<Shop />} />
+
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/create" element={isAuthenticated===true ? <CreateEvent isAuthenticated={isAuthenticated} /> : <NoAccess/> } />
         <Route path="/index" element={<Event />} />
         <Route  path="/bid/:product_id"  element={<PlaceBid isAuthenticated={isAuthenticated} />}  />
+        
         <Route  path="/category/:category_id"  element={<DisplayByCategory isAuthenticated={isAuthenticated} />}  />
+
         <Route path="*" element={<NoAccess />} />
 
 

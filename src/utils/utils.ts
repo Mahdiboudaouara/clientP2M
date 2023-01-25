@@ -1,3 +1,4 @@
+
 export type TimeLeft = {
   days: number;
   hours: number;
@@ -5,7 +6,9 @@ export type TimeLeft = {
   seconds: number;
 };
 
+
 export const calculateTimeLeft = (date) => {
+
   const difference = +new Date(date) - +new Date();
 
   let timeLeft: TimeLeft = {} as TimeLeft;

@@ -28,7 +28,7 @@ const Home = () => {
 
   return (
     <div>
-      <section className="bg-light">
+      <section className="bg-light ">
         <div className="container py-5">
           <div className="row text-center py-3">
             <div className="col-lg-6 m-auto">

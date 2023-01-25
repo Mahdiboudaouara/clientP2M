@@ -178,6 +178,7 @@ body, ul, li, p, a, label, input, div {
   font-size: 2.5em;
   position: relative;
   text-align: center;
+  background-color: transparent;
 }
 .divider:after,
 .divider:before {
@@ -219,4 +220,11 @@ background: #eee;
 .color{
   color:red;
   font-size: large;
+}
+.right{
+text-align: left;
+}
+.heyh{
+  background-color: #0bff7e;
+  color:black
 }

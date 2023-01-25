@@ -5,15 +5,19 @@ import Axios from "axios";
 import { formatedTimestamp } from "../utils/utils.ts";
 import { calculateTimeLeft, calculateTimeIn } from "../utils/utils.ts";
 import { MDBInput } from "mdb-react-ui-kit";
+  
 import NotAvailable from "./NotAvailable";
 import ReactDOM from "react-dom/client";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
 
+
 export default function PlaceBid(props) {
   const [product, setProduct] = useState(false);
   const [categoryName, setCategoryName] = useState([]);
+
   const [price, setPrice] = useState();
+
 
   let { product_id } = useParams();
 
@@ -23,6 +27,7 @@ export default function PlaceBid(props) {
       const res = await Axios.get(
         `http://localhost:3001/api/auction/displayproduct/${product_id}`
       );
+
       if (res.data) {
         setProduct(res.data);
         setPrice(res.data.startingPrice);
@@ -53,6 +58,7 @@ export default function PlaceBid(props) {
       if (res.data.bidAmount) {
         setPrice(res.data.bidAmount);
       }
+
     } catch (err) {
       console.log(err);
     }
@@ -66,6 +72,7 @@ export default function PlaceBid(props) {
 
   useEffect(() => {
     fetchProduct(product_id);
+
     getLastBid(product_id);
     timer(date)
   }, []);
@@ -86,12 +93,14 @@ export default function PlaceBid(props) {
   }, [timeLeft]);
 
   // Get the category name for the product
+
   const getCategoryName = async (category_id) => {
     try {
       const res = await Axios.get(
         `http://localhost:3001/api/auction/getcategory/${category_id}`
       );
       setCategoryName(res.data.category);
+      setTimeout(() => setTimeLeft(calculateTimeLeft(product.date)), 1000);
     } catch (err) {
       console.log(err);
     }
@@ -119,6 +128,26 @@ export default function PlaceBid(props) {
       date: formatedTimestamp(),
     });
   }
+  const [startTime, setStartTime] = useState(new Date(product.date));
+  const [elapsedTime, setElapsedTime] = useState(Date.now() - startTime.getTime());
+  console.log((elapsedTime))
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      setElapsedTime(Date.now() - startTime.getTime());
+    }, 1000);
+    return () => clearInterval(intervalId);
+  }, [startTime]);
+
+  function getTime() {
+    const hours = Math.floor(elapsedTime / (60 * 60 * 1000));
+    const minutes = Math.floor((elapsedTime % (60 * 60 * 1000)) / (60 * 1000));
+    const seconds = Math.floor((elapsedTime % (60 * 1000)) / 1000);
+    return { hours, minutes, seconds };
+  }
+
+  const { hours, minutes, seconds } = getTime();
+
 
   return (
     <section class="bg-light">
@@ -138,6 +167,7 @@ export default function PlaceBid(props) {
             <div class="card">
             
               <div class="card-body">
+
               { timeLeft.days!==undefined  ? 
                 <h3>
                   {String(timeLeft.days).padStart(2, "0")}D:{" "}
@@ -146,6 +176,7 @@ export default function PlaceBid(props) {
                   {String(timeLeft.seconds).padStart(2, "0")}S
                 </h3> : <h3></h3>
               }
+
 
                 <h1 class="h2">{product.productName}</h1>
                 <p class="h3 py-2">
