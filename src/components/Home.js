@@ -8,13 +8,13 @@ const Home = () => {
   const [categories, setCategories] = useState([]);
   const [error, setError] = useState(null);
 
-  React.useEffect(async () => {
-    await axios
+  React.useEffect( () => {
+     axios
       .get("http://localhost:3001/api/auction/display")
       .then((res) => setProducts(res.data))
       .catch((err) => setError(err));
 
-      await axios
+       axios
       .get("http://localhost:3001/api/auction/categories")
       .then((res) => setCategories(res.data))
       .catch((err) => setError(err));
@@ -23,7 +23,7 @@ const Home = () => {
     return <div>Error: {error.message}</div>;
   }
 
-  console.log(categories)
+  
 
 
   return (

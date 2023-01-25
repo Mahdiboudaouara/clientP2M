@@ -10,29 +10,37 @@ export default function Card(props) {
   let image = props.image;
   let bidding_price = props.bidding_price;
   let category_id=props.category_id;
-  console.log('category_id',category_id)
   let id = props.id;
   let ch = `/bid/${id}`;
   const [categoryName, setCategoryName] = useState([]);
-  const [startBid, setStartBid] = useState(date> Date.now()  ? false : true);
-   console.log(startBid)
+  const [startBid, setStartBid] = useState(false);
 
-  const getCategoryName = async (category_id) => {
-    try {
-      const res = await axios.get(
-        `http://localhost:3001/api/auction/getcategory/${category_id}`
-      );
-      setCategoryName(res.data.category);
-    } catch (err) {
-      console.log(err);
+  const [timeLeft, setTimeLeft] = useState(Date());
+  const  timer=async(date)=> {
+    if (date > Date.now()) {
+      setTimeout(() => setTimeLeft(calculateTimeLeft(date), 1000));
+      setStartBid(false);
+    } else {
+      setTimeout(() => setTimeLeft(calculateTimeIn(date), 1000));
+      setStartBid(true);
     }
-  };
-  const [timeLeft, setTimeLeft] = useState(date> Date.now() ? calculateTimeLeft(date) : calculateTimeIn(date));
+  }
+
 
   React.useEffect(() => {
+    const getCategoryName = async (category_id) => {
+      try {
+        const res = await axios.get(
+          `http://localhost:3001/api/auction/getcategory/${category_id}`
+        );
+        setCategoryName(res.data.category);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    
     getCategoryName(category_id)
-    setTimeout(() => setTimeLeft(date> Date.now()  ? calculateTimeLeft(date) : calculateTimeIn(date) ), 1000);
-    setStartBid(date> Date.now()  ? false : true)
+    timer(date)
 
   }, []);
 
@@ -62,7 +70,7 @@ export default function Card(props) {
               {String(timeLeft.days).padStart(2, "0")}D:{" "}
               {String(timeLeft.hours).padStart(2, "0")}H:{" "}
               {String(timeLeft.minutes).padStart(2, "0")}M:{" "}
-              {String(timeLeft.seconds).padStart(2, "0")}S:{" "}
+              {String(timeLeft.seconds).padStart(2, "0")}S
             </p>
           </div>
           
