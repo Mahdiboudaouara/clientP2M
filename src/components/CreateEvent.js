@@ -119,7 +119,7 @@ export function Form(props) {
   const [productImageBack, setProductImageBack] = React.useState("");
   const [productImageNameBack, setProductImageNameBack] = React.useState("");
   const [auctionDate, setAuctionDate] = React.useState("");
-  const [startingPrice, setStartingPrice] = React.useState(0.01);
+  const [startingPrice, setStartingPrice] = React.useState(0.1);
   const hiddenFileInput = React.useRef(null);
 
   const handleChange = (event) => {
@@ -215,9 +215,9 @@ export function Form(props) {
       <label>Starting Price (DT)</label>
       <input
         type="number"
-        min="0.01"
+        min="0.1"
         value={startingPrice}
-        step="0.01"
+        step="0.1"
         name="startingPrice"
         onChange={(event) => {
           setStartingPrice(event.target.value);

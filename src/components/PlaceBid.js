@@ -4,15 +4,14 @@ import { useState, useEffect } from "react";
 import Axios from "axios";
 import { formatedTimestamp } from "../utils/utils.ts";
 import { MDBInput } from "mdb-react-ui-kit";
+import { calculateTimeLeft } from "../utils/utils.ts";
 
-export default function Place_bid(props) {
+export default function PlaceBid(props) {
   let isAuthenticated = props.isAuthenticated;
 
   const [product, setProduct] = useState(false);
   const [categoryName, setCategoryName] = useState([]);
-
-
-  console.log(isAuthenticated);
+  const [price, setPrice] = useState();
 
   let { product_id } = useParams();
   console.log(product_id);
@@ -22,18 +21,36 @@ export default function Place_bid(props) {
         `http://localhost:3001/api/auction/displayproduct/${product_id}`
       );
       setProduct(res.data);
+      setPrice(res.data.startingPrice);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  const getLastBid = async (product_id) => {
+    try {
+      const res = await Axios.get(
+        `http://localhost:3001/api/bid/${product_id}`
+      );
+      if (res.data.bidAmount) {
+        setPrice(res.data.bidAmount);
+      }
     } catch (err) {
       console.log(err);
     }
   };
 
-  useEffect(() => {
+  React.useEffect(() => {
     fetchProduct(product_id);
+    getLastBid(product_id);
   }, []);
-  const [price, setPrice] = useState(product.startingPrice);
-  const onChange = (e) => {
-    setPrice(e.target.value);
-  };
+  const date = new Date(product.date);
+
+  const [timeLeft, setTimeLeft] = useState(calculateTimeLeft(date));
+
+  React.useEffect(() => {
+     setTimeout(() => setTimeLeft(calculateTimeLeft(date)), 1000);
+  }, [timeLeft]);
+
   const getCategoryName = async (category_id) => {
     try {
       const res = await Axios.get(
@@ -44,8 +61,15 @@ export default function Place_bid(props) {
       console.log(err);
     }
   };
-  if(product){
+
+  if (product) {
     getCategoryName(product.category_id);
+  }
+
+  const [inputPrice, setInputPrice] = React.useState(0);
+  function onChange(e) {
+    setInputPrice(e.target.value);
+    console.log(e.target.value);
   }
 
   async function addBid(e) {
@@ -53,10 +77,9 @@ export default function Place_bid(props) {
     await Axios.post("http://localhost:3001/api/bid/create", {
       productId: product_id,
       userId: product.owner_id,
-      bidAmount: price,
+      bidAmount: inputPrice,
       date: formatedTimestamp(),
     });
-    console.log("kamalt");
   }
 
   return (
@@ -72,22 +95,20 @@ export default function Place_bid(props) {
                 id={product.id}
               />
             </div>
-            <div class="row">
-              <div
-                id="multi-item-example"
-                class="col-10 carousel slide carousel-multi-item"
-                data-bs-ride="carousel"
-              >
-                <div
-                  class="carousel-inner product-links-wap"
-                  role="listbox"
-                ></div>
-              </div>
-            </div>
+            
           </div>
           <div class="col-lg-7 mt-5">
+            
             <div class="card">
+              
               <div class="card-body">
+              <h3>
+                    {String(timeLeft.days).padStart(2, "0")}D:{" "}
+                    {String(timeLeft.hours).padStart(2, "0")}H:{" "}
+                    {String(timeLeft.minutes).padStart(2, "0")}M:{" "}
+                    {String(timeLeft.seconds).padStart(2, "0")}S
+                  </h3>
+
                 <h1 class="h2">{product.productName}</h1>
                 <p class="h3 py-2">
                   Current Price Point : {price || product.startingPrice}DT
@@ -117,17 +138,18 @@ export default function Place_bid(props) {
                     <div class="col-auto">
                       <ul class="list-inline pb-3">
                         <MDBInput
-                          value={price}
-                          onChange={onChange}
+                          placeholder={price + 0.1}
                           name="price"
                           type="number"
-                          step="0.01"
-                          min={price}
+                          step="0.1"
+                          onChange={onChange}
+                          min={price + 0.1}
                           required
                           label="place a bid"
                         />
                       </ul>
                     </div>
+                    
                     <div class="row pb-3">
                       <div class="col d-grid">
                         <button
