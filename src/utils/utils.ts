@@ -19,9 +19,24 @@ export const calculateTimeLeft = (date) => {
           hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
           minutes: Math.floor((difference / 1000 / 60) % 60),
           seconds: Math.floor((difference / 1000) % 60),
-      };
+      }
   }
+  return timeLeft;
+};
 
+export const calculateTimeIn = (date) => {
+  const difference =+new Date() - +new Date(date)  ;
+
+  let timeLeft: TimeLeft = {} as TimeLeft;
+
+  if (difference > 0) {
+      timeLeft = {
+          days: Math.floor(difference / (1000 * 60 * 60 * 24)),
+          hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
+          minutes: Math.floor((difference / 1000 / 60) % 60),
+          seconds: Math.floor((difference / 1000) % 60),
+      }
+  }
   return timeLeft;
 };
 

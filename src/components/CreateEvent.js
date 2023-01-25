@@ -89,25 +89,30 @@ const Styles = styled.div`
 `;
 
 export function Form(props) {
-  const navigate = useNavigate();
+
 
   const [userId, setUserId] = React.useState("");
+  const [categories, setCategories] = React.useState([]);
+
+
   React.useEffect(async () => {
-    console.log("dkhal lel populate");
     const req = await fetch("http://localhost:3001/api/verifytoken", {
       headers: {
         "auth-token": localStorage.getItem("token"),
       },
     });
-
     const data = await req.json();
-    console.log(data);
+    await Axios.get("http://localhost:3001/api/auction/categories")
+      .then((res) => setCategories(res.data))
+
     if (data) {
       setUserId(data.id);
     } else {
       alert(data);
     }
   }, []);
+
+
 
   const [productName, setProductName] = React.useState("");
   const [productCategory, setProductCategory] = React.useState("");
@@ -116,7 +121,7 @@ export function Form(props) {
   const [productImageBack, setProductImageBack] = React.useState("");
   const [productImageNameBack, setProductImageNameBack] = React.useState("");
   const [auctionDate, setAuctionDate] = React.useState("");
-  const [startingPrice, setStartingPrice] = React.useState(0.01);
+  const [startingPrice, setStartingPrice] = React.useState(0.1);
   const hiddenFileInput = React.useRef(null);
 
   const handleChange = (event) => {
@@ -130,6 +135,8 @@ export function Form(props) {
     event.preventDefault();
     hiddenFileInput.current?.click();
   };
+
+
   async function addAuction(e) {
     const formData = new FormData();
 
@@ -143,6 +150,12 @@ export function Form(props) {
     await formData.append("userId", userId);
 
     e.preventDefault();
+    const currentDate = new Date();
+    const selectedDate = new Date(auctionDate);
+    if (selectedDate < currentDate) {
+      alert("Please select a time that is equal to or later than the current time.");
+      return;
+    }
     //foncti
 
     await Axios.post(
@@ -155,7 +168,9 @@ export function Form(props) {
         },
       }
     );
+
     window.location.href = '/';
+
 
   }
 
@@ -172,6 +187,7 @@ export function Form(props) {
       <br></br>
 
       <label>Product Category</label>
+
       <select
         name="productCategory"
         value={productCategory}
@@ -182,34 +198,9 @@ export function Form(props) {
         <option value="" disabled selected>
           Select Product Category
         </option>
-        <option value="1">
-          Electronics (smartphones, laptops, tablets, etc.)
-        </option>
-
-        <option value="2">Fashion (clothing, shoes, accessories, etc.)</option>
-        <option value="3">
-          Home & Garden (furniture, home décor, appliances, etc.)
-        </option>
-        <option value="4">
-          Collectibles (sports memorabilia, stamps, coins, etc.)
-        </option>
-        <option value="5">Art (paintings, sculptures, prints, etc.)</option>
-        <option value="6">Jewelry (diamonds, gold, silver, etc.)</option>
-
-        <option value="7">
-          Antiques (vintage furniture, pottery, glassware, etc.)
-        </option>
-        <option value="8">Automotive (cars, motorcycles, boats, etc.)</option>
-        <option value="9">Books (rare books, first editions, etc.)</option>
-        <option value="10">Music (vinyl records, CDs, etc.)</option>
-        <option value="11">Sporting Goods (golf clubs, bicycles, etc.)</option>
-        <option value="12">Tools (power tools, hand tools, etc.)</option>
-        <option value="13">
-          Toys & Hobbies (action figures, models, etc.)
-        </option>
-        <option value="14">
-          Travel (airline tickets, vacation packages, etc.)
-        </option>
+        {categories.map((category) => (
+          <option value={category.id}>{category.category}{category.options}</option>
+        ))}
       </select>
       <br></br>
 
@@ -227,7 +218,7 @@ export function Form(props) {
       <input
         name="date"
         type="datetime-local"
-        min={moment().format("YYYY-MM-DDTHH:MM")}
+        min={moment().format("YYYY-MM-DDTHH:mm")}
         onChange={(event) => {
           setAuctionDate(event.target.value);
         }}
@@ -237,9 +228,9 @@ export function Form(props) {
       <label>Starting Price (DT)</label>
       <input
         type="number"
-        min="0.01"
+        min="0.1"
         value={startingPrice}
-        step="0.01"
+        step="0.1"
         name="startingPrice"
         onChange={(event) => {
           setStartingPrice(event.target.value);
