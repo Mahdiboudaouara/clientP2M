@@ -140,11 +140,11 @@ export default function PlaceBid(props) {
                 <p class="h3 py-2">
                   Current Price Point : {price || product.startingPrice}DT
                 </p>
-                <p class="py-2">
+                {startBid ? <p class="py-2">
                   <span class="list-inline-item text-dark">
                     Number of bids : 55
                   </span>
-                </p>
+                </p>: <></>}
                 <ul class="list-inline">
                   <li class="list-inline-item">
                     <h6>Category:</h6>
@@ -158,10 +158,10 @@ export default function PlaceBid(props) {
                 <h6>Description:</h6>
                 <p>{product.productDescription}</p>
                 <input type="hidden" name="product-title" value="Activewear" />
-                {props.isAuthenticated === true ? (
+                {props.isAuthenticated === true ?  (
                   <div class="row">
                     <div class="col-auto">
-                      <ul class="list-inline pb-3">
+                      { startBid ? <ul class="list-inline pb-3">
                         <MDBInput
                         placeholder={price+0.1}
                           name="price"
@@ -172,7 +172,7 @@ export default function PlaceBid(props) {
                           required
                           label="place a bid"
                         />
-                      </ul>
+                      </ul>  : <></> }
                     </div>
 
                     <div class="row pb-3">

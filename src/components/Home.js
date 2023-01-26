@@ -1,30 +1,58 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import Card from "./Card";
 import axios from "axios";
 import CategoryCard from "./CategoryCard";
+import PaginationControls from "./PaginationControls";
 
 const Home = () => {
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
+  const [totalPages, setTotalPages] = useState(0);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [limit, setLimit] = useState(6);
   const [error, setError] = useState(null);
+  useEffect(() => {  
+    axios
+    .get("http://localhost:3001/api/auction/categories")
+    .then((res) => setCategories(res.data))
+    .catch((err) => setError(err));
+        async function fetchData() {
+      const res = await axios.get("http://localhost:3001/api/auction/count");
+      setTotalPages(Math.ceil(res.data[0].count / limit));
+    }
+    fetchData();
+  }, []);
+  useEffect(() => {
+    async function fetchData() {
+      const res = await axios.get("http://localhost:3001/api/auction/count");
+      setTotalPages(Math.ceil(res.data[0].count / limit));
+    }
+    fetchData();
 
-  React.useEffect( () => {
-     axios
-      .get("http://localhost:3001/api/auction/display")
+  }, [limit,totalPages]);
+  useEffect(() => {
+    axios
+      .get(
+        `http://localhost:3001/api/auction/display?page=${currentPage}&limit=${limit}`
+      )
       .then((res) => setProducts(res.data))
       .catch((err) => setError(err));
 
-       axios
-      .get("http://localhost:3001/api/auction/categories")
-      .then((res) => setCategories(res.data))
-      .catch((err) => setError(err));
-  }, []);
+
+  }, [currentPage,limit]);
+
+
+
+  const handlePageChange = (newPage) => {
+    setCurrentPage(newPage);
+  };
+
+  const handleLimitChange = (newLimit) => {
+    setLimit(newLimit);
+  };
   if (error) {
     return <div>Error: {error.message}</div>;
   }
-
-  
-
 
   return (
     <div>
@@ -41,8 +69,6 @@ const Home = () => {
           </div>
           <div className="row">
             {products.map((product) => (
-              
-              
               <Card
                 date={new Date(product.date)}
                 name={product.productName}
@@ -53,6 +79,14 @@ const Home = () => {
                 id={product.id}
               />
             ))}
+          </div>
+          <div>
+            <PaginationControls
+              currentPage={currentPage}
+              totalPages={totalPages}
+              handlePageChange={handlePageChange}
+              handleLimitChange={handleLimitChange}
+            />
           </div>
         </div>
       </section>
@@ -68,8 +102,12 @@ const Home = () => {
           </div>
         </div>
         <div className="row">
-        {categories.map((category) => (
-          <CategoryCard categoryName={category.category} categoryImage={category.categoryImage} categoryId={category.id} />
+          {categories.map((category) => (
+            <CategoryCard
+              categoryName={category.category}
+              categoryImage={category.categoryImage}
+              categoryId={category.id}
+            />
           ))}
         </div>
       </section>

@@ -15,7 +15,7 @@ export default function Card(props) {
   const [categoryName, setCategoryName] = useState([]);
   const [startBid, setStartBid] = useState(false);
 
-  const [timeLeft, setTimeLeft] = useState(Date());
+  const [timeLeft, setTimeLeft] = useState(Date(date));
   const  timer=async(date)=> {
     if (date > Date.now()) {
       setTimeout(() => setTimeLeft(calculateTimeLeft(date), 1000));
@@ -40,7 +40,7 @@ export default function Card(props) {
     };
     
     getCategoryName(category_id)
-    timer(date)
+    timer(Date(date))
 
   }, []);
 
