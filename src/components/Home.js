@@ -11,23 +11,20 @@ const Home = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [limit, setLimit] = useState(6);
   const [error, setError] = useState(null);
+  async function countData() {
+    const res = await axios.get("http://localhost:3001/api/auction/count");
+    setTotalPages(Math.ceil(res.data[0].count / limit));
+  }
   useEffect(() => {  
     axios
     .get("http://localhost:3001/api/auction/categories")
     .then((res) => setCategories(res.data))
     .catch((err) => setError(err));
-        async function fetchData() {
-      const res = await axios.get("http://localhost:3001/api/auction/count");
-      setTotalPages(Math.ceil(res.data[0].count / limit));
-    }
-    fetchData();
+
+    countData();
   }, []);
   useEffect(() => {
-    async function fetchData() {
-      const res = await axios.get("http://localhost:3001/api/auction/count");
-      setTotalPages(Math.ceil(res.data[0].count / limit));
-    }
-    fetchData();
+    countData();
 
   }, [limit,totalPages]);
   useEffect(() => {
