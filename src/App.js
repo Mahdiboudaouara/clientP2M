@@ -15,6 +15,7 @@ import NoAccess from "./components/NoAccess"
 import PlaceBid from "./components/PlaceBid";
 import DisplayByCategory from "./components/DisplayByCategory"
 import Shop from "./components/shop"
+import About from "./components/About";
 
 
 function App() {
@@ -55,6 +56,7 @@ function App() {
         <Route  path="/bid/:product_id"  element={<PlaceBid isAuthenticated={isAuthenticated} />}  />
         
         <Route  path="/category/:category_id"  element={<DisplayByCategory isAuthenticated={isAuthenticated} />}  />
+        <Route path="/contact" element={<About/>}/>
 
         <Route path="*" element={<NoAccess />} />
 
