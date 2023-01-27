@@ -27,7 +27,7 @@ export default function Card(props) {
   }
 
 
-  React.useEffect(() => {
+  useEffect(() => {
     const getCategoryName = async (category_id) => {
       try {
         const res = await axios.get(
@@ -45,14 +45,14 @@ export default function Card(props) {
   }, [props]);
 
 
-  React.useEffect(() => {
+  useEffect(() => {
     setTimeout(() => setTimeLeft(date> Date.now() ? calculateTimeLeft(date) : calculateTimeIn(date) ), 1000);
     setStartBid(date> Date.now()  ? false : true)
   }, [timeLeft,props]);
   return (
     <div className="col-12 col-md-4 mb-4 ">
       <div className="card h-100 ">
-        <div class="container ">
+        <div className="container ">
           <a href={ch}>
             <img
               src={image}
@@ -63,7 +63,7 @@ export default function Card(props) {
             ></img>
           </a>
           <div
-            class="centered"
+            className="centered"
             style={startBid ? { backgroundColor: "#32c36c" } : {}}
           >
             <p style={startBid ? { color: "white" } : {}}>

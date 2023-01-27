@@ -86,12 +86,12 @@ export default function PlaceBid(props) {
     };
     fetchProduct(product_id);
     getLastBid(product_id);
-  }, []);
+  }, [product_id,props.isAuthenticated]);
 
   // Update time left and bid status every second
   useEffect(() => {
     timer(date);
-  }, [timeLeft]);
+  }, [timeLeft,date]);
 
   // State for bid input
   const [inputPrice, setInputPrice] = React.useState();
@@ -112,45 +112,48 @@ export default function PlaceBid(props) {
       date: formatedTimestamp(),
     }).then((res) =>setPrice(inputPrice)).catch((err) => setError(err));
   }
+  if (error) {
+    return <div>Error: {error.message}</div>;
+  }
 
   return (
-    <section class="bg-light">
-      <div class="container pb-5">
-        <div class="row">
-          <div class="col-lg-5 mt-5">
-            <div class="card mb-3">
+    <section className="bg-light">
+      <div className="container pb-5">
+        <div className="row">
+          <div className="col-lg-5 mt-5">
+            <div className="card mb-3">
               <img
-                class="card-img img-fluid"
+                className="card-img img-fluid"
                 src={product.productImage}
                 alt=""
                 id={product.id}
               />
             </div>
           </div>
-          <div class="col-lg-7 mt-5">
-            <div class="card">
-              <div class="card-body">
+          <div className="col-lg-7 mt-5">
+            <div className="card">
+              <div className="card-body">
                 <h3>
                   {String(timeLeft.days).padStart(2, "0")}D:{" "}
                   {String(timeLeft.hours).padStart(2, "0")}H:{" "}
                   {String(timeLeft.minutes).padStart(2, "0")}M:{" "}
                   {String(timeLeft.seconds).padStart(2, "0")}S
                 </h3>
-                <h1 class="h2">{product.productName}</h1>
-                <p class="h3 py-2">
+                <h1 className="h2">{product.productName}</h1>
+                <p className="h3 py-2">
                   Current Price Point : {price || product.startingPrice}DT
                 </p>
-                {startBid ? <p class="py-2">
-                  <span class="list-inline-item text-dark">
+                {startBid ? <p className="py-2">
+                  <span className="list-inline-item text-dark">
                     Number of bids : 55
                   </span>
                 </p>: <></>}
-                <ul class="list-inline">
-                  <li class="list-inline-item">
+                <ul className="list-inline">
+                  <li className="list-inline-item">
                     <h6>Category:</h6>
                   </li>
-                  <li class="list-inline-item">
-                    <p class="text-muted">
+                  <li className="list-inline-item">
+                    <p className="text-muted">
                       <strong>{categoryName}</strong>
                     </p>
                   </li>
@@ -159,9 +162,9 @@ export default function PlaceBid(props) {
                 <p>{product.productDescription}</p>
                 <input type="hidden" name="product-title" value="Activewear" />
                 {props.isAuthenticated === true ?  (
-                  <div class="row">
-                    <div class="col-auto">
-                      { startBid ? <ul class="list-inline pb-3">
+                  <div className="row">
+                    <div className="col-auto">
+                      { startBid ? <ul className="list-inline pb-3">
                         <MDBInput
                         placeholder={price+0.1}
                           name="price"
@@ -175,12 +178,12 @@ export default function PlaceBid(props) {
                       </ul>  : <></> }
                     </div>
 
-                    <div class="row pb-3">
-                      <div class="col d-grid">
+                    <div className="row pb-3">
+                      <div className="col d-grid">
                         {startBid ? (
                           <button
                             type="submit"
-                            class="btn btn-success btn-lg"
+                            className="btn btn-success btn-lg"
                             name="submit"
                             value="addtocard"
                             onClick={addBid}
@@ -190,7 +193,7 @@ export default function PlaceBid(props) {
                         ) : (
                           <button
                             type="text"
-                            class="btn btn-warning btn-lg"
+                            className="btn btn-warning btn-lg"
                             name="submit"
                           >
                             The bidding has not started yet!

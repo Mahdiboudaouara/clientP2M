@@ -89,43 +89,41 @@ export default function Shop() {
   };
 
   return (
-    <div class="container py-5">
-      <div class="row">
-        <div class="col-lg-3">
-          <h1 class="h2 pb-4">Products</h1>
-          <ul class="list-unstyled templatemo-accordion">
-            <li class="pb-3">
+    <div className="container py-5">
+      <div className="row">
+        <div className="col-lg-3">
+          <h1 className="h2 pb-4">Products</h1>
+          <ul className="list-unstyled templatemo-accordion">
+            <li className="pb-3">
               <label
-                class="collapsed d-flex justify-content-between h3 text-decoration-none"
-                href="#"
+                className="collapsed d-flex justify-content-between h3 text-decoration-none"
+
               >
                 Show ended bids
                 <input
-                  class="form-check-input"
+                  className="form-check-input"
                   type="checkbox"
                   id="inlineCheckbox1"
                   value="option1"
                 />
               </label>
               <label
-                class="collapsed d-flex justify-content-between h3 text-decoration-none"
-                href="#"
+                className="collapsed d-flex justify-content-between h3 text-decoration-none"
               >
                 Show featured bids
                 <input
-                  class="form-check-input"
+                  className="form-check-input"
                   type="checkbox"
                   id="inlineCheckbox1"
                   value="option1"
                 />
               </label>{" "}
               <label
-                class="collapsed d-flex justify-content-between h3 text-decoration-none"
-                href="#"
+                className="collapsed d-flex justify-content-between h3 text-decoration-none"
               >
                 Show actual bids
                 <input
-                  class="form-check-input"
+                  className="form-check-input"
                   type="checkbox"
                   id="inlineCheckbox1"
                   value="option1"
@@ -134,18 +132,18 @@ export default function Shop() {
             </li>
           </ul>
 
-          <h1 class="h2 pb-4">Categories</h1>
+          <h1 className="h2 pb-4">Categories</h1>
 
-          <ul class="list-unstyled templatemo-accordion">
-            <li class="pb-3">
+          <ul className="list-unstyled templatemo-accordion">
+            <li className="pb-3">
               {categories.map((category) => (
                 <label
-                  class="collapsed d-flex justify-content-between h3 text-decoration-none"
-                  href="#"
+                key={category.id}
+                  className="collapsed d-flex justify-content-between h3 text-decoration-none"
                 >
                   {category.category}
                   <input
-                    class="form-check-input"
+                    className="form-check-input"
                     type="checkbox"
                     id="inlineCheckbox1"
                     value="option1"
@@ -157,10 +155,11 @@ export default function Shop() {
             </li>
           </ul>
         </div>
-        <div class="col-lg-9">
-          <div class="row">
+        <div className="col-lg-9">
+          <div className="row">
             {ch.map((product) => (
               <Card
+              key={product.id}
                 date={new Date(product.date)}
                 name={product.productName}
                 description={product.productDescription}
