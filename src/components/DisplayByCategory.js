@@ -8,7 +8,6 @@ export default function DisplayByCategory() {
   const [products, setProducts] = useState([]);
   const [error, setError] = useState(null);
   const { category_id } = useParams();
-  console.log("categoryid",category_id)
   const fetchProducts = async (category_id) => {
     try {
       const res = await axios.get(
@@ -16,13 +15,13 @@ export default function DisplayByCategory() {
       );
       setProducts(res.data);
     } catch (err) {
-      console.log(err);
+      setError(err)
     }
   };
 
   useEffect(() => {
     fetchProducts(category_id);
-  }, []);
+  }, [category_id]);
 
   if (error) {
     return <div>Error: {error.message}</div>;
@@ -34,6 +33,7 @@ export default function DisplayByCategory() {
         <div className="row">
           {products.map((product) => (
             <Card
+              key={product.id}
               date={new Date(product.date)}
               name={product.productName}
               description={product.productDescription}

@@ -11,11 +11,16 @@ const Home = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [limit, setLimit] = useState(6);
   const [error, setError] = useState(null);
+
+
+
   async function countData() {
     const res = await axios.get("http://localhost:3001/api/auction/count");
     setTotalPages(Math.ceil(res.data[0].count / limit));
   }
+
   useEffect(() => {  
+    
     axios
     .get("http://localhost:3001/api/auction/categories")
     .then((res) => setCategories(res.data))
@@ -36,7 +41,7 @@ const Home = () => {
       .catch((err) => setError(err));
 
 
-  }, [currentPage,limit,]);
+  }, [currentPage,limit]);
 
 
 
@@ -67,6 +72,7 @@ const Home = () => {
           <div className="row">
             {products.map((product) => (
               <Card
+              key={product.id}
                 date={new Date(product.date)}
                 name={product.productName}
                 description={product.productDescription}
@@ -101,6 +107,7 @@ const Home = () => {
         <div className="row">
           {categories.map((category) => (
             <CategoryCard
+            key={category.id}
               categoryName={category.category}
               categoryImage={category.categoryImage}
               categoryId={category.id}

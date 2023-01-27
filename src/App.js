@@ -21,6 +21,7 @@ import About from "./components/About";
 function App() {
   const navigate = useNavigate();
   const [isAuthenticated, setIsAuthenticated] = React.useState(false);
+  const [userId, setUserId] = React.useState(0);
   React.useEffect(() => {
     const token = localStorage.getItem("token");
     console.log(token);
@@ -37,6 +38,7 @@ function App() {
         localStorage.removeItem("token");
         navigate("/login");
       } else {
+        setUserId(user.id)
         setIsAuthenticated(!isAuthenticated);
       }
     }
@@ -51,7 +53,7 @@ function App() {
 
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/create" element={isAuthenticated===true ? <CreateEvent isAuthenticated={isAuthenticated} /> : <NoAccess/> } />
+        <Route path="/create" element={isAuthenticated===true ? <CreateEvent userId={userId} isAuthenticated={isAuthenticated} /> : <NoAccess/> } />
         <Route path="/index" element={<Event />} />
         <Route  path="/bid/:product_id"  element={<PlaceBid isAuthenticated={isAuthenticated} />}  />
         

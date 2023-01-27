@@ -14,7 +14,6 @@ export default function Login() {
     email: '',
     password: '',
   });
-  console.log(formValue)
 
 
   const [isLoggedIn, setisLoggedIn] = React.useState(false);
@@ -51,23 +50,22 @@ export default function Login() {
 
   }
   React.useEffect(() => {
-    console.log(isLoggedIn)
     if (isLoggedIn) {
       window.location.href = '/';
     }
   }, [isLoggedIn]);
   return (
-  <section class="vh-100 a">
+  <section className="vh-100 a">
   <div className="container py-5 h-100">
     <div className="row d-flex align-items-center justify-content-center h-100">
       <div className="col-md-8 col-lg-7 col-xl-6">
-        <img src="https://media.istockphoto.com/id/1281553891/vector/auction-hammer-with-sold-text-line-icon-finance-concept-hitting-wooden-gavel-in-auction-sign.jpg?s=612x612&w=0&k=20&c=dnaIP5TRgGm_CJEL8cZUuivbUEfVZ20ESILJsiWGcIg="
-          className="img-fluid" style={{width:'60%'}} alt="Phone image" />
+        <img  alt="product" src="https://media.istockphoto.com/id/1281553891/vector/auction-hammer-with-sold-text-line-icon-finance-concept-hitting-wooden-gavel-in-auction-sign.jpg?s=612x612&w=0&k=20&c=dnaIP5TRgGm_CJEL8cZUuivbUEfVZ20ESILJsiWGcIg="
+          className="img-fluid" style={{width:'60%'}}  />
       </div>
       <div className="col-md-7 col-lg-5 col-xl-5 offset-xl-1">
         <form>
 
-        <div class="form-outline mb-4">
+        <div className="form-outline mb-4">
 
         <MDBInput
           value={formValue.email}
@@ -79,7 +77,7 @@ export default function Login() {
         />
       </div>
 
-      <div class="form-outline mb-4">
+      <div className="form-outline mb-4">
 
         <MDBInput
           value={formValue.password}
@@ -91,10 +89,10 @@ export default function Login() {
         />
    
       </div>
-      <div class="d-flex justify-content-around align-items-center mb-4">
-            <div class="form-check">
-              <input class="form-check-input b" type="checkbox" value="" id="form1Example3" checked />
-              <label class="form-check-label" for="form1Example3"> Remember me </label>
+      <div className="d-flex justify-content-around align-items-center mb-4">
+            <div className="form-check">
+              <input className="form-check-input b" type="checkbox" value="" id="form1Example3" checked onChange={()=>console.log("checked")} />
+              <label className="form-check-label" htmlFor="form1Example3"> Remember me </label>
             </div>
             <a href="#!">Forgot password?</a>
           </div>
@@ -102,10 +100,10 @@ export default function Login() {
    
         </form>
         
-        <div class="divider d-flex align-items-center my-4">
-            <p class="text-center fw-bold mx-3 mb-0 text-muted">OR</p>
+        <div className="divider d-flex align-items-center my-4">
+            <p className="text-center fw-bold mx-3 mb-0 text-muted">OR</p>
           </div>
-            <p> <a href="/register" class="link-info text-right">Register here</a></p>
+            <p> <a href="/register" className="link-info text-right">Register here</a></p>
       </div>
     </div>
     

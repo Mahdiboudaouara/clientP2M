@@ -1,9 +1,7 @@
 import React from "react";
-
 import styled from "styled-components";
 import moment from "moment";
 import Axios from "axios";
-import { useNavigate } from "react-router-dom";
 
 const Button = styled.button`
   background-color: #32c36c;
@@ -89,31 +87,10 @@ const Styles = styled.div`
 `;
 
 export function Form(props) {
+  const userId = props.props.userId;
 
-
-  const [userId, setUserId] = React.useState("");
   const [categories, setCategories] = React.useState([]);
-
-
-  React.useEffect(async () => {
-    const req = await fetch("http://localhost:3001/api/verifytoken", {
-      headers: {
-        "auth-token": localStorage.getItem("token"),
-      },
-    });
-    const data = await req.json();
-    await Axios.get("http://localhost:3001/api/auction/categories")
-      .then((res) => setCategories(res.data))
-
-    if (data) {
-      setUserId(data.id);
-    } else {
-      alert(data);
-    }
-  }, []);
-
-
-
+  const [error, setError] = React.useState(null);
   const [productName, setProductName] = React.useState("");
   const [productCategory, setProductCategory] = React.useState("");
   const [productDescription, setProductDescription] = React.useState("");
@@ -123,6 +100,12 @@ export function Form(props) {
   const [auctionDate, setAuctionDate] = React.useState("");
   const [startingPrice, setStartingPrice] = React.useState(0.1);
   const hiddenFileInput = React.useRef(null);
+
+  React.useEffect(() => {
+    Axios.get("http://localhost:3001/api/auction/categories").then((res) =>
+      setCategories(res.data)
+    );
+  }, []);
 
   const handleChange = (event) => {
     event.preventDefault();
@@ -135,7 +118,6 @@ export function Form(props) {
     event.preventDefault();
     hiddenFileInput.current?.click();
   };
-
 
   async function addAuction(e) {
     const formData = new FormData();
@@ -153,7 +135,9 @@ export function Form(props) {
     const currentDate = new Date();
     const selectedDate = new Date(auctionDate);
     if (selectedDate < currentDate) {
-      alert("Please select a time that is equal to or later than the current time.");
+      alert(
+        "Please select a time that is equal to or later than the current time."
+      );
       return;
     }
     //foncti
@@ -169,9 +153,10 @@ export function Form(props) {
       }
     );
 
-    window.location.href = '/';
-
-
+    window.location.href = "/";
+  }
+  if (error) {
+    return <div>Error: {error.message}</div>;
   }
 
   return (
@@ -195,11 +180,14 @@ export function Form(props) {
           setProductCategory(event.target.value);
         }}
       >
-        <option value="" disabled selected>
+        <option value="" disabled>
           Select Product Category
         </option>
         {categories.map((category) => (
-          <option value={category.id}>{category.category}{category.options}</option>
+          <option key={category.id} value={category.id}>
+            {category.category}
+            {category.options}
+          </option>
         ))}
       </select>
       <br></br>
@@ -254,10 +242,10 @@ export function Form(props) {
   );
 }
 
-export default function CreateEvent() {
+export default function CreateEvent(props) {
   return (
     <Styles>
-      <Form />
+      <Form props={props} />
     </Styles>
   );
 }
