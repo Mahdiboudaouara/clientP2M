@@ -42,13 +42,13 @@ export default function Card(props) {
     getCategoryName(category_id)
     timer(Date(date))
 
-  }, []);
+  }, [props]);
 
 
   React.useEffect(() => {
     setTimeout(() => setTimeLeft(date> Date.now() ? calculateTimeLeft(date) : calculateTimeIn(date) ), 1000);
     setStartBid(date> Date.now()  ? false : true)
-  }, [timeLeft]);
+  }, [timeLeft,props]);
   return (
     <div className="col-12 col-md-4 mb-4 ">
       <div className="card h-100 ">

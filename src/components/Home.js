@@ -36,7 +36,7 @@ const Home = () => {
       .catch((err) => setError(err));
 
 
-  }, [currentPage,limit]);
+  }, [currentPage,limit,]);
 
 
 
