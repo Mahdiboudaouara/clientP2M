@@ -1,13 +1,19 @@
 import React, { useState } from "react";
 import Card from "./Card";
 import axios from "axios";
-import CategoryCard from "./CategoryCard";
+import PaginationControls from "./PaginationControls";
+
 export default function Shop() {
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
+  const [totalPages, setTotalPages] = useState(0);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [limit, setLimit] = useState(6);
   const [error, setError] = useState(null);
-  const [ch, setch] = useState([]);
+  const [allProducts, setAllProducts] = useState([]);
+  const [categoryId, setCategoryId] = useState("0");
   const [checkboxes, setCheckboxes] = useState([
+    { id: 0, isChecked: true },
     { id: 1, isChecked: false },
     { id: 2, isChecked: false },
     { id: 3, isChecked: false },
@@ -24,69 +30,85 @@ export default function Shop() {
     { id: 14, isChecked: false },
   ]);
 
-  const [productCategory, setProductCategory] = React.useState("");
-  React.useEffect(async () => {
-    let d = 0;
-    for (const elemnt of checkboxes) {
-      if (elemnt.isChecked === true) {
-        d = d + 1;
-      }
-    }
+  async function countData() {
+    const res = await axios.get("http://localhost:3001/api/auction/count");
+    setTotalPages(Math.ceil(res.data[0].count / limit));
+  }
+  async function countDataByCategoryId(category_id) {
+    const res = await axios.get(
+      `http://localhost:3001/api/auction/countbycategory/${category_id}`
+    );
+    setTotalPages(Math.ceil(res.data[0].count / limit));
+  }
 
-    console.log(d);
-    await axios
-      .get("http://localhost:3001/api/auction/display")
-      .then((res) => {
-        setProducts(res.data);
-        if (d === 0) {
-          setch(res.data);
-          console.log(ch);
-        }
-      })
-      .catch((err) => setError(err));
 
-    await axios
+  React.useEffect(() => {
+    if (categoryId === "0"){
+    countData();
+    axios
       .get("http://localhost:3001/api/auction/categories")
       .then((res) => setCategories(res.data))
       .catch((err) => setError(err));
-  }, []);
+    axios
+      .get(
+        `http://localhost:3001/api/auction/display?page=${currentPage}&limit=${limit}`
+      )
+      .then((res) => {
+        setProducts(res.data);
+        setAllProducts(res.data);
+      })
+      .catch((err) => setError(err));}
+  }, [currentPage,limit]);
   React.useEffect(() => {
-    console.log(products);
-  }, []);
+    console.log("2")
+    if (categoryId !== "0") {
+      countDataByCategoryId(categoryId);
+    } else {
+      countData();
+    }
+  }, [limit, categoryId]);
+  React.useEffect(() => {
+    console.log("3")
+    if (categoryId !== "0") {
+      console.log("categoryId", categoryId);
+      axios
+        .get(
+          `http://localhost:3001/api/auction/displaybycategory/${categoryId}/?page=${currentPage}&limit=${limit}`
+        )
+        .then((res) => {
+          setProducts(res.data);
+        })
+        .catch((err) => setError(err));
+    } else {
+      setProducts(allProducts);
+    }
+  }, [currentPage, limit, categoryId]);
+
+  const handlePageChange = (newPage) => {
+    setCurrentPage(newPage);
+  };
+
+  const handleLimitChange = (newLimit) => {
+    setLimit(newLimit);
+  };
+
+  const handleRadioChange = (event) => {
+    event.preventDefault();
+    setCurrentPage(1)
+    setCategoryId(event.target.value);
+    const updatedCheckboxes = checkboxes.map((cb) => {
+      if (cb.id.toString() == event.target.value) {
+        return { ...cb, isChecked: !cb.isChecked };
+      }
+      return {...cb, isChecked: false};
+    });
+    console.log(updatedCheckboxes)
+    setCheckboxes(updatedCheckboxes);
+  };
 
   if (error) {
     return <div>Error: {error.message}</div>;
   }
-
-  const Filtre = (b) => {
-    let c = 0;
-    const updatedCheckboxes = checkboxes.map((checkbox) => {
-      if (checkbox.id === b) {
-        checkbox.isChecked = !checkbox.isChecked;
-      }
-      return checkbox;
-    });
-    setCheckboxes(updatedCheckboxes);
-    setch([]);
-
-    for (const element of checkboxes) {
-      if (element.isChecked === true) {
-        for (const i of products) {
-          if (i.category_id === element.id) {
-            setch((ch) => [...ch, i]);
-          }
-        }
-      }
-    }
-    for (const elemnt of checkboxes) {
-      if (elemnt.isChecked === true) {
-        c = c + 1;
-      }
-    }
-    if (c === 0) {
-      setch(products);
-    }
-  };
 
   return (
     <div className="container py-5">
@@ -95,10 +117,7 @@ export default function Shop() {
           <h1 className="h2 pb-4">Products</h1>
           <ul className="list-unstyled templatemo-accordion">
             <li className="pb-3">
-              <label
-                className="collapsed d-flex justify-content-between h3 text-decoration-none"
-
-              >
+              <label className="collapsed d-flex justify-content-between h3 text-decoration-none">
                 Show ended bids
                 <input
                   className="form-check-input"
@@ -107,9 +126,7 @@ export default function Shop() {
                   value="option1"
                 />
               </label>
-              <label
-                className="collapsed d-flex justify-content-between h3 text-decoration-none"
-              >
+              <label className="collapsed d-flex justify-content-between h3 text-decoration-none">
                 Show featured bids
                 <input
                   className="form-check-input"
@@ -118,9 +135,7 @@ export default function Shop() {
                   value="option1"
                 />
               </label>{" "}
-              <label
-                className="collapsed d-flex justify-content-between h3 text-decoration-none"
-              >
+              <label className="collapsed d-flex justify-content-between h3 text-decoration-none">
                 Show actual bids
                 <input
                   className="form-check-input"
@@ -136,19 +151,35 @@ export default function Shop() {
 
           <ul className="list-unstyled templatemo-accordion">
             <li className="pb-3">
+              <label
+                key={0}
+                className="collapsed d-flex justify-content-between h3 text-decoration-none"
+              >
+                See all products
+                <input
+                  className="form-check-input"
+                  type="radio"
+                  id="inlineCheckbox1"
+                  value={0}
+                  name="abc"
+                  checked={checkboxes[0].isChecked}
+                  onChange={handleRadioChange}
+                />
+              </label>
               {categories.map((category) => (
                 <label
-                key={category.id}
+                  key={category.id}
                   className="collapsed d-flex justify-content-between h3 text-decoration-none"
                 >
                   {category.category}
                   <input
                     className="form-check-input"
-                    type="checkbox"
+                    type="radio"
                     id="inlineCheckbox1"
-                    value="option1"
-                    checked={checkboxes[category.id - 1].isChecked}
-                    onChange={() => Filtre(category.id)}
+                    value={category.id}
+                    name="abc"
+                    checked={checkboxes[category.id].isChecked}
+                    onChange={handleRadioChange}
                   />
                 </label>
               ))}
@@ -157,9 +188,9 @@ export default function Shop() {
         </div>
         <div className="col-lg-9">
           <div className="row">
-            {ch.map((product) => (
+            {products.map((product) => (
               <Card
-              key={product.id}
+                key={product.id}
                 date={new Date(product.date)}
                 name={product.productName}
                 description={product.productDescription}
@@ -169,6 +200,14 @@ export default function Shop() {
                 id={product.id}
               />
             ))}{" "}
+          </div>
+          <div>
+            <PaginationControls
+              currentPage={currentPage}
+              totalPages={totalPages}
+              handlePageChange={handlePageChange}
+              handleLimitChange={handleLimitChange}
+            />
           </div>
         </div>
       </div>
