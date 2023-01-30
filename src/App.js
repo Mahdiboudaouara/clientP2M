@@ -19,13 +19,11 @@ import About from "./components/About";
 import * as io from "socket.io-client";
 function App() {
   const socket = io.connect("http://localhost:3001");
-  console.log(socket)
   const navigate = useNavigate();
   const [isAuthenticated, setIsAuthenticated] = React.useState(false);
   const [userId, setUserId] = React.useState(0);
   React.useEffect(() => {
     const token = localStorage.getItem("token");
-    console.log(token);
     if (token) {
       console.log(token);
       const user = jwtDecode(token);
@@ -33,7 +31,6 @@ function App() {
         localStorage.removeItem("token");
         setIsAuthenticated(false);
       }
-      console.log("user:", user);
 
       if (!user) {
         localStorage.removeItem("token");
@@ -49,7 +46,7 @@ function App() {
       <Navbar isAuthenticated={isAuthenticated} />
       <Routes>
         {/* <Route path="/" element={isAuthenticated===true ? <Home /> : <NoAccess/>} /> */}
-        <Route path="/" element={<Home />} />
+        <Route path="/" element={<Home  />} />
         <Route path="/shop" element={<Shop />} />
 
         <Route path="/login" element={<Login />} />
