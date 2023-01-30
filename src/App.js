@@ -16,9 +16,10 @@ import PlaceBid from "./components/PlaceBid";
 import DisplayByCategory from "./components/DisplayByCategory";
 import Shop from "./components/shop";
 import About from "./components/About";
-
+import * as io from "socket.io-client";
 function App() {
-
+  const socket = io.connect("http://localhost:3001");
+  console.log(socket)
   const navigate = useNavigate();
   const [isAuthenticated, setIsAuthenticated] = React.useState(false);
   const [userId, setUserId] = React.useState(0);
@@ -66,7 +67,7 @@ function App() {
         <Route path="/index" element={<Event />} />
         <Route
           path="/bid/:product_id"
-          element={<PlaceBid isAuthenticated={isAuthenticated} />}
+          element={<PlaceBid isAuthenticated={isAuthenticated} socket={socket}/>}
         />
 
         <Route

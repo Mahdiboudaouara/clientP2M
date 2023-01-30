@@ -9,8 +9,8 @@ import NotAvailable from "./NotAvailable";
 import ReactDOM from "react-dom/client";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
-import * as io from 'socket.io-client';
-export default function PlaceBid(props) {
+
+export default function PlaceBid({socket,isAuthenticated}) {
   const [product, setProduct] = useState([]);
   const [categoryName, setCategoryName] = useState([]);
   const [price, setPrice] = useState(0);
@@ -59,7 +59,7 @@ export default function PlaceBid(props) {
           const root = ReactDOM.createRoot(document.getElementById("root"));
           return root.render(
             <>
-              <Navbar isAuthenticated={props.isAuthenticated} />
+              <Navbar isAuthenticated={isAuthenticated} />
               <NotAvailable />
               <Footer />
             </>
@@ -84,7 +84,7 @@ export default function PlaceBid(props) {
     };
     fetchProduct(product_id);
     getLastBid(product_id);
-  }, [product_id, props.isAuthenticated]);
+  }, [product_id, isAuthenticated]);
 
   // Update time left and bid status every second
   useEffect(() => {
@@ -99,6 +99,11 @@ export default function PlaceBid(props) {
     console.log(e.target.value);
     setInputPrice(e.target.value);
   };
+  useEffect(() => {
+    socket.on("send bid", (bid) => {
+      setPrice(bid.bidAmount)
+    });
+  }, [socket]);
 
   // Add bid to the product
   async function addBid(e) {
@@ -113,7 +118,7 @@ export default function PlaceBid(props) {
       date: formatedTimestamp(),
     })
       .then((res) => {
-        const socket=io.connect("http://localhost:3001")
+        
 
         setPrice(inputPrice);
         socket.emit("newBid", {
@@ -177,7 +182,7 @@ export default function PlaceBid(props) {
                 <h6>Description:</h6>
                 <p>{product.productDescription}</p>
                 <input type="hidden" name="product-title" value="Activewear" />
-                {props.isAuthenticated === true ? (
+                {isAuthenticated === true ? (
                   <div className="row">
                     <div className="col-auto">
                       {startBid ? (
