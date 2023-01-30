@@ -10,7 +10,7 @@ import ReactDOM from "react-dom/client";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
 
-export default function PlaceBid(props) {
+export default function PlaceBid({socket,isAuthenticated}) {
   const [product, setProduct] = useState([]);
   const [categoryName, setCategoryName] = useState([]);
   const [price, setPrice] = useState(0);
@@ -19,8 +19,7 @@ export default function PlaceBid(props) {
   const [date, setDate] = useState(Date());
   const [error, setError] = useState(null);
   let { product_id } = useParams();
-
-
+  
 
   // Get the category name for the product
   const getCategoryName = async (category_id) => {
@@ -33,7 +32,7 @@ export default function PlaceBid(props) {
       console.log(err);
     }
   };
-  const  timer=async(date)=> {
+  const timer = async (date) => {
     if (date > Date.now()) {
       setTimeout(() => setTimeLeft(calculateTimeLeft(date), 1000));
       setStartBid(false);
@@ -41,10 +40,9 @@ export default function PlaceBid(props) {
       setTimeout(() => setTimeLeft(calculateTimeIn(date), 1000));
       setStartBid(true);
     }
-  }
+  };
 
   useEffect(() => {
-
     // Fetch product information by product id
     const fetchProduct = async (product_id) => {
       try {
@@ -61,7 +59,7 @@ export default function PlaceBid(props) {
           const root = ReactDOM.createRoot(document.getElementById("root"));
           return root.render(
             <>
-              <Navbar isAuthenticated={props.isAuthenticated} />
+              <Navbar isAuthenticated={isAuthenticated} />
               <NotAvailable />
               <Footer />
             </>
@@ -86,12 +84,12 @@ export default function PlaceBid(props) {
     };
     fetchProduct(product_id);
     getLastBid(product_id);
-  }, [product_id,props.isAuthenticated]);
+  }, [product_id, isAuthenticated]);
 
   // Update time left and bid status every second
   useEffect(() => {
     timer(date);
-  }, [timeLeft,date]);
+  }, [timeLeft, date]);
 
   // State for bid input
   const [inputPrice, setInputPrice] = React.useState();
@@ -99,18 +97,37 @@ export default function PlaceBid(props) {
   // Handle input changes
   const onChange = (e) => {
     console.log(e.target.value);
-    setInputPrice(e.target.value)
+    setInputPrice(e.target.value);
   };
+  useEffect(() => {
+    socket.on("send bid", (bid) => {
+      setPrice(bid.bidAmount)
+    });
+  }, [socket]);
 
   // Add bid to the product
   async function addBid(e) {
+    
+    
     e.preventDefault();
+
     await Axios.post("http://localhost:3001/api/bid/create", {
       productId: product_id,
       userId: product.owner_id,
       bidAmount: inputPrice,
       date: formatedTimestamp(),
-    }).then((res) =>setPrice(inputPrice)).catch((err) => setError(err));
+    })
+      .then((res) => {
+        
+
+        setPrice(inputPrice);
+        socket.emit("newBid", {
+          productId: product_id,
+          bidAmount: inputPrice,
+          date: formatedTimestamp(),
+        });
+      })
+      .catch((err) => setError(err));
   }
   if (error) {
     return <div>Error: {error.message}</div>;
@@ -143,11 +160,15 @@ export default function PlaceBid(props) {
                 <p className="h3 py-2">
                   Current Price Point : {price || product.startingPrice}DT
                 </p>
-                {startBid ? <p className="py-2">
-                  <span className="list-inline-item text-dark">
-                    Number of bids : 55
-                  </span>
-                </p>: <></>}
+                {startBid ? (
+                  <p className="py-2">
+                    <span className="list-inline-item text-dark">
+                      Number of bids : 55
+                    </span>
+                  </p>
+                ) : (
+                  <></>
+                )}
                 <ul className="list-inline">
                   <li className="list-inline-item">
                     <h6>Category:</h6>
@@ -161,21 +182,25 @@ export default function PlaceBid(props) {
                 <h6>Description:</h6>
                 <p>{product.productDescription}</p>
                 <input type="hidden" name="product-title" value="Activewear" />
-                {props.isAuthenticated === true ?  (
+                {isAuthenticated === true ? (
                   <div className="row">
                     <div className="col-auto">
-                      { startBid ? <ul className="list-inline pb-3">
-                        <MDBInput
-                        placeholder={price+0.1}
-                          name="price"
-                          type="number"
-                          step="0.1"
-                          min={price+0.1}
-                          onChange={onChange}
-                          required
-                          label="place a bid"
-                        />
-                      </ul>  : <></> }
+                      {startBid ? (
+                        <ul className="list-inline pb-3">
+                          <MDBInput
+                            placeholder={price + 0.1}
+                            name="price"
+                            type="number"
+                            step="0.1"
+                            min={price + 0.1}
+                            onChange={onChange}
+                            required
+                            label="place a bid"
+                          />
+                        </ul>
+                      ) : (
+                        <></>
+                      )}
                     </div>
 
                     <div className="row pb-3">

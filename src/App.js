@@ -1,6 +1,6 @@
 import "./App.css";
 import React from "react";
-import 'bootstrap/dist/css/bootstrap.css';
+import "bootstrap/dist/css/bootstrap.css";
 import { Routes, Route } from "react-router-dom";
 import Home from "./components/Home";
 import Login from "./components/Login";
@@ -11,14 +11,15 @@ import Event from "./components/Event";
 import Footer from "./components/Footer";
 import jwtDecode from "jwt-decode";
 import { useNavigate } from "react-router-dom";
-import NoAccess from "./components/NoAccess"
+import NoAccess from "./components/NoAccess";
 import PlaceBid from "./components/PlaceBid";
-import DisplayByCategory from "./components/DisplayByCategory"
-import Shop from "./components/shop"
+import DisplayByCategory from "./components/DisplayByCategory";
+import Shop from "./components/shop";
 import About from "./components/About";
-
-
+import * as io from "socket.io-client";
 function App() {
+  const socket = io.connect("http://localhost:3001");
+  console.log(socket)
   const navigate = useNavigate();
   const [isAuthenticated, setIsAuthenticated] = React.useState(false);
   const [userId, setUserId] = React.useState(0);
@@ -28,9 +29,9 @@ function App() {
     if (token) {
       console.log(token);
       const user = jwtDecode(token);
-      if (user.exp < Date.now() / 1000){
+      if (user.exp < Date.now() / 1000) {
         localStorage.removeItem("token");
-        setIsAuthenticated(false)
+        setIsAuthenticated(false);
       }
       console.log("user:", user);
 
@@ -38,7 +39,7 @@ function App() {
         localStorage.removeItem("token");
         navigate("/login");
       } else {
-        setUserId(user.id)
+        setUserId(user.id);
         setIsAuthenticated(!isAuthenticated);
       }
     }
@@ -46,25 +47,38 @@ function App() {
   return (
     <>
       <Navbar isAuthenticated={isAuthenticated} />
-      <Routes >
+      <Routes>
         {/* <Route path="/" element={isAuthenticated===true ? <Home /> : <NoAccess/>} /> */}
         <Route path="/" element={<Home />} />
         <Route path="/shop" element={<Shop />} />
 
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/create" element={isAuthenticated===true ? <CreateEvent userId={userId} isAuthenticated={isAuthenticated} /> : <NoAccess/> } />
+        <Route
+          path="/create"
+          element={
+            isAuthenticated === true ? (
+              <CreateEvent userId={userId} isAuthenticated={isAuthenticated} />
+            ) : (
+              <NoAccess />
+            )
+          }
+        />
         <Route path="/index" element={<Event />} />
-        <Route  path="/bid/:product_id"  element={<PlaceBid isAuthenticated={isAuthenticated} />}  />
-        
-        <Route  path="/category/:category_id"  element={<DisplayByCategory isAuthenticated={isAuthenticated} />}  />
-        <Route path="/contact" element={<About/>}/>
+        <Route
+          path="/bid/:product_id"
+          element={<PlaceBid isAuthenticated={isAuthenticated} socket={socket}/>}
+        />
+
+        <Route
+          path="/category/:category_id"
+          element={<DisplayByCategory isAuthenticated={isAuthenticated} />}
+        />
+        <Route path="/contact" element={<About />} />
 
         <Route path="*" element={<NoAccess />} />
-
-
       </Routes>
-      <Footer/>
+      <Footer />
     </>
   );
 }
