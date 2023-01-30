@@ -7,6 +7,7 @@ import { useParams } from "react-router-dom";
 export default function DisplayByCategory() {
   const [products, setProducts] = useState([]);
   const [error, setError] = useState(null);
+  
   const { category_id } = useParams();
   const fetchProducts = async (category_id) => {
     try {

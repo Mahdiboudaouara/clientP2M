@@ -96,7 +96,6 @@ export default function PlaceBid({socket,isAuthenticated}) {
 
   // Handle input changes
   const onChange = (e) => {
-    console.log(e.target.value);
     setInputPrice(e.target.value);
   };
   useEffect(() => {

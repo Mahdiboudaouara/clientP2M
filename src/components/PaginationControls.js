@@ -28,6 +28,8 @@ export default function PaginationControls({
         <option value={12}>12 per page</option>
         <option value={24}>24 per page</option>
         <option value={48}>48 per page</option>
+        <option value={96}>96 per page</option>
+        <option value={192}>192 per page</option>
       </select>
     </div>
   );

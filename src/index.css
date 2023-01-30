@@ -194,28 +194,9 @@ background: #eee;
     height: 20%;
   }
 }
-@media (max-height: 700px) {
-  .a{
-    min-height: 700px;
-  }
-  img {
-   width: 40%;
-   height:10%;
-   padding-bottom: 50px;
-  }
+
   
  
-}
-@media (max-height: 500px) {
-  .a{
-    min-height: 700px;
-  }
-  img {
-    display: none;
-  }
-  
- 
-}
 
 .color{
   color:red;
