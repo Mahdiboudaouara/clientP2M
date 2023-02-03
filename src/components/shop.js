@@ -3,12 +3,13 @@ import Card from "./Card";
 import axios from "axios";
 import PaginationControls from "./PaginationControls";
 
-export default function Shop() {
+export default function Shop(props) {
+  let categoryid=props.categoryid
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
   const [totalPages, setTotalPages] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
-  const [limit, setLimit] = useState(6);
+  const [limit, setLimit] = useState(4);
   const [error, setError] = useState(null);
   const [allProducts, setAllProducts] = useState([]);
   const [categoryId, setCategoryId] = useState("0");
@@ -121,7 +122,7 @@ export default function Shop() {
                 Show ended bids
                 <input
                   className="form-check-input"
-                  type="checkbox"
+                  type="radio"
                   id="inlineCheckbox1"
                   value="option1"
                 />
@@ -130,7 +131,7 @@ export default function Shop() {
                 Show featured bids
                 <input
                   className="form-check-input"
-                  type="checkbox"
+                  type="radio"
                   id="inlineCheckbox1"
                   value="option1"
                 />
@@ -139,7 +140,7 @@ export default function Shop() {
                 Show actual bids
                 <input
                   className="form-check-input"
-                  type="checkbox"
+                  type="radio"
                   id="inlineCheckbox1"
                   value="option1"
                 />

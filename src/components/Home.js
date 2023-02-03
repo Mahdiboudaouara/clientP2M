@@ -1,37 +1,47 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import Card from "./Card";
 import axios from "axios";
 import CategoryCard from "./CategoryCard";
 import PaginationControls from "./PaginationControls";
+import { FaArrowAltCircleLeft, FaArrowAltCircleRight } from "react-icons/fa";
+import PlaceBid from "./PlaceBid";
 
 const Home = () => {
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
   const [totalPages, setTotalPages] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
-  const [limit, setLimit] = useState(6);
+  const [limit, setLimit] = useState(4);
   const [error, setError] = useState(null);
+  const [limite, setLimite] = useState(3);
 
+  const handleShowMore = () => {
+    setLimite(categories.length);
+  };
 
+  const handleShowLess = () => {
+    setLimite(3);
+  };
+ 
 
   async function countData() {
     const res = await axios.get("http://localhost:3001/api/auction/count");
     setTotalPages(Math.ceil(res.data[0].count / limit));
   }
 
-  useEffect(() => {  
-    
+  useEffect(() => {
+
     axios
-    .get("http://localhost:3001/api/auction/categories")
-    .then((res) => setCategories(res.data))
-    .catch((err) => setError(err));
+      .get("http://localhost:3001/api/auction/categories")
+      .then((res) => setCategories(res.data))
+      .catch((err) => setError(err));
 
     countData();
   }, []);
   useEffect(() => {
     countData();
 
-  }, [limit,totalPages]);
+  }, [limit, totalPages]);
   useEffect(() => {
     axios
       .get(
@@ -41,7 +51,7 @@ const Home = () => {
       .catch((err) => setError(err));
 
 
-  }, [currentPage,limit]);
+  }, [currentPage, limit]);
 
 
 
@@ -58,7 +68,7 @@ const Home = () => {
 
   return (
     <div>
-      <section className="bg-light ">
+      <section className="home">
         <div className="container py-5">
           <div className="row text-center py-3">
             <div className="col-lg-6 m-auto">
@@ -67,12 +77,17 @@ const Home = () => {
 
 
               </p>
+
             </div>
           </div>
-          <div className="row">
+
+
+          <div className="row ">
+
+
             {products.map((product) => (
               <Card
-              key={product.id}
+                key={product.id}
                 date={new Date(product.date)}
                 name={product.productName}
                 description={product.productDescription}
@@ -82,8 +97,11 @@ const Home = () => {
                 id={product.id}
                 shop={false}
               />
-            ))}
+            ))
+            }
+
           </div>
+
           <div>
             <PaginationControls
               currentPage={currentPage}
@@ -106,15 +124,22 @@ const Home = () => {
           </div>
         </div>
         <div className="row">
-          {categories.map((category) => (
-            <CategoryCard
-            key={category.id}
-              categoryName={category.category}
-              categoryImage={category.categoryImage}
-              categoryId={category.id}
-            />
-          ))}
+        {categories.slice(0, limite).map((category, index) => (
+       <CategoryCard
+        key={category.id}
+        categoryName={category.category}
+        categoryImage={category.categoryImage}
+        categoryId={category.id}
+      />
+      ))}
+      {limite < categories.length && (
+        <button class="btn btn-warning" onClick={handleShowMore}><i class="fa fa-arrow-down"></i>Show More</button>
+      )}
+      {limite === categories.length && (
+        <button onClick={handleShowLess} class="btn btn-warning"  ><i class="fa fa-arrow-up"></i>  Show Less</button>
+      )}
         </div>
+        
       </section>
     </div>
   );

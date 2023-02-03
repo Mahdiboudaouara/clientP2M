@@ -2,6 +2,8 @@ import React from "react";
 import styled from "styled-components";
 import moment from "moment";
 import Axios from "axios";
+import { toast } from "react-hot-toast";
+
 
 const Button = styled.button`
   background-color: #32c36c;
@@ -134,12 +136,18 @@ export function Form(props) {
     e.preventDefault();
     const currentDate = new Date();
     const selectedDate = new Date(auctionDate);
+    if (productImageNameBack==="" || auctionDate==="" ||productName==="" || productDescription==="" || startingPrice==="" || productCategory==="")
+    {
+      toast.error('All field are required');
+      return;
+    }
     if (selectedDate < currentDate) {
       alert(
         "Please select a time that is equal to or later than the current time."
       );
       return;
     }
+    
     //foncti
 
     await Axios.post(

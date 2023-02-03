@@ -22,9 +22,11 @@ export default function NoAccess() {
 			</div>
 		</div>
 	</div>
-        
+	
+
 
       
     </div>
+	
   )
 }

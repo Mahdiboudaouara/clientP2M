@@ -69,21 +69,25 @@ export default function Card(props) {
     setStartBid(date > Date.now() ? false : true);
   }, [timeLeft, props]);
   return (
+
     <div className={`col-12 col-md-${shop ? 6 :4} mb-4 `}>
+
       <div className="card h-100 ">
-        <div className="container ">
+        <div className="containerr ">
           <a href={ch}>
             <img
               src={image}
+
               width="150px"
               height="330px"
               className="card-img-top"
+
               alt="..."
             ></img>
           </a>
           <div
             className="centered"
-            style={startBid ? { backgroundColor: "#32c36c" } : {}}
+            style={startBid ? { backgroundColor: "orange" } : {backgroundColor: "white"}}
           >
             <p style={startBid ? { color: "white" } : {}}>
               {String(timeLeft.days).padStart(2, "0")}D:{" "}
@@ -105,9 +109,11 @@ export default function Card(props) {
             <p className="card-text">{description}</p>
 
             <p className="card-text">category : {categoryName}</p>
-            <p className="text-muted">{startBid ? "Start Bidding Now" : ""}</p>
           </div>
+          
         </div>
+       { !startBid ? <button class="button-77" style={{marginBottom:'10px',paddingBottom:'10px',width:"200px",paddingLeft:"10px",marginLeft:"10px"}} role="button">Start Bid Now</button>: <button disabled class="button-77" style={{marginBottom:'10px',paddingBottom:'10px',width:"200px",paddingLeft:"10px",marginLeft:"10px"}} role="button">Start Bid Now</button>}
+
       </div>
     </div>
   );
