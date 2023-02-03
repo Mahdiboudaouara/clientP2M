@@ -31,6 +31,9 @@ export default function PaginationControls({
         <option value={96}>96 per page</option>
         <option value={192}>192 per page</option>
       </select>
+
+      
     </div>
+    
   );
 }

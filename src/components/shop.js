@@ -198,6 +198,7 @@ export default function Shop() {
                 image={product.productImage}
                 category_id={product.category_id}
                 id={product.id}
+                shop={true}
               />
             ))}{" "}
           </div>

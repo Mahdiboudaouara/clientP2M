@@ -63,9 +63,9 @@ const Home = () => {
           <div className="row text-center py-3">
             <div className="col-lg-6 m-auto">
               <h1>Featured Product</h1>
-              <p>
-                Reprehenderit in voluptate velit esse cillum dolore eu fugiat
-                nulla pariatur. Excepteur sint occaecat cupidatat non proident.
+              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse ac euismod metus. Maecenas ornare mauris in ex ullamcorper vehicula. Nulla facilisi. 
+
+
               </p>
             </div>
           </div>
@@ -80,6 +80,7 @@ const Home = () => {
                 image={product.productImage}
                 category_id={product.category_id}
                 id={product.id}
+                shop={false}
               />
             ))}
           </div>

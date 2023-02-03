@@ -11,6 +11,7 @@ export default function Card(props) {
   let bidding_price = props.bidding_price;
   let category_id = props.category_id;
   let id = props.id;
+  let shop = props.shop;
   let ch = `/bid/${id}`;
   const [categoryName, setCategoryName] = useState([]);
   const [startBid, setStartBid] = useState(false);
@@ -68,14 +69,14 @@ export default function Card(props) {
     setStartBid(date > Date.now() ? false : true);
   }, [timeLeft, props]);
   return (
-    <div className="col-12 col-md-4 mb-4 ">
+    <div className={`col-12 col-md-${shop ? 6 :4} mb-4 `}>
       <div className="card h-100 ">
         <div className="container ">
           <a href={ch}>
             <img
               src={image}
               width="150px"
-              height="250px"
+              height="330px"
               className="card-img-top"
               alt="..."
             ></img>
