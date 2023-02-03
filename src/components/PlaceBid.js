@@ -9,6 +9,8 @@ import NotAvailable from "./NotAvailable";
 import ReactDOM from "react-dom/client";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
+import { toast } from "react-hot-toast";
+
 
 export default function PlaceBid({socket,isAuthenticated}) {
   const [product, setProduct] = useState([]);
@@ -101,16 +103,26 @@ export default function PlaceBid({socket,isAuthenticated}) {
   };
   useEffect(() => {
     socket.on("send bid", (bid) => {
-      setPrice(bid.bidAmount)
+      setPrice(bid.bidAmount);
     });
   }, [socket]);
 
   // Add bid to the product
   async function addBid(e) {
     
-    
     e.preventDefault();
+    if (inputPrice===undefined)
+    {
+      toast.error('Bid value required');
+      return;
+    }
+    if (inputPrice <= price )
+    {
+      toast.error('Bid value should be higher than actual price');
+      return;
 
+
+    }
     await Axios.post("http://localhost:3001/api/bid/create", {
       productId: product_id,
       userId: product.owner_id,
@@ -125,13 +137,15 @@ export default function PlaceBid({socket,isAuthenticated}) {
           productId: product_id,
           bidAmount: inputPrice,
           date: formatedTimestamp(),
-        });
+        })
+        ;
+        
       })
-      .catch((err) => setError(err));
+      .catch((err) => alert("bid value should be higher than last bid")
+     
+      );
   }
-  if (error) {
-    return <div>Error: {error.message}</div>;
-  }
+
 
   return (
     <section className="bg-light">

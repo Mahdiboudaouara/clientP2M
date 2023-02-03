@@ -31,7 +31,7 @@ export default function DisplayByCategory() {
     <section className="bg-light">
       <div className="container py-5">
         <div className="row">
-          {products.map((product) => (
+          {   products.map((product) => (
             <Card
               key={product.id}
               date={new Date(product.date)}

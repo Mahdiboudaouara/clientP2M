@@ -3,8 +3,7 @@ import React from 'react'
 export default function NotAvailable() {
   return (
     <div>
-        Product Not Available 
-      
+        There are no product on this categorie     
     </div>
   )
 }
