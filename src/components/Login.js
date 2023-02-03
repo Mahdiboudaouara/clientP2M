@@ -91,19 +91,19 @@ export default function Login() {
       </div>
       <div className="d-flex justify-content-around align-items-center mb-4">
             <div className="form-check">
-              <input className="form-check-input b" type="checkbox" value="" id="form1Example3" checked onChange={()=>console.log("checked")} />
+              <input  className="form-check-input b" type="checkbox" value="" id="form1Example3" checked onChange={()=>console.log("checked")} />
               <label className="form-check-label" htmlFor="form1Example3"> Remember me </label>
             </div>
-            <a href="#!">Forgot password?</a>
+            <a style={{color:"#226D68"}} href="#!">Forgot password?</a>
           </div>
-        <button type='submit' className="btn btn-primary btn-block" onClick={LoginUser} >Sign In</button>
+        <button type='submit' style={{backgroundColor:"#226D68",color:"#ECF8F6"}} className="btn btn-block" onClick={LoginUser} >Sign In</button>
    
         </form>
         
         <div className="divider d-flex align-items-center my-4">
             <p className="text-center fw-bold mx-3 mb-0 text-muted">OR</p>
           </div>
-            <p> <a href="/register" className="link-info text-right">Register here</a></p>
+            <p> <a href="/register" style={{color:"#226D68"}} className="text-right">Register here</a></p>
       </div>
     </div>
     

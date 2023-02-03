@@ -13,7 +13,7 @@ export default function Navbar(props) {
     return (
         <nav className="navbar navbar-expand-lg navbar-light shadow">
             <div className="container d-flex justify-content-between align-items-center">
-                <a className="navbar-brand text-success logo h1 align-self-center" href="/">
+                <a className="navbar-brand logo h1 align-self-center" style={{color:"#18534F"}} href="/">
                     Auction
                 </a>
                 <button className="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#templatemo_main_nav" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">

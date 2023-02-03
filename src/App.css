@@ -22,7 +22,7 @@
   align-items: center;
   justify-content: center;
   font-size: calc(10px + 2vmin);
-  color: white;
+  color: #ECF8F6;
 }
 
 .App-link {
@@ -38,7 +38,7 @@
   }
 }
 .App {
-  background-color: white;
+  background-color: #ECF8F6;
 }
 
 .Auth-form-container {
@@ -55,7 +55,7 @@
   padding-top: 30px;
   padding-bottom: 20px;
   border-radius: 8px;
-  background-color: white;
+  background-color: #ECF8F6;
 }
 
 .Auth-form-content {

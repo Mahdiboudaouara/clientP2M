@@ -9,7 +9,7 @@ export default function Shop(props) {
   const [categories, setCategories] = useState([]);
   const [totalPages, setTotalPages] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
-  const [limit, setLimit] = useState(4);
+  const [limit, setLimit] = useState(3);
   const [error, setError] = useState(null);
   const [allProducts, setAllProducts] = useState([]);
   const [categoryId, setCategoryId] = useState("0");
@@ -91,6 +91,7 @@ export default function Shop(props) {
 
   const handleLimitChange = (newLimit) => {
     setLimit(newLimit);
+    setCurrentPage(1)
   };
 
   const handleRadioChange = (event) => {
@@ -114,11 +115,11 @@ export default function Shop(props) {
   return (
     <div className="container py-5">
       <div className="row">
-        <div className="col-lg-3">
+        <div className="col-3">
           <h1 className="h2 pb-4">Products</h1>
           <ul className="list-unstyled templatemo-accordion">
             <li className="pb-3">
-              <label className="collapsed d-flex justify-content-between h3 text-decoration-none">
+              <label className="collapsed d-flex justify-content-between h5 text-decoration-none">
                 Show ended bids
                 <input
                   className="form-check-input"
@@ -127,7 +128,7 @@ export default function Shop(props) {
                   value="option1"
                 />
               </label>
-              <label className="collapsed d-flex justify-content-between h3 text-decoration-none">
+              <label className="collapsed d-flex justify-content-between h5 text-decoration-none">
                 Show featured bids
                 <input
                   className="form-check-input"
@@ -136,7 +137,7 @@ export default function Shop(props) {
                   value="option1"
                 />
               </label>{" "}
-              <label className="collapsed d-flex justify-content-between h3 text-decoration-none">
+              <label className="collapsed d-flex justify-content-between h5 text-decoration-none">
                 Show actual bids
                 <input
                   className="form-check-input"
@@ -154,7 +155,7 @@ export default function Shop(props) {
             <li className="pb-3">
               <label
                 key={0}
-                className="collapsed d-flex justify-content-between h3 text-decoration-none"
+                className="collapsed d-flex justify-content-between h5 text-decoration-none"
               >
                 See all products
                 <input
@@ -170,7 +171,7 @@ export default function Shop(props) {
               {categories.map((category) => (
                 <label
                   key={category.id}
-                  className="collapsed d-flex justify-content-between h3 text-decoration-none"
+                  className="collapsed d-flex justify-content-between h5 text-decoration-none"
                 >
                   {category.category}
                   <input

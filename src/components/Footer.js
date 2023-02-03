@@ -19,11 +19,11 @@ export default function Footer() {
   }
   return (
     <div>
-      <footer className="bg-dark" id="tempaltemo_footer">
+      <footer style={{backgroundColor:"#18534F"}} id="tempaltemo_footer">
         <div className="container">
           <div className="row">
             <div className="col-md-4 pt-5">
-              <h2 className="h2 text-success border-bottom pb-3 border-light logo">
+              <h2 className=" text-light border-bottom pb-3 border-light logo">
                 Auction
               </h2>
               <ul className="list-unstyled text-light footer-link-list">
@@ -53,7 +53,7 @@ export default function Footer() {
               <h2 className="h2 text-light border-bottom pb-3 border-light">
                 Products
               </h2>
-              <ul className="list-unstyled text-light footer-link-list">
+              <ul style={{color:"#ECF8F6"}} className="list-unstyled footer-link-list">
                 {categories.map((category) => (
                   <li key={category.id}>
                     <a className="text-decoration-none" href={`/category/${category.id}`}>
@@ -131,7 +131,7 @@ export default function Footer() {
             <div className="row pt-2">
               <div className="col-12">
                 <p className="text-left text-light">
-                  Copyright &copy; 2023 Auction
+                  Copyright &copy; 2023 Auction &copy; By Mahdi&Oussema
                 </p>
               </div>
             </div>

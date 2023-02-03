@@ -62,13 +62,14 @@ export default function Register() {
                 Sign up
               </p>
 
-              <div className="form-outline mb-4">
+              <div  className="form-outline mb-4">
                 <MDBInput
                   value={formValue.name}
                   name="name"
                   onChange={onChange}
                   required
                   label="Name"
+                
                 />
               </div>
 
@@ -105,7 +106,8 @@ export default function Register() {
 
               <button
                 type="submit"
-                className="btn btn-primary btn-block"
+                style={{backgroundColor:"#226D68",color:"#ECF8F6"}}
+                className="btn btn-block"
                 onClick={addUser}
               >
                 Register
@@ -118,8 +120,8 @@ export default function Register() {
               </p>
             </div>
             <p>
-              {" "}
-              <a href="/register" className="link-info text-right">
+            
+              <a href="/login" style={{color:"#226D68"}} className="text-right">
                 LOG IN
               </a>
             </p>

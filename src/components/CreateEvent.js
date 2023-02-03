@@ -6,8 +6,8 @@ import { toast } from "react-hot-toast";
 
 
 const Button = styled.button`
-  background-color: #32c36c;
-  color: white;
+  background-color: #226D68;
+  color: #ECF8F6;
   padding: 0.5rem;
   font-family: sans-serif;
   border-radius: 0.3rem;
@@ -30,7 +30,7 @@ const Styles = styled.div`
   }
 
   form {
-    background: white;
+    background: #ECF8F6;
     border: 1px solid #dedede;
     display: flex;
     flex-direction: column;
@@ -72,8 +72,8 @@ const Styles = styled.div`
   }
 
   .submitBtn {
-    background-color: #32c36c;
-    color: white;
+    background-color: #226D68;
+    color: #ECF8F6;
     font-family: sans-serif;
     font-size: 14px;
     margin: 20px 0px;

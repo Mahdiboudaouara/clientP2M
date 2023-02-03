@@ -138,6 +138,8 @@ export default function PlaceBid({socket,isAuthenticated}) {
           date: formatedTimestamp(),
         })
         ;
+        toast.success('Bid Inserted');
+
         
       })
       .catch((err) => alert("bid value should be higher than last bid")
@@ -221,7 +223,8 @@ export default function PlaceBid({socket,isAuthenticated}) {
                         {startBid ? (
                           <button
                             type="submit"
-                            className="btn btn-success btn-lg"
+                            className="btn btn-lg"
+                            style={{backgroundColor:"#226D68",color:"#ECF8F6"}}
                             name="submit"
                             value="addtocard"
                             onClick={addBid}
@@ -231,7 +234,8 @@ export default function PlaceBid({socket,isAuthenticated}) {
                         ) : (
                           <button
                             type="text"
-                            className="btn btn-warning btn-lg"
+                            className="btn btn-lg"
+                            style={{backgroundColor:"#226D68",color:"#ECF8F6"}} 
                             name="submit"
                           >
                             The bidding has not started yet!
@@ -242,7 +246,7 @@ export default function PlaceBid({socket,isAuthenticated}) {
                   </div>
                 ) : (
                   <div className="color">
-                    Please <a href="/signup">sign up</a> to place a bid
+                    Please <a href="/register">sign up</a> to place a bid
                   </div>
                 )}
               </div>

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { calculateTimeLeft, calculateTimeIn } from "../utils/utils.ts";
 import "../../src/index.css";
+import { FaCentercode } from "react-icons/fa";
 
 export default function Card(props) {
   let date = props.date;
@@ -12,10 +13,14 @@ export default function Card(props) {
   let category_id = props.category_id;
   let id = props.id;
   let shop = props.shop;
-  let ch = `/bid/${id}`;
+  let Link = `/bid/${id}`;
+  const navigateToproductpage=()=>
+  {
+    window.location.href = Link;
+  }
+  const [price, setPrice] = useState(false);
   const [categoryName, setCategoryName] = useState([]);
   const [startBid, setStartBid] = useState(false);
-  const [price, setPrice] = useState(0);
   const [timeLeft, setTimeLeft] = useState(Date(date));
   const timer = async (date) => {
     if (date > Date.now()) {
@@ -33,7 +38,7 @@ export default function Card(props) {
           `http://localhost:3001/api/bid/${product_id}`
         );
         if (res.data.bidAmount) {
-          setPrice(res.data.bidAmount);
+            setPrice(res.data.bidAmount)
         }
       } catch (err) {
         console.log(err);
@@ -74,7 +79,7 @@ export default function Card(props) {
 
       <div className="card h-100 ">
         <div className="containerr ">
-          <a href={ch}>
+          <a href={Link}>
             <img
               src={image}
 
@@ -87,9 +92,9 @@ export default function Card(props) {
           </a>
           <div
             className="centered"
-            style={startBid ? { backgroundColor: "orange" } : {backgroundColor: "white"}}
+            style={startBid ? { backgroundColor: "#226D68" } : {backgroundColor: "#ECF8F6"}}
           >
-            <p style={startBid ? { color: "white" } : {}}>
+            <p style={startBid ? { color: "#ECF8F6" } : {}}>
               {String(timeLeft.days).padStart(2, "0")}D:{" "}
               {String(timeLeft.hours).padStart(2, "0")}H:{" "}
               {String(timeLeft.minutes).padStart(2, "0")}M:{" "}
@@ -100,10 +105,10 @@ export default function Card(props) {
         <div className="card-body ">
           <ul className="list-unstyled d-flex justify-content-between">
             <li></li>
-            <li className="text-muted text-right">{price==bidding_price ?  `Starting Price ${bidding_price}`  :`Current Price ${price}`}DT</li>
+            <li className="text-muted text-right">{price ?  `Current Price ${price}`  :`Starting Price ${bidding_price}` }DT</li>
           </ul>
           <div className="right">
-            <a href={ch} className="h2 text-decoration-none text-dark">
+            <a href={Link} className="h2 text-decoration-none text-dark">
               {name}
             </a>
             <p className="card-text">{description}</p>
@@ -112,8 +117,7 @@ export default function Card(props) {
           </div>
           
         </div>
-       { !startBid ? <button class="button-77" style={{marginBottom:'10px',paddingBottom:'10px',width:"200px",paddingLeft:"10px",marginLeft:"10px"}} role="button">Start Bid Now</button>: <button disabled class="button-77" style={{marginBottom:'10px',paddingBottom:'10px',width:"200px",paddingLeft:"10px",marginLeft:"10px"}} role="button">Start Bid Now</button>}
-
+       { startBid ?  <center><button onClick={navigateToproductpage} class="button-77" style={{fontSize:'16px',marginBottom:'10px',paddingBottom:'18px',width:"200px",paddingLeft:"33px",marginLeft:"10px"}} role="button">Start bid now</button></center>: <center><button onClick={navigateToproductpage} disabled class="button-77" style={{fontSize:'18px',marginBottom:'10px',paddingBottom:'18px',width:"200px",paddingLeft:"33px",marginLeft:"10px"}} role="button">Start bid now</button></center>} <br></br>
       </div>
     </div>
   );

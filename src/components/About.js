@@ -3,10 +3,10 @@ import React from 'react'
 export default function About() {
   return (
     <div>
-    <section className="bg-success py-5">
+    <section style={{backgroundColor:"#ECF8F6"}} className=" py-5">
         <div className="container">
             <div className="row align-items-center py-5">
-                <div className="col-md-8 text-white">
+                <div  className="col-md-8 ">
                     <h1>About Us</h1>
                     <p>
                         Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
@@ -34,9 +34,9 @@ export default function About() {
         </div>
         <div className="row justify-content-center">
       
-            <div className="col-md-6 col-lg-3 pb-5">
-                <div className="h-100 py-5 services-icon-wap shadow">
-                    <div className="h1 text-success text-center"><i className="fa fa-truck fa-lg"></i></div>
+            <div className="col-md-6 col-lg-3 pb-5" >
+                <div className="h-100 py-5 services-icon-wap shadow" style={{backgroundColor:"#226D68"}}>
+                    <div className="h1 text-light text-center"><i className="fa fa-truck fa-lg"></i></div>
                     <h2 className="h5 mt-4 text-center">Delivery Services</h2>
                 </div>
             </div>
@@ -45,15 +45,15 @@ export default function About() {
          
 
             <div className="col-md-6 col-lg-3 pb-5">
-                <div className="h-100 py-5 services-icon-wap shadow">
-                    <div className="h1 text-success text-center"><i className="fa fa-percent"></i></div>
+                <div className="h-100 py-5 services-icon-wap shadow" style={{backgroundColor:"#226D68"}}>
+                    <div className="h1 text-light text-center"><i className="fa fa-percent"></i></div>
                     <h2 className="h5 mt-4 text-center">Promotion</h2>
                 </div>
             </div>
 
             <div className="col-md-6 col-lg-3 pb-5">
-                <div className="h-100 py-5 services-icon-wap shadow">
-                    <div className="h1 text-success text-center"><i className="fa fa-user"></i></div>
+                <div className="h-100 py-5 services-icon-wap shadow" style={{backgroundColor:"#226D68"}}>
+                    <div className="h1 text-light text-center"><i className="fa fa-user"></i></div>
                     <h2 className="h5 mt-4 text-center">24 Hours Service</h2>
                 </div>
             </div>
@@ -79,17 +79,11 @@ export default function About() {
 
                                     <div className="carousel-item active">
                                         <div className="row">
-                                            <div className="col-3 p-md-5">
+                                            <div className="col-6 p-md-5">
                                                 <img className="img-fluid brand-img" src="https://www.ecoles.com.tn/sites/default/files/universite/logo/sup-com-logo.jpg" alt="Logo1"/>
                                             </div>
-                                            <div className="col-3 p-md-5">
+                                            <div className="col-6 p-md-5">
                                                 <img className="img-fluid brand-img" src="https://www.ecoles.com.tn/sites/default/files/universite/logo/sup-com-logo.jpg" alt="Logo2"/>
-                                            </div>
-                                            <div className="col-3 p-md-5">
-                                                <img className="img-fluid brand-img" src="https://www.ecoles.com.tn/sites/default/files/universite/logo/sup-com-logo.jpg" alt="Logo3"/>
-                                            </div>
-                                            <div className="col-3 p-md-5">
-                                               <img className="img-fluid brand-img" src="https://www.ecoles.com.tn/sites/default/files/universite/logo/sup-com-logo.jpg" alt="Logo4"/>
                                             </div>
                                         </div>
                                     </div>

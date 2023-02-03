@@ -11,7 +11,7 @@ const Home = () => {
   const [categories, setCategories] = useState([]);
   const [totalPages, setTotalPages] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
-  const [limit, setLimit] = useState(4);
+  const [limit, setLimit] = useState(3);
   const [error, setError] = useState(null);
   const [limite, setLimite] = useState(3);
 
@@ -22,7 +22,6 @@ const Home = () => {
   const handleShowLess = () => {
     setLimite(3);
   };
- 
 
   async function countData() {
     const res = await axios.get("http://localhost:3001/api/auction/count");
@@ -30,7 +29,6 @@ const Home = () => {
   }
 
   useEffect(() => {
-
     axios
       .get("http://localhost:3001/api/auction/categories")
       .then((res) => setCategories(res.data))
@@ -40,7 +38,6 @@ const Home = () => {
   }, []);
   useEffect(() => {
     countData();
-
   }, [limit, totalPages]);
   useEffect(() => {
     axios
@@ -49,11 +46,7 @@ const Home = () => {
       )
       .then((res) => setProducts(res.data))
       .catch((err) => setError(err));
-
-
   }, [currentPage, limit]);
-
-
 
   const handlePageChange = (newPage) => {
     setCurrentPage(newPage);
@@ -61,6 +54,7 @@ const Home = () => {
 
   const handleLimitChange = (newLimit) => {
     setLimit(newLimit);
+    setCurrentPage(1);
   };
   if (error) {
     return <div>Error: {error.message}</div>;
@@ -72,19 +66,11 @@ const Home = () => {
         <div className="container py-5">
           <div className="row text-center py-3">
             <div className="col-lg-6 m-auto">
-              <h1>Featured Product</h1>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse ac euismod metus. Maecenas ornare mauris in ex ullamcorper vehicula. Nulla facilisi. 
-
-
-              </p>
-
+              <h1>Featured Products</h1>
             </div>
           </div>
 
-
           <div className="row ">
-
-
             {products.map((product) => (
               <Card
                 key={product.id}
@@ -97,9 +83,7 @@ const Home = () => {
                 id={product.id}
                 shop={false}
               />
-            ))
-            }
-
+            ))}
           </div>
 
           <div>
@@ -124,22 +108,33 @@ const Home = () => {
           </div>
         </div>
         <div className="row">
-        {categories.slice(0, limite).map((category, index) => (
-       <CategoryCard
-        key={category.id}
-        categoryName={category.category}
-        categoryImage={category.categoryImage}
-        categoryId={category.id}
-      />
-      ))}
-      {limite < categories.length && (
-        <button class="btn btn-warning" onClick={handleShowMore}><i class="fa fa-arrow-down"></i>Show More</button>
-      )}
-      {limite === categories.length && (
-        <button onClick={handleShowLess} class="btn btn-warning"  ><i class="fa fa-arrow-up"></i>  Show Less</button>
-      )}
+          {categories.slice(0, limite).map((category, index) => (
+            <CategoryCard
+              key={category.id}
+              categoryName={category.category}
+              categoryImage={category.categoryImage}
+              categoryId={category.id}
+            />
+          ))}
+          {limite < categories.length && (
+            <button
+              class="btn"
+              style={{ backgroundColor: "#226D68", color: "#ECF8F6" }}
+              onClick={handleShowMore}
+            >
+              <i class="fa fa-arrow-down"></i>Show More
+            </button>
+          )}
+          {limite === categories.length && (
+            <button
+              onClick={handleShowLess}
+              class="btn"
+              style={{ color: "#226D68" }}
+            >
+              <i class="fa fa-arrow-up"></i> Show Less
+            </button>
+          )}
         </div>
-        
       </section>
     </div>
   );
