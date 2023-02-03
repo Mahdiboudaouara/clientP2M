@@ -181,14 +181,14 @@ label {
   width: 40px;
   font-size: 14px;
   color: #fff;
-  background-color: #dedede;
+  background-color: #226D68;
   margin: 3px;
   padding: 0px;
   -webkit-transition: 0.2s all;
   transition: 0.2s all;
 }
 .notfound-social>a:hover {
-  background-color: #18e06f;
+  background-color: #ECF8F6;
 }
 
 @media only screen and (max-width: 767px) {

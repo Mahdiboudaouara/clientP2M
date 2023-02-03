@@ -40,21 +40,22 @@ body, ul, li, p, a, label, input, div {
 /* Nav */
 #templatemo_nav_top { min-height: 40px;}
 #templatemo_nav_top * { font-size: .9em !important;}
-#templatemo_main_nav a { color: #212934;}
-#templatemo_main_nav a:hover { color: #69bb7e;}
+#templatemo_main_nav a { color: #303838;}
+#templatemo_main_nav a:hover { color: #0d3b38;}
+#templatemo_main_nav a:active { color: #0d3b38;}
 #templatemo_main_nav .navbar .nav-icon { margin-right: 20px;}
 
 /* Hero Carousel */
 #template-mo-zay-hero-carousel { background: #efefef !important;}
 /* Accordion */
 .templatemo-accordion a { color: #000;}
-.templatemo-accordion a:hover { color: #333d4a;}
+.templatemo-accordion a:hover { color: #18534F;}
 /* Shop */
-.shop-top-menu a:hover { color: #69bb7e !important;}
+.shop-top-menu a:hover { color: #ECF8F6 !important;}
 /* Product */
 .product-wap { box-shadow: 0px 5px 10px 0px rgba(0, 0, 0, 0.10);}
 .product-wap .product-color-dot.color-dot-red { background:#f71515;}
-.product-wap .product-color-dot.color-dot-blue { background:#6db4fe;}
+.product-wap .product-color-dot.color-dot-blue { background:#226D68;}
 .product-wap .product-color-dot.color-dot-black { background:#000000;}
 .product-wap .product-color-dot.color-dot-light { background:#e0e0e0;}
 .product-wap .product-color-dot.color-dot-green { background:#0bff7e;}
@@ -87,11 +88,11 @@ body, ul, li, p, a, label, input, div {
 /* Carousel Hero */
 #template-mo-zay-hero-carousel .carousel-indicators li {
   margin-top: -50px;
-  background-color: #59ab6e;
+  background-color: #dcdde1;
 }
 #template-mo-zay-hero-carousel .carousel-control-next i,
 #template-mo-zay-hero-carousel .carousel-control-prev i {
-  color: #59ab6e !important;
+  color: #dcdde1 !important;
   font-size: 2.8em !important;
 }
 /* Carousel Brand */
@@ -102,13 +103,13 @@ body, ul, li, p, a, label, input, div {
 /* Services */
 .services-icon-wap {transition: .3s;}
 .services-icon-wap:hover, .services-icon-wap:hover i {color: #fff;}
-.services-icon-wap:hover {background: #69bb7e;}
+.services-icon-wap:hover {background: #dcdde1;}
 /* Contact map */
 .leaflet-control a, .leaflet-control { font-size: 10px !important;}
 .form-control { border: 1px solid #e8e8e8;}
 /* Footer */
 #tempaltemo_footer a { color: #dcdde1;}
-#tempaltemo_footer a:hover { color: #68bb7d;}
+#tempaltemo_footer a:hover { color: #ECF8F6;}
 #tempaltemo_footer ul.footer-link-list li { padding-top: 10px;}
 #tempaltemo_footer ul.footer-icons li {
   width: 2.6em;
@@ -120,10 +121,10 @@ body, ul, li, p, a, label, input, div {
   transition: .5s;
 }
 #tempaltemo_footer ul.footer-icons li:hover i {
-  color: #212934;
+  color: #226D68;
   transition: .5s;
 }
-#tempaltemo_footer .border-light { border-color: #2d343f !important;}
+#tempaltemo_footer .border-light { border-color: #226D68 !important;}
 /*
 // Extra small devices (portrait phones, less than 576px)
 // No media query since this is the default in Bootstrap
