@@ -6,6 +6,9 @@ import PaginationControls from "./PaginationControls";
 export default function Shop(props) {
   let categoryid=props.categoryid
   const [products, setProducts] = useState([]);
+  const [test, setTest] = useState([]);
+
+
   const [categories, setCategories] = useState([]);
   const [totalPages, setTotalPages] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
@@ -68,6 +71,11 @@ export default function Shop(props) {
       countData();
     }
   }, [limit, categoryId]);
+
+
+
+
+
   React.useEffect(() => {
     console.log("3")
     if (categoryId !== "0") {

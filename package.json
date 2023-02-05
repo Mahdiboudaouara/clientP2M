@@ -12,8 +12,8 @@
     "@testing-library/user-event": "^13.5.0",
     "axios": "^1.2.2",
     "bootstrap": "^5.2.3",
-    "eslint-config-react-app": "^7.0.1",
     "font-awesome": "^4.7.0",
+    "jest": "^27.5.1",
     "jwt-decode": "^3.1.2",
     "mdb-react-ui-kit": "^5.1.0",
     "moment": "^2.29.4",
@@ -31,7 +31,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "test": "react-scripts test --watchAll",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -51,5 +51,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "eslint-config-react-app": "^7.0.1"
   }
 }

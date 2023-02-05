@@ -57,7 +57,7 @@ function App() {
             isAuthenticated === true ? (
               <CreateEvent userId={userId} isAuthenticated={isAuthenticated} />
             ) : (
-              <NoAccess />
+              <NoAccess /> 
             )
           }
         />
