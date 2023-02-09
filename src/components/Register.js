@@ -13,6 +13,7 @@ export default function Register() {
     confirmpassword: "",
   });
   const onChange = (e) => {
+    
     setFormValue({ ...formValue, [e.target.name]: e.target.value });
   };
 
@@ -22,7 +23,7 @@ export default function Register() {
       formValue.email !== "" ||
       formValue.name !== "" ||
       formValue.password !== ""
-    ) {
+    ) { 
       if (formValue.password === formValue.confirmpassword) {
         try {
           await Axios.post("http://localhost:3001/api/user/register", {
@@ -30,7 +31,7 @@ export default function Register() {
             email: formValue.email,
             password: formValue.password,
           });
-
+ 
           window.location.href = "/login";
         } catch (error) {
           if (error.response) {
@@ -106,6 +107,7 @@ export default function Register() {
 
               <button
                 type="submit"
+                name="button"
                 style={{backgroundColor:"#226D68",color:"#ECF8F6"}}
                 className="btn btn-block"
                 onClick={addUser}

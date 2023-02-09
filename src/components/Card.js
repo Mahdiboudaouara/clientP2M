@@ -82,7 +82,6 @@ export default function Card(props) {
           <a href={Link}>
             <img
               src={image}
-
               width="150px"
               height="330px"
               className="card-img-top"
@@ -112,7 +111,6 @@ export default function Card(props) {
               {name}
             </a>
             <p className="card-text">{description}</p>
-
             <p className="card-text">category : {categoryName}</p>
           </div>
           

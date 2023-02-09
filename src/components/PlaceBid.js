@@ -142,7 +142,7 @@ export default function PlaceBid({socket,isAuthenticated}) {
 
         
       })
-      .catch((err) => alert("bid value should be higher than last bid")
+      .catch((err) => toast.error("bid value should be higher than last bid")
      
       );
   }
@@ -172,7 +172,7 @@ export default function PlaceBid({socket,isAuthenticated}) {
                   {String(timeLeft.seconds).padStart(2, "0")}S
                 </h3>
                 <h1 className="h2">{product.productName}</h1>
-                <p className="h3 py-2">
+                <p className="h3 py-2" id="lastbid">
                   Current Price Point : {price || product.startingPrice}DT
                 </p>
                 {startBid ? (
