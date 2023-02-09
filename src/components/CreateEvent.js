@@ -101,7 +101,7 @@ export function Form(props) {
   const [auctionDate, setAuctionDate] = React.useState("");
   const [startingPrice, setStartingPrice] = React.useState(0.1);
   const hiddenFileInput = React.useRef(null);
-
+  let date=new Date("2024-01-01T01:11")
   React.useEffect(() => {
     Axios.get("http://localhost:3001/api/auction/categories").then((res) =>
       setCategories(res.data)
@@ -221,7 +221,8 @@ export function Form(props) {
         type="datetime-local"
         min={moment().format("YYYY-MM-DDTHH:mm")}
         onChange={(event) => {
-          setAuctionDate(event.target.value);
+          setAuctionDate(event.target.value)
+          console.log(date);
         }}
       />
       <br></br>
@@ -243,12 +244,13 @@ export function Form(props) {
         type="file"
         ref={hiddenFileInput}
         className="custom-file-upload"
+        name="upload"
         style={{ display: "none" }}
         onChange={handleChange}
       />
       <img src={productImage} />
       <br></br>
-      <button type="submit" onClick={addAuction} className="submitBtn">
+      <button name="button" type="submit" onClick={addAuction} className="submitBtn">
         Submit
       </button>
     </form>

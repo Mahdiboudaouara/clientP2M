@@ -74,6 +74,7 @@ export default function Login() {
           id='validationCustom01'
           required
           label='Email'
+          className="input"
         />
       </div>
 
@@ -96,7 +97,7 @@ export default function Login() {
             </div>
             <a style={{color:"#226D68"}} href="#!">Forgot password?</a>
           </div>
-        <button type='submit' style={{backgroundColor:"#226D68",color:"#ECF8F6"}} className="btn btn-block" onClick={LoginUser} >Sign In</button>
+        <button name="button" type='submit' style={{backgroundColor:"#226D68",color:"#ECF8F6"}} className="btn btn-block" onClick={LoginUser} >Sign In</button>
    
         </form>
         

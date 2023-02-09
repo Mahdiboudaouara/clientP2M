@@ -37,7 +37,7 @@ export default function Navbar(props) {
                         </ul>
                     </div>
                     <div className="">
-                        {props.isAuthenticated === true ? <div><a className="mx-3" title='Create New Auction' href='/create'><FaPlus /></a>   <a className='mx-3'title='Show History' href='/history'> <FaHistory /></a> <a title='Log Out' href='/' className='mx-3'onClick={Logout}><FaSignOutAlt /></a>
+                        {props.isAuthenticated === true ? <div><a className="mx-3" name="navigate" title='Create New Auction' href='/create'><FaPlus /></a>   <a className='mx-3'title='Show History' href='/history'> <FaHistory /></a> <a title='Log Out' href='/' className='mx-3'onClick={Logout}><FaSignOutAlt /></a>
 
                         </div> : <a title='Sign in' href='/login'><FaSignInAlt /></a>}
 
