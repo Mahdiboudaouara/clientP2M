@@ -3,8 +3,7 @@ import Card from "./Card";
 import axios from "axios";
 import CategoryCard from "./CategoryCard";
 import PaginationControls from "./PaginationControls";
-import { FaArrowAltCircleLeft, FaArrowAltCircleRight } from "react-icons/fa";
-import PlaceBid from "./PlaceBid";
+
 
 const Home = () => {
   const [products, setProducts] = useState([]);
@@ -77,7 +76,6 @@ const Home = () => {
                 date={new Date(product.date)}
                 name={product.productName}
                 description={product.productDescription}
-                bidding_price={product.startingPrice}
                 image={product.productImage}
                 category_id={product.category_id}
                 id={product.id}

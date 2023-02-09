@@ -38,7 +38,6 @@ export default function DisplayByCategory() {
               date={new Date(product.date)}
               name={product.productName}
               description={product.productDescription}
-              bidding_price={product.startingPrice}
               image={product.productImage}
               category_id={product.category_id}
               id={product.id}

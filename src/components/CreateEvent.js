@@ -4,10 +4,9 @@ import moment from "moment";
 import Axios from "axios";
 import { toast } from "react-hot-toast";
 
-
 const Button = styled.button`
-  background-color: #226D68;
-  color: #ECF8F6;
+  background-color: #226d68;
+  color: #ecf8f6;
   padding: 0.5rem;
   font-family: sans-serif;
   border-radius: 0.3rem;
@@ -30,7 +29,7 @@ const Styles = styled.div`
   }
 
   form {
-    background: #ECF8F6;
+    background: #ecf8f6;
     border: 1px solid #dedede;
     display: flex;
     flex-direction: column;
@@ -72,8 +71,8 @@ const Styles = styled.div`
   }
 
   .submitBtn {
-    background-color: #226D68;
-    color: #ECF8F6;
+    background-color: #226d68;
+    color: #ecf8f6;
     font-family: sans-serif;
     font-size: 14px;
     margin: 20px 0px;
@@ -136,9 +135,15 @@ export function Form(props) {
     e.preventDefault();
     const currentDate = new Date();
     const selectedDate = new Date(auctionDate);
-    if (productImageNameBack==="" || auctionDate==="" ||productName==="" || productDescription==="" || startingPrice==="" || productCategory==="")
-    {
-      toast.error('All field are required');
+    if (
+      productImageNameBack === "" ||
+      auctionDate === "" ||
+      productName === "" ||
+      productDescription === "" ||
+      startingPrice === "" ||
+      productCategory === ""
+    ) {
+      toast.error("All field are required");
       return;
     }
     if (selectedDate < currentDate) {
@@ -147,7 +152,7 @@ export function Form(props) {
       );
       return;
     }
-    
+
     //foncti
 
     await Axios.post(

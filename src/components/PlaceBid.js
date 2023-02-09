@@ -11,17 +11,14 @@ import Navbar from "./Navbar";
 import Footer from "./Footer";
 import { toast } from "react-hot-toast";
 
-
-export default function PlaceBid({socket,isAuthenticated}) {
+export default function PlaceBid({ socket, isAuthenticated }) {
   const [product, setProduct] = useState([]);
   const [categoryName, setCategoryName] = useState([]);
   const [price, setPrice] = useState(0);
   const [timeLeft, setTimeLeft] = useState(Date());
   const [startBid, setStartBid] = useState(false);
   const [date, setDate] = useState(Date());
-  const [error, setError] = useState(null);
   let { product_id } = useParams();
-  
 
   // Get the category name for the product
   const getCategoryName = async (category_id) => {
@@ -53,7 +50,6 @@ export default function PlaceBid({socket,isAuthenticated}) {
         );
         if (res.data) {
           setProduct(res.data);
-          setPrice(res.data.startingPrice);
           getCategoryName(res.data.category_id);
           await timer(new Date(res.data.date));
           setDate(new Date(res.data.date));
@@ -78,7 +74,7 @@ export default function PlaceBid({socket,isAuthenticated}) {
           `http://localhost:3001/api/bid/${product_id}`
         );
         if (res.data.bidAmount) {
-          setPrice(res.data.bidAmount);
+          setPrice(parseFloat(res.data.bidAmount));
         }
       } catch (err) {
         console.log(err);
@@ -102,25 +98,20 @@ export default function PlaceBid({socket,isAuthenticated}) {
   };
   useEffect(() => {
     socket.on("send bid", (bid) => {
-      setPrice(bid.bidAmount);
+      setPrice(parseFloat(bid.bidAmount));
     });
   }, [socket]);
 
   // Add bid to the product
   async function addBid(e) {
-    
     e.preventDefault();
-    if (inputPrice===undefined)
-    {
-      toast.error('Bid value required');
+    if (inputPrice === undefined) {
+      toast.error("Bid value required");
       return;
     }
-    if (inputPrice <= price )
-    {
-      toast.error('Bid value should be higher than actual price');
+    if (inputPrice <= price) {
+      toast.error("Bid value should be higher than actual price");
       return;
-
-
     }
     await Axios.post("http://localhost:3001/api/bid/create", {
       productId: product_id,
@@ -129,24 +120,16 @@ export default function PlaceBid({socket,isAuthenticated}) {
       date: formatedTimestamp(),
     })
       .then((res) => {
-        
-
-        setPrice(inputPrice);
+        setPrice(parseFloat(inputPrice));
         socket.emit("newBid", {
           productId: product_id,
           bidAmount: inputPrice,
           date: formatedTimestamp(),
-        })
-        ;
-        toast.success('Bid Inserted');
-
-        
+        });
+        toast.success("Bid Inserted");
       })
-      .catch((err) => alert("bid value should be higher than last bid")
-     
-      );
+      .catch((err) => alert("bid value should be higher than last bid"));
   }
-
 
   return (
     <section className="bg-light">
@@ -172,9 +155,7 @@ export default function PlaceBid({socket,isAuthenticated}) {
                   {String(timeLeft.seconds).padStart(2, "0")}S
                 </h3>
                 <h1 className="h2">{product.productName}</h1>
-                <p className="h3 py-2">
-                  Current Price Point : {price || product.startingPrice}DT
-                </p>
+                <p className="h3 py-2">Current Price Point : {price}DT</p>
                 {startBid ? (
                   <p className="py-2">
                     <span className="list-inline-item text-dark">
@@ -224,7 +205,10 @@ export default function PlaceBid({socket,isAuthenticated}) {
                           <button
                             type="submit"
                             className="btn btn-lg"
-                            style={{backgroundColor:"#226D68",color:"#ECF8F6"}}
+                            style={{
+                              backgroundColor: "#226D68",
+                              color: "#ECF8F6",
+                            }}
                             name="submit"
                             value="addtocard"
                             onClick={addBid}
@@ -235,7 +219,10 @@ export default function PlaceBid({socket,isAuthenticated}) {
                           <button
                             type="text"
                             className="btn btn-lg"
-                            style={{backgroundColor:"#226D68",color:"#ECF8F6"}} 
+                            style={{
+                              backgroundColor: "#226D68",
+                              color: "#ECF8F6",
+                            }}
                             name="submit"
                           >
                             The bidding has not started yet!
