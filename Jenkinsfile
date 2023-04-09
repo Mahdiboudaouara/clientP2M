@@ -64,7 +64,7 @@ pipeline {
                             sh "ssh -o StrictHostKeyChecking=no ${SERVER_USERNAME}@${SERVER_ADDRESS} ${shellCmd}"
                         }
                     } else {
-                        withKubeConfig([credentialsId: 'lke-credentials', serverUrl: 'https://a91f9164-ee02-4607-b762-afa39ab0b534.eu-central-2.linodelke.net']) {
+                        withKubeConfig([credentialsId: 'clusterkubeconfig', serverUrl: 'https://c81ac799-c9ef-4da4-9d8a-872d8e6400c8.eu-central-2.linodelke.net']) {
                             sh 'envsubst < kubernetes/deployment.yaml | kubectl apply -f -'
                             sh 'envsubst < kubernetes/service.yaml | kubectl apply -f -'
                         }
