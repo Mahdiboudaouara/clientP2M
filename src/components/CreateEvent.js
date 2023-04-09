@@ -188,7 +188,7 @@ export function Form(props) {
         onChange={(event) => {
           setProductCategory(event.target.value);
         }}
-      >
+      > 
         <option value="" disabled>
           Select Product Category
         </option>
@@ -197,8 +197,8 @@ export function Form(props) {
             {category.category}
             {category.options}
           </option>
-        ))}
-      </select>
+        ))} 
+      </select> 
       <br></br>
 
       <label>Product description</label>

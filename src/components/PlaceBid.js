@@ -53,7 +53,6 @@ export default function PlaceBid({socket,isAuthenticated}) {
         );
         if (res.data) {
           setProduct(res.data);
-          setPrice(res.data.startingPrice);
           getCategoryName(res.data.category_id);
           await timer(new Date(res.data.date));
           setDate(new Date(res.data.date));
@@ -173,7 +172,7 @@ export default function PlaceBid({socket,isAuthenticated}) {
                 </h3>
                 <h1 className="h2">{product.productName}</h1>
                 <p className="h3 py-2" id="lastbid">
-                  Current Price Point : {price || product.startingPrice}DT
+                  Current Price Point : {price} DT
                 </p>
                 {startBid ? (
                   <p className="py-2">
