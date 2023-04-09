@@ -26,7 +26,11 @@ spec:
         ports:  
         - containerPort: 80
         env: 
-        - name: SERVER_PORT
-          value: "3001"
-        - name: SERVER
+        - name: REACT_APP_SERVER
           value: "server"
+        - name: REACT_APP_SERVER_PORT
+          value: "3001"
+        - name: REACT_APP_CLIENT
+          value: "client"
+        - name: REACT_APP_CLIENT_PORT
+          value: "80"
