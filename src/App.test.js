@@ -178,7 +178,7 @@ describe("Porducts", () => {
 //format date jjmm00yyyyhmm
       await dateField.sendKeys("1010002024930");
       const InputField = await driver.findElement(By.name("upload"));
-      await InputField.sendKeys("C:/Users/lenovo/Pictures/Screenshots/3dartblankbookbookscoverdesigndrawflatgrouphardiconillustrationinformationisolatedlibrarylogopagespaperredreportsstandingstudiessymboltextthickvectorwebwhite-vector-vectors-PA4PKE (3).jpg");
+      await InputField.sendKeys("C:/Users/Legion/Desktop/dev-p2m/mahdi.jpg");
       
       const button = await driver.findElement(By.name("button"));
       await driver.executeScript("arguments[0].scrollIntoView(true);", button);
@@ -222,7 +222,7 @@ describe("Porducts", () => {
         const currentUrl = await driver.getCurrentUrl();
         return currentUrl !== initialUrl;
       }, 1000);
-      await driver.get('http://localhost:3000/bid/9');
+      await driver.get('http://localhost:3000/bid/126');
       
       let pBidtext
       let lastbid = await driver.findElement(By.id('lastbid')).then((pElement) => {
@@ -261,4 +261,3 @@ describe("Porducts", () => {
   
 
 })
-

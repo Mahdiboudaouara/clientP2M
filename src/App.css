@@ -194,7 +194,6 @@ label {
 @media only screen and (max-width: 767px) {
     .notfound .notfound-bg {
       width: 287px;
-      margin: auto;
     }
 
     .notfound .notfound-bg > div {
@@ -210,4 +209,4 @@ label {
   .notfound h2 {
     font-size: 18px;
   }
-}
+} 

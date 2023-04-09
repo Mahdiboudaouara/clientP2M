@@ -18,7 +18,7 @@ import Shop from "./components/shop";
 import About from "./components/About";
 import * as io from "socket.io-client";
 function App() {
-  const socket = io.connect("http://localhost:3001");
+  const socket = io.connect("http://server:3001");
   const navigate = useNavigate();
   const [isAuthenticated, setIsAuthenticated] = React.useState(false);
   const [userId, setUserId] = React.useState(0);
@@ -46,7 +46,7 @@ function App() {
       <Navbar isAuthenticated={isAuthenticated} />
       <Routes>
         {/* <Route path="/" element={isAuthenticated===true ? <Home /> : <NoAccess/>} /> */}
-        <Route path="/" element={<Home  />} />
+        <Route path="/" element={<Home />} />
         <Route path="/shop" element={<Shop />} />
 
         <Route path="/login" element={<Login />} />
@@ -57,14 +57,16 @@ function App() {
             isAuthenticated === true ? (
               <CreateEvent userId={userId} isAuthenticated={isAuthenticated} />
             ) : (
-              <NoAccess /> 
+              <NoAccess />
             )
           }
         />
         <Route path="/index" element={<Event />} />
         <Route
           path="/bid/:product_id"
-          element={<PlaceBid isAuthenticated={isAuthenticated} socket={socket}/>}
+          element={
+            <PlaceBid isAuthenticated={isAuthenticated} socket={socket} />
+          }
         />
 
         <Route

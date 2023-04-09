@@ -105,7 +105,7 @@ export function Form(props) {
   const hiddenFileInput = React.useRef(null);
   let date=new Date("2024-01-01T01:11")
   React.useEffect(() => {
-    Axios.get("http://localhost:3001/api/auction/categories").then((res) =>
+    Axios.get("http://server:3001/api/auction/categories").then((res) =>
       setCategories(res.data)
     );
   }, []);
@@ -152,7 +152,7 @@ export function Form(props) {
     //foncti
 
     await Axios.post(
-      "http://localhost:3001/api/auction/create",
+      "http://server:3001/api/auction/create",
 
       formData,
       {
