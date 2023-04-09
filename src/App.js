@@ -18,7 +18,7 @@ import Shop from "./components/shop";
 import About from "./components/About";
 import * as io from "socket.io-client";
 function App() {
-  const socket = io.connect("http://server:3001");
+  const socket = io.connect(`http://${process.env.REACT_APP_SERVER}:${process.env.REACT_APP_SERVER_PORT}`);
   const navigate = useNavigate();
   const [isAuthenticated, setIsAuthenticated] = React.useState(false);
   const [userId, setUserId] = React.useState(0);

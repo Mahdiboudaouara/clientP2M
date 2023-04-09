@@ -8,7 +8,7 @@ describe("Auth", () => {
 
     beforeEach(async () => {
       driver = await new Builder().forBrowser("chrome").build();
-      await driver.get("http://localhost:3000/register");
+      await driver.get(`http://${process.env.REACT_APP_CLIENT}:${process.env.REACT_APP_CLIENT_PORT}/register`);
     });
     afterEach(async () => {
       await driver.quit();
@@ -37,7 +37,7 @@ describe("Auth", () => {
       }, 1000);
       const updatedUrl = await driver.getCurrentUrl();
 
-      expect(updatedUrl).toBe("http://localhost:3000/login")
+      expect(updatedUrl).toBe(`http://${process.env.REACT_APP_CLIENT}:${process.env.REACT_APP_CLIENT_PORT}/login`)
 
     });
 
@@ -47,7 +47,7 @@ describe("Auth", () => {
     let driver;
     beforeEach(async () => {
       driver = await new Builder().forBrowser("chrome").build();
-      await driver.get("http://localhost:3000/login");
+      await driver.get(`http://${process.env.REACT_APP_CLIENT}:${process.env.REACT_APP_CLIENT_PORT}/login`);
     });
     afterEach(async () => {
       await driver.quit();
@@ -67,7 +67,7 @@ describe("Auth", () => {
       }, 1000);
       const updatedUrl = await driver.getCurrentUrl();
 
-      expect(updatedUrl).toBe("http://localhost:3000/")
+      expect(updatedUrl).toBe(`http://${process.env.REACT_APP_CLIENT}:${process.env.REACT_APP_CLIENT_PORT}/`)
 
     });
 
@@ -77,7 +77,7 @@ describe("Auth", () => {
 
     beforeEach(async () => {
       driver = await new Builder().forBrowser("chrome").build();
-      await driver.get("http://localhost:3000/register");
+      await driver.get(`http://${process.env.REACT_APP_CLIENT}:${process.env.REACT_APP_CLIENT_PORT}/register`);
     });
     afterEach(async () => {
       await driver.quit();
@@ -118,7 +118,7 @@ describe("Auth", () => {
       }, 3000);
       const updatedUrl = await driver.getCurrentUrl();
 
-      expect(updatedUrl).toBe("http://localhost:3000/")
+      expect(updatedUrl).toBe(`http://${process.env.REACT_APP_CLIENT}:${process.env.REACT_APP_CLIENT_PORT}/`)
   });
 
 })})
@@ -129,7 +129,7 @@ describe("Porducts", () => {
     beforeEach(async () => {
       driver = await new Builder().forBrowser("chrome").build();
       await driver.manage().window().maximize();
-      await driver.get("http://localhost:3000/login");
+      await driver.get(`http://${process.env.REACT_APP_CLIENT}:${process.env.REACT_APP_CLIENT_PORT}/login`);
     }); 
  
    
@@ -191,7 +191,7 @@ describe("Porducts", () => {
   const Finalurl = await driver.getCurrentUrl();
 
 
-      expect(Finalurl).toBe("http://localhost:3000/")
+      expect(Finalurl).toBe(`http://${process.env.REACT_APP_CLIENT}:${process.env.REACT_APP_CLIENT_PORT}/`)
   
     });
  
@@ -202,7 +202,7 @@ describe("Porducts", () => {
     beforeEach(async () => {
       driver = await new Builder().forBrowser("chrome").build();
       await driver.manage().window().maximize();
-      await driver.get("http://localhost:3000/login");
+      await driver.get(`http://${process.env.REACT_APP_CLIENT}:${process.env.REACT_APP_CLIENT_PORT}/login`);
     });
 
  
@@ -222,7 +222,7 @@ describe("Porducts", () => {
         const currentUrl = await driver.getCurrentUrl();
         return currentUrl !== initialUrl;
       }, 1000);
-      await driver.get('http://localhost:3000/bid/126');
+      await driver.get(`http://${process.env.REACT_APP_CLIENT}:${process.env.REACT_APP_CLIENT_PORT}/bid/126`);
       
       let pBidtext
       let lastbid = await driver.findElement(By.id('lastbid')).then((pElement) => {

@@ -26,7 +26,7 @@ export default function Register() {
     ) { 
       if (formValue.password === formValue.confirmpassword) {
         try {
-          await Axios.post("http://server:3001/api/user/register", {
+          await Axios.post(`http://${process.env.REACT_APP_SERVER}:${process.env.REACT_APP_SERVER_PORT}/api/user/register`, {
             name: formValue.name,
             email: formValue.email,
             password: formValue.password,
