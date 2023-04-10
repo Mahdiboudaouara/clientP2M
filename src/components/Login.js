@@ -25,7 +25,7 @@ export default function Login() {
   const LoginUser = async (e) => {
     e.preventDefault();
     try {
-      const resp = await Axios.post(`http://${process.env.REACT_APP_SERVER}:${process.env.REACT_APP_SERVER_PORT}/api/user/login`, {
+      const resp = await Axios.post(`http://${process.env.REACT_APP_SERVER}/api/user/login`, {
         email: formValue.email,
         password: formValue.password,
       });

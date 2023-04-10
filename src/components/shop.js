@@ -35,12 +35,12 @@ export default function Shop(props) {
   ]);
 
   async function countData() {
-    const res = await axios.get(`http://${process.env.REACT_APP_SERVER}:${process.env.REACT_APP_SERVER_PORT}/api/auction/count`);
+    const res = await axios.get(`http://${process.env.REACT_APP_SERVER}/api/auction/count`);
     setTotalPages(Math.ceil(res.data[0].count / limit));
   }
   async function countDataByCategoryId(category_id) {
     const res = await axios.get(
-      `http://${process.env.REACT_APP_SERVER}:${process.env.REACT_APP_SERVER_PORT}/api/auction/countbycategory/${category_id}`
+      `http://${process.env.REACT_APP_SERVER}/api/auction/countbycategory/${category_id}`
     );
     setTotalPages(Math.ceil(res.data[0].count / limit));
   }
@@ -50,12 +50,12 @@ export default function Shop(props) {
     if (categoryId === "0"){
     countData();
     axios
-      .get(`http://${process.env.REACT_APP_SERVER}:${process.env.REACT_APP_SERVER_PORT}/api/auction/categories`)
+      .get(`http://${process.env.REACT_APP_SERVER}/api/auction/categories`)
       .then((res) => setCategories(res.data))
       .catch((err) => setError(err));
     axios
       .get(
-        `http://${process.env.REACT_APP_SERVER}:${process.env.REACT_APP_SERVER_PORT}/api/auction/display?page=${currentPage}&limit=${limit}`
+        `http://${process.env.REACT_APP_SERVER}/api/auction/display?page=${currentPage}&limit=${limit}`
       )
       .then((res) => {
         setProducts(res.data);
@@ -82,7 +82,7 @@ export default function Shop(props) {
       console.log("categoryId", categoryId);
       axios
         .get(
-          `http://${process.env.REACT_APP_SERVER}:${process.env.REACT_APP_SERVER_PORT}/api/auction/displaybycategory/${categoryId}/?page=${currentPage}&limit=${limit}`
+          `http://${process.env.REACT_APP_SERVER}/api/auction/displaybycategory/${categoryId}/?page=${currentPage}&limit=${limit}`
         )
         .then((res) => {
           setProducts(res.data);
