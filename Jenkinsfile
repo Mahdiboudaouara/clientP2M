@@ -14,6 +14,7 @@ pipeline {
         PROJECT_NAME = 'client'
         REPO_SERVER = '739761511001.dkr.ecr.eu-central-1.amazonaws.com'
         ECR_REGISTRY = '739761511001.dkr.ecr.eu-central-1.amazonaws.com/ecr-mahdi'
+        APP_URL = 'http://139-144-162-115.ip.linodeusercontent.com'
         AWS_REGION = 'eu-central-1'
     }
     stages {
