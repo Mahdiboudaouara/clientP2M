@@ -39,6 +39,8 @@ export default function Register() {
           }
         }
       } else {
+        console.log('formValue.confirmpassword',formValue.confirmpassword)
+        console.log('formValue.password',formValue.password)
         toast.error("Password dont match");
       }
     } else {
