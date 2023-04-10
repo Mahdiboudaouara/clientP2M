@@ -10,7 +10,7 @@ export default function Footer() {
 
   React.useEffect(() => {
     axios
-      .get(`http://${process.env.REACT_APP_SERVER}/api/auction/categories`)
+      .get(`http://${process.env.REACT_APP_SERVER}/auction/categories`)
       .then((res) => setCategories(res.data))
       .catch((err) => setError(err));
   }, []);
