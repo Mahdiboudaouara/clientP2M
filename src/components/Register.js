@@ -10,7 +10,7 @@ export default function Register() {
     name: "",
     email: "",
     password: "",
-    confirmpassword: "",
+    confirmPassword: "",
   });
   const onChange = (e) => {
     
@@ -24,7 +24,7 @@ export default function Register() {
       formValue.name !== "" ||
       formValue.password !== ""
     ) { 
-      if (formValue.password === formValue.confirmpassword) {
+      if (formValue.password === formValue.confirmPassword) {
         try {
           await Axios.post(`http://${process.env.REACT_APP_SERVER}:${process.env.REACT_APP_SERVER_PORT}/api/user/register`, {
             name: formValue.name,
@@ -39,8 +39,6 @@ export default function Register() {
           }
         }
       } else {
-        console.log('formValue.confirmpassword',formValue.confirmpassword)
-        console.log('formValue.password',formValue.password)
         toast.error("Password dont match");
       }
     } else {
