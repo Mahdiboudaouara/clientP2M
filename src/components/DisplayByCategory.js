@@ -12,7 +12,7 @@ export default function DisplayByCategory() {
   const fetchProducts = async (category_id) => {
     try {
       const res = await axios.get(
-        `http://${process.env.REACT_APP_SERVER}/auction/displaybycategory/${category_id}`
+        `http://${process.env.REACT_APP_SERVER}:${process.env.REACT_APP_SERVER_PORT}/api/auction/displaybycategory/${category_id}`
       );
       setProducts(res.data);
     } catch (err) {

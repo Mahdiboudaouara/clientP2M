@@ -24,13 +24,13 @@ const Home = () => {
   };
 
   async function countData() {
-    const res = await axios.get(`http://${process.env.REACT_APP_SERVER}/auction/count`);
+    const res = await axios.get(`http://${process.env.REACT_APP_SERVER}:${process.env.REACT_APP_SERVER_PORT}/api/auction/count`);
     setTotalPages(Math.ceil(res.data[0].count / limit));
   }
 
   useEffect(() => {
     axios
-      .get(`http://${process.env.REACT_APP_SERVER}/auction/categories`)
+      .get(`http://${process.env.REACT_APP_SERVER}:${process.env.REACT_APP_SERVER_PORT}/api/auction/categories`)
       .then((res) => setCategories(res.data))
       .catch((err) => setError(err));
 
@@ -42,7 +42,7 @@ const Home = () => {
   useEffect(() => {
     axios
       .get(
-        `http://${process.env.REACT_APP_SERVER}/auction/display?page=${currentPage}&limit=${limit}`
+        `http://${process.env.REACT_APP_SERVER}:${process.env.REACT_APP_SERVER_PORT}/api/auction/display?page=${currentPage}&limit=${limit}`
       )
       .then((res) => setProducts(res.data))
       .catch((err) => setError(err));
