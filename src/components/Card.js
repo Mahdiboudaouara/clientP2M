@@ -9,7 +9,6 @@ export default function Card(props) {
   let name = props.name;
   let description = props.description;
   let image = props.image;
-  let bidding_price = props.bidding_price;
   let category_id = props.category_id;
   let id = props.id;
   let shop = props.shop;
@@ -38,7 +37,7 @@ export default function Card(props) {
           `http://${process.env.REACT_APP_SERVER}:${process.env.REACT_APP_SERVER_PORT}/api/bid/${product_id}`
         );
         if (res.data.bidAmount) {
-            setPrice(res.data.bidAmount)
+            setPrice(parseFloat(res.data.bidAmount))
         }
       } catch (err) {
         console.log(err);
@@ -104,7 +103,7 @@ export default function Card(props) {
         <div className="card-body ">
           <ul className="list-unstyled d-flex justify-content-between">
             <li></li>
-            <li className="text-muted text-right">{price ?  `Current Price ${price}`  :`Starting Price ${bidding_price}` }DT</li>
+            <li className="text-muted text-right">{`Current Price ${price}`}DT</li>
           </ul>
           <div className="right">
             <a href={Link} className="h2 text-decoration-none text-dark">

@@ -3,24 +3,18 @@ import { useState } from "react";
 import Axios from "axios";
 import { toast } from "react-hot-toast";
 
-
-
-import {
-  MDBInput
-} from 'mdb-react-ui-kit';
+import { MDBInput } from "mdb-react-ui-kit";
 
 export default function Login() {
   const [formValue, setFormValue] = useState({
-    email: '',
-    password: '',
+    email: "",
+    password: "",
   });
-
 
   const [isLoggedIn, setisLoggedIn] = React.useState(false);
   const onChange = (e) => {
     setFormValue({ ...formValue, [e.target.name]: e.target.value });
   };
-
 
   const LoginUser = async (e) => {
     e.preventDefault();
@@ -31,27 +25,22 @@ export default function Login() {
       });
 
       if (resp.data) {
-        localStorage.setItem('token', resp.data)
-        setisLoggedIn(true)
+        localStorage.setItem("token", resp.data);
+        setisLoggedIn(true);
         toast.success("Welcome back :)", {
           position: "bottom-center",
           duration: 5000,
         });
       }
-
-
     } catch (error) {
       if (error.response) {
-        toast.error('Please enter a valid Email/Password');
-
+        toast.error("Please enter a valid Email/Password");
       }
     }
- 
-
-  }
+  };
   React.useEffect(() => {
     if (isLoggedIn) {
-      window.location.href = '/';
+      window.location.href = "/";
     }
   }, [isLoggedIn]);
   return (
@@ -103,16 +92,10 @@ export default function Login() {
         
         <div className="divider d-flex align-items-center my-4">
             <p className="text-center fw-bold mx-3 mb-0 text-muted">OR</p>
+
           </div>
-            <p> <a href="/register" style={{color:"#226D68"}} className="text-right">Register here</a></p>
+        </div>
       </div>
-    </div>
-    
-  </div>
-
-
-</section>
-
-
-  )
+    </section>
+  );
 }
