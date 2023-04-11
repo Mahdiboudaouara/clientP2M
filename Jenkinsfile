@@ -92,6 +92,7 @@ pipeline {
     post {
         always {
             sh 'rm -rf node_modules' // Clean up after build
+            sh 'docker system prune -a --volumes'
         }
     }
 }
