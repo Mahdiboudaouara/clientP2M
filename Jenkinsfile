@@ -8,7 +8,7 @@ pipeline {
         choice(name: 'DEPLOY_TO', choices: ['EC2', 'K8S'], description: 'Choose where to deploy')
     }
     environment {
-        SERVER_ADDRESS = '3.64.215.215'
+        SERVER_ADDRESS = '3.123.129.244'
         SERVER_USERNAME = 'ec2-user'
         DOCKER_IMAGE_NAME = 'mahdiboudaouara/reactappimage'
         PROJECT_NAME = 'client'
