@@ -52,9 +52,9 @@ pipeline {
             }
         }
         stage('Deploy') {
-            // when {
-            //     branch 'main'
-            // }
+            when {
+                branch 'main'
+            }
             steps {
                 script {
                     if (params.DEPLOY_TO == 'EC2') {
