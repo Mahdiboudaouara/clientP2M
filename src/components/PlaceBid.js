@@ -24,7 +24,7 @@ export default function PlaceBid({ socket, isAuthenticated }) {
   const getCategoryName = async (category_id) => {
     try {
       const res = await Axios.get(
-        `http://localhost:3001/api/auction/getcategory/${category_id}`
+        `http://${process.env.REACT_APP_SERVER}:${process.env.REACT_APP_SERVER_PORT}/api/auction/getcategory/${category_id}`
       );
       setCategoryName(res.data.category);
     } catch (err) {
@@ -46,7 +46,7 @@ export default function PlaceBid({ socket, isAuthenticated }) {
     const fetchProduct = async (product_id) => {
       try {
         const res = await Axios.get(
-          `http://localhost:3001/api/auction/displayproduct/${product_id}`
+          `http://${process.env.REACT_APP_SERVER}:${process.env.REACT_APP_SERVER_PORT}/api/auction/displayproduct/${product_id}`
         );
         if (res.data) {
           setProduct(res.data);
@@ -71,7 +71,7 @@ export default function PlaceBid({ socket, isAuthenticated }) {
     const getLastBid = async (product_id) => {
       try {
         const res = await Axios.get(
-          `http://localhost:3001/api/bid/${product_id}`
+          `http://${process.env.REACT_APP_SERVER}:${process.env.REACT_APP_SERVER_PORT}/api/bid/${product_id}`
         );
         if (res.data.bidAmount) {
           setPrice(parseFloat(res.data.bidAmount));
@@ -113,7 +113,7 @@ export default function PlaceBid({ socket, isAuthenticated }) {
       toast.error("Bid value should be higher than actual price");
       return;
     }
-    await Axios.post("http://localhost:3001/api/bid/create", {
+    await Axios.post(`http://${process.env.REACT_APP_SERVER}:${process.env.REACT_APP_SERVER_PORT}/api/bid/create`, {
       productId: product_id,
       userId: product.owner_id,
       bidAmount: inputPrice,
@@ -128,7 +128,11 @@ export default function PlaceBid({ socket, isAuthenticated }) {
         });
         toast.success("Bid Inserted");
       })
-      .catch((err) => alert("bid value should be higher than last bid"));
+
+      .catch((err) => toast.error("bid value should be higher than last bid")
+     
+      );
+
   }
 
   return (
@@ -155,7 +159,10 @@ export default function PlaceBid({ socket, isAuthenticated }) {
                   {String(timeLeft.seconds).padStart(2, "0")}S
                 </h3>
                 <h1 className="h2">{product.productName}</h1>
-                <p className="h3 py-2">Current Price Point : {price}DT</p>
+                <p className="h3 py-2" id="lastbid">
+                  Current Price Point : {price} DT
+                </p>
+
                 {startBid ? (
                   <p className="py-2">
                     <span className="list-inline-item text-dark">

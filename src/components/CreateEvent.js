@@ -4,6 +4,7 @@ import moment from "moment";
 import Axios from "axios";
 import { toast } from "react-hot-toast";
 
+
 const Button = styled.button`
   background-color: #226d68;
   color: #ecf8f6;
@@ -101,9 +102,9 @@ export function Form(props) {
   const [auctionDate, setAuctionDate] = React.useState("");
   const [startingPrice, setStartingPrice] = React.useState(0.1);
   const hiddenFileInput = React.useRef(null);
-
+  let date=new Date("2024-01-01T01:11")
   React.useEffect(() => {
-    Axios.get("http://localhost:3001/api/auction/categories").then((res) =>
+    Axios.get(`http://${process.env.REACT_APP_SERVER}:${process.env.REACT_APP_SERVER_PORT}/api/auction/categories`).then((res) =>
       setCategories(res.data)
     );
   }, []);
@@ -156,7 +157,7 @@ export function Form(props) {
     //foncti
 
     await Axios.post(
-      "http://localhost:3001/api/auction/create",
+      `http://${process.env.REACT_APP_SERVER}:${process.env.REACT_APP_SERVER_PORT}/api/auction/create`,
 
       formData,
       {
@@ -192,7 +193,7 @@ export function Form(props) {
         onChange={(event) => {
           setProductCategory(event.target.value);
         }}
-      >
+      > 
         <option value="" disabled>
           Select Product Category
         </option>
@@ -201,8 +202,8 @@ export function Form(props) {
             {category.category}
             {category.options}
           </option>
-        ))}
-      </select>
+        ))} 
+      </select> 
       <br></br>
 
       <label>Product description</label>
@@ -221,7 +222,8 @@ export function Form(props) {
         type="datetime-local"
         min={moment().format("YYYY-MM-DDTHH:mm")}
         onChange={(event) => {
-          setAuctionDate(event.target.value);
+          setAuctionDate(event.target.value)
+          console.log(date);
         }}
       />
       <br></br>
@@ -243,12 +245,13 @@ export function Form(props) {
         type="file"
         ref={hiddenFileInput}
         className="custom-file-upload"
+        name="upload"
         style={{ display: "none" }}
         onChange={handleChange}
       />
       <img src={productImage} />
       <br></br>
-      <button type="submit" onClick={addAuction} className="submitBtn">
+      <button name="button" type="submit" onClick={addAuction} className="submitBtn">
         Submit
       </button>
     </form>

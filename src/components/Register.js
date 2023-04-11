@@ -10,9 +10,10 @@ export default function Register() {
     name: "",
     email: "",
     password: "",
-    confirmpassword: "",
+    confirmPassword: "",
   });
   const onChange = (e) => {
+    
     setFormValue({ ...formValue, [e.target.name]: e.target.value });
   };
 
@@ -22,15 +23,15 @@ export default function Register() {
       formValue.email !== "" ||
       formValue.name !== "" ||
       formValue.password !== ""
-    ) {
-      if (formValue.password === formValue.confirmpassword) {
+    ) { 
+      if (formValue.password === formValue.confirmPassword) {
         try {
-          await Axios.post("http://localhost:3001/api/user/register", {
+          await Axios.post(`http://${process.env.REACT_APP_SERVER}:${process.env.REACT_APP_SERVER_PORT}/api/user/register`, {
             name: formValue.name,
             email: formValue.email,
             password: formValue.password,
           });
-
+ 
           window.location.href = "/login";
         } catch (error) {
           if (error.response) {
@@ -46,14 +47,14 @@ export default function Register() {
   };
 
   return (
-    <section className="vh-100 a">
+    <section >
       <div className="container py-5 h-100">
         <div className="row d-flex align-items-center justify-content-center h-100">
           <div className="col-md-8 col-lg-7 col-xl-6">
             <img
-              src="https://media.istockphoto.com/id/1281553891/vector/auction-hammer-with-sold-text-line-icon-finance-concept-hitting-wooden-gavel-in-auction-sign.jpg?s=612x612&w=0&k=20&c=dnaIP5TRgGm_CJEL8cZUuivbUEfVZ20ESILJsiWGcIg="
-              className="a"
+              src="https://media.istockphoto.com/id/1194209555/vector/auction-online-vector-concept-for-web-banner-website-page.jpg?s=612x612&w=0&k=20&c=iKRTYOYmA1a4yE0Gy4a3Cx3W8qTgUdZvDWAOygT1IkY="
               alt="product"
+              className="img-fluid" style={{width:'75%'}}
             />
           </div>
           <div className="col-md-7 col-lg-5 col-xl-5 offset-xl-1 ">
@@ -62,14 +63,13 @@ export default function Register() {
                 Sign up
               </p>
 
-              <div  className="form-outline mb-4">
+              <div className="form-outline mb-4">
                 <MDBInput
                   value={formValue.name}
                   name="name"
                   onChange={onChange}
                   required
                   label="Name"
-                
                 />
               </div>
 
@@ -93,20 +93,22 @@ export default function Register() {
                   label="Password"
                 />
               </div>
+
               <div className="form-outline mb-4">
                 <MDBInput
-                  value={formValue.confirmpassword}
-                  name="confirmpassword"
+                  value={formValue.confirmPassword}
+                  name="confirmPassword"
                   onChange={onChange}
                   type="password"
                   required
-                  label="confirmpassword"
+                  label="Confirm Password"
                 />
               </div>
 
               <button
                 type="submit"
-                style={{backgroundColor:"#226D68",color:"#ECF8F6"}}
+                name="button"
+                style={{ backgroundColor: '#226D68', color: '#ECF8F6' }}
                 className="btn btn-block"
                 onClick={addUser}
               >
@@ -116,13 +118,12 @@ export default function Register() {
 
             <div className="divider d-flex align-items-center my-4">
               <p className="text-center fw-bold mx-3 mb-0 text-muted">
-                You have an account ?
+                Already have an account?
               </p>
             </div>
             <p>
-            
-              <a href="/login" style={{color:"#226D68"}} className="text-right">
-                LOG IN
+              <a href="/login" style={{ color: '#226D68' }} className="text-right">
+                Log in
               </a>
             </p>
           </div>

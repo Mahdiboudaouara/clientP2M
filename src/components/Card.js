@@ -34,7 +34,7 @@ export default function Card(props) {
     const getLastBid = async (product_id) => {
       try {
         const res = await axios.get(
-          `http://localhost:3001/api/bid/${product_id}`
+          `http://${process.env.REACT_APP_SERVER}:${process.env.REACT_APP_SERVER_PORT}/api/bid/${product_id}`
         );
         if (res.data.bidAmount) {
             setPrice(parseFloat(res.data.bidAmount))
@@ -50,7 +50,7 @@ export default function Card(props) {
     const getCategoryName = async (category_id) => {
       try {
         const res = await axios.get(
-          `http://localhost:3001/api/auction/getcategory/${category_id}`
+          `http://${process.env.REACT_APP_SERVER}:${process.env.REACT_APP_SERVER_PORT}/api/auction/getcategory/${category_id}`
         );
         setCategoryName(res.data.category);
       } catch (err) {
@@ -81,7 +81,6 @@ export default function Card(props) {
           <a href={Link}>
             <img
               src={image}
-
               width="150px"
               height="330px"
               className="card-img-top"
@@ -111,7 +110,6 @@ export default function Card(props) {
               {name}
             </a>
             <p className="card-text">{description}</p>
-
             <p className="card-text">category : {categoryName}</p>
           </div>
           
