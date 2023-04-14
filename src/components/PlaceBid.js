@@ -24,7 +24,7 @@ export default function PlaceBid({ socket, isAuthenticated }) {
   const getCategoryName = async (category_id) => {
     try {
       const res = await Axios.get(
-        `http://${process.env.REACT_APP_SERVER}:${process.env.REACT_APP_SERVER_PORT}/api/auction/getcategory/${category_id}`
+        `http://${process.env.REACT_APP_SERVER}/api/auction/getcategory/${category_id}`
       );
       setCategoryName(res.data.category);
     } catch (err) {
@@ -46,7 +46,7 @@ export default function PlaceBid({ socket, isAuthenticated }) {
     const fetchProduct = async (product_id) => {
       try {
         const res = await Axios.get(
-          `http://${process.env.REACT_APP_SERVER}:${process.env.REACT_APP_SERVER_PORT}/api/auction/displayproduct/${product_id}`
+          `http://${process.env.REACT_APP_SERVER}/api/auction/displayproduct/${product_id}`
         );
         if (res.data) {
           setProduct(res.data);
@@ -71,7 +71,7 @@ export default function PlaceBid({ socket, isAuthenticated }) {
     const getLastBid = async (product_id) => {
       try {
         const res = await Axios.get(
-          `http://${process.env.REACT_APP_SERVER}:${process.env.REACT_APP_SERVER_PORT}/api/bid/${product_id}`
+          `http://${process.env.REACT_APP_SERVER}/api/bid/${product_id}`
         );
         if (res.data.bidAmount) {
           setPrice(parseFloat(res.data.bidAmount));
@@ -113,7 +113,7 @@ export default function PlaceBid({ socket, isAuthenticated }) {
       toast.error("Bid value should be higher than actual price");
       return;
     }
-    await Axios.post(`http://${process.env.REACT_APP_SERVER}:${process.env.REACT_APP_SERVER_PORT}/api/bid/create`, {
+    await Axios.post(`http://${process.env.REACT_APP_SERVER}/api/bid/create`, {
       productId: product_id,
       userId: product.owner_id,
       bidAmount: inputPrice,

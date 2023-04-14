@@ -104,7 +104,7 @@ export function Form(props) {
   const hiddenFileInput = React.useRef(null);
   let date=new Date("2024-01-01T01:11")
   React.useEffect(() => {
-    Axios.get(`http://${process.env.REACT_APP_SERVER}:${process.env.REACT_APP_SERVER_PORT}/api/auction/categories`).then((res) =>
+    Axios.get(`http://${process.env.REACT_APP_SERVER}/api/auction/categories`).then((res) =>
       setCategories(res.data)
     );
   }, []);
@@ -157,7 +157,7 @@ export function Form(props) {
     //foncti
 
     await Axios.post(
-      `http://${process.env.REACT_APP_SERVER}:${process.env.REACT_APP_SERVER_PORT}/api/auction/create`,
+      `http://${process.env.REACT_APP_SERVER}/api/auction/create`,
 
       formData,
       {
