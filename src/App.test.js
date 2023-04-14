@@ -25,7 +25,7 @@ describe("Auth", () => {
       await emailinputField.sendKeys(randomEmail);
       const passwordField = await driver.findElement(By.name("password"));
       await passwordField.sendKeys(randomPassword);
-      const confirmpasswordField = await driver.findElement(By.name("confirmpassword"));
+      const confirmpasswordField = await driver.findElement(By.name("confirmPassword"));
       await confirmpasswordField.sendKeys(randomPassword);
       const button = await driver.findElement(By.name("button"));
 
@@ -94,7 +94,7 @@ describe("Auth", () => {
       await emailinputField.sendKeys(randomEmail);
       const registerpasswordField = await driver.findElement(By.name("password"));
       await registerpasswordField.sendKeys(randomPassword);
-      const confirmpasswordField = await driver.findElement(By.name("confirmpassword"));
+      const confirmpasswordField = await driver.findElement(By.name("confirmPassword"));
       await confirmpasswordField.sendKeys(randomPassword);
       const registerbutton = await driver.findElement(By.name("button"));
       await registerbutton.click().then();
@@ -173,7 +173,7 @@ describe("Porducts", () => {
       let select = new Select(dropdownList);
       await select.selectByVisibleText("Electronics(smartphones, laptops, tablets, etc.)");
      const startingPriceField = await driver.findElement(By.name("startingPrice"));
-      await startingPriceField.sendKeys(randomBalance);
+      await startingPriceField.sendKeys('5');
       const dateField = await driver.findElement(By.name("date"));
 //format date jjmm00yyyyhmm
       await dateField.sendKeys("1010002024930");
@@ -222,7 +222,7 @@ describe("Porducts", () => {
         const currentUrl = await driver.getCurrentUrl();
         return currentUrl !== initialUrl;
       }, 1000);
-      await driver.get(`http://${process.env.REACT_APP_CLIENT}:${process.env.REACT_APP_CLIENT_PORT}/bid/126`);
+      await driver.get(`http://${process.env.REACT_APP_CLIENT}:${process.env.REACT_APP_CLIENT_PORT}/bid/2`);
       
       let pBidtext
       let lastbid = await driver.findElement(By.id('lastbid')).then((pElement) => {
