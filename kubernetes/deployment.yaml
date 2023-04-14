@@ -27,7 +27,7 @@ spec:
         - containerPort: 80
         env: 
         - name: REACT_APP_SERVER
-          value: "139-144-162-115.ip.linodeusercontent.com/api"
+          value: "139-144-162-115.ip.linodeusercontent.com"
         - name: REACT_APP_SERVER_PORT
           value: "3001"
         - name: REACT_APP_CLIENT
