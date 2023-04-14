@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Card from "./Card";
 import axios from "axios";
 import PaginationControls from "./PaginationControls";
+import env from "react-dotenv";
 
 export default function Shop(props) {
   let categoryid=props.categoryid
@@ -35,12 +36,12 @@ export default function Shop(props) {
   ]);
 
   async function countData() {
-    const res = await axios.get(`http://${process.env.REACT_APP_SERVER}/api/auction/count`);
+    const res = await axios.get(`http://${env.REACT_APP_SERVER}/api/auction/count`);
     setTotalPages(Math.ceil(res.data[0].count / limit));
   }
   async function countDataByCategoryId(category_id) {
     const res = await axios.get(
-      `http://${process.env.REACT_APP_SERVER}/api/auction/countbycategory/${category_id}`
+      `http://${env.REACT_APP_SERVER}/api/auction/countbycategory/${category_id}`
     );
     setTotalPages(Math.ceil(res.data[0].count / limit));
   }
@@ -50,12 +51,12 @@ export default function Shop(props) {
     if (categoryId === "0"){
     countData();
     axios
-      .get(`http://${process.env.REACT_APP_SERVER}/api/auction/categories`)
+      .get(`http://${env.REACT_APP_SERVER}/api/auction/categories`)
       .then((res) => setCategories(res.data))
       .catch((err) => setError(err));
     axios
       .get(
-        `http://${process.env.REACT_APP_SERVER}/api/auction/display?page=${currentPage}&limit=${limit}`
+        `http://${env.REACT_APP_SERVER}/api/auction/display?page=${currentPage}&limit=${limit}`
       )
       .then((res) => {
         setProducts(res.data);
@@ -82,7 +83,7 @@ export default function Shop(props) {
       console.log("categoryId", categoryId);
       axios
         .get(
-          `http://${process.env.REACT_APP_SERVER}/api/auction/displaybycategory/${categoryId}/?page=${currentPage}&limit=${limit}`
+          `http://${env.REACT_APP_SERVER}/api/auction/displaybycategory/${categoryId}/?page=${currentPage}&limit=${limit}`
         )
         .then((res) => {
           setProducts(res.data);

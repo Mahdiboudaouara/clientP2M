@@ -3,7 +3,7 @@ import styled from "styled-components";
 import moment from "moment";
 import Axios from "axios";
 import { toast } from "react-hot-toast";
-
+import env from "react-dotenv";
 
 const Button = styled.button`
   background-color: #226d68;
@@ -104,7 +104,7 @@ export function Form(props) {
   const hiddenFileInput = React.useRef(null);
   let date=new Date("2024-01-01T01:11")
   React.useEffect(() => {
-    Axios.get(`http://${process.env.REACT_APP_SERVER}/api/auction/categories`).then((res) =>
+    Axios.get(`http://${env.REACT_APP_SERVER}/api/auction/categories`).then((res) =>
       setCategories(res.data)
     );
   }, []);
@@ -157,7 +157,7 @@ export function Form(props) {
     //foncti
 
     await Axios.post(
-      `http://${process.env.REACT_APP_SERVER}/api/auction/create`,
+      `http://${env.REACT_APP_SERVER}/api/auction/create`,
 
       formData,
       {

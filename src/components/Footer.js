@@ -1,7 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import axios from "axios";
-
+import env from "react-dotenv";
 import { BsFacebook, BsTwitter, BsInstagram } from "react-icons/bs";
 
 export default function Footer() {
@@ -10,7 +10,7 @@ export default function Footer() {
 
   React.useEffect(() => {
     axios
-      .get(`http://${process.env.REACT_APP_SERVER}/api/auction/categories`)
+      .get(`http://${env.REACT_APP_SERVER}/api/auction/categories`)
       .then((res) => setCategories(res.data))
       .catch((err) => setError(err));
   }, []);

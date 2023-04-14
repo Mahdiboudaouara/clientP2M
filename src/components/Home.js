@@ -3,7 +3,7 @@ import Card from "./Card";
 import axios from "axios";
 import CategoryCard from "./CategoryCard";
 import PaginationControls from "./PaginationControls";
-
+import env from "react-dotenv";
 
 const Home = () => {
   const [products, setProducts] = useState([]);
@@ -23,13 +23,13 @@ const Home = () => {
   };
 
   async function countData() {
-    const res = await axios.get(`http://${process.env.REACT_APP_SERVER}/api/auction/count`);
+    const res = await axios.get(`http://${env.REACT_APP_SERVER}/api/auction/count`);
     setTotalPages(Math.ceil(res.data[0].count / limit));
   }
 
   useEffect(() => {
     axios
-      .get(`http://${process.env.REACT_APP_SERVER}/api/auction/categories`)
+      .get(`http://${env.REACT_APP_SERVER}/api/auction/categories`)
       .then((res) => setCategories(res.data))
       .catch((err) => setError(err));
 
@@ -41,7 +41,7 @@ const Home = () => {
   useEffect(() => {
     axios
       .get(
-        `http://${process.env.REACT_APP_SERVER}/api/auction/display?page=${currentPage}&limit=${limit}`
+        `http://${env.REACT_APP_SERVER}/api/auction/display?page=${currentPage}&limit=${limit}`
       )
       .then((res) => setProducts(res.data))
       .catch((err) => setError(err));

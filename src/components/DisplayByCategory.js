@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Card from "./Card";
 import { useParams } from "react-router-dom";
-
+import env from "react-dotenv";
 
 export default function DisplayByCategory() {
   const [products, setProducts] = useState([]);
@@ -12,7 +12,7 @@ export default function DisplayByCategory() {
   const fetchProducts = async (category_id) => {
     try {
       const res = await axios.get(
-        `http://${process.env.REACT_APP_SERVER}/api/auction/displaybycategory/${category_id}`
+        `http://${env.REACT_APP_SERVER}/api/auction/displaybycategory/${category_id}`
       );
       setProducts(res.data);
     } catch (err) {

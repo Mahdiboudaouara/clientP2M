@@ -2,7 +2,7 @@ import React from "react";
 import { useState } from "react";
 import Axios from "axios";
 import { toast } from "react-hot-toast";
-
+import env from "react-dotenv";
 import { MDBInput } from "mdb-react-ui-kit";
 
 export default function Login() {
@@ -19,7 +19,7 @@ export default function Login() {
   const LoginUser = async (e) => {
     e.preventDefault();
     try {
-      const resp = await Axios.post(`http://${process.env.REACT_APP_SERVER}/api/user/login`, {
+      const resp = await Axios.post(`http://${env.REACT_APP_SERVER}/api/user/login`, {
         email: formValue.email,
         password: formValue.password,
       });

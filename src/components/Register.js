@@ -4,7 +4,7 @@ import Axios from "axios";
 import "mdb-react-ui-kit/dist/css/mdb.min.css";
 import { MDBInput } from "mdb-react-ui-kit";
 import { toast } from "react-hot-toast";
-
+import env from "react-dotenv";
 export default function Register() {
   const [formValue, setFormValue] = useState({
     name: "",
@@ -26,7 +26,7 @@ export default function Register() {
     ) { 
       if (formValue.password === formValue.confirmPassword) {
         try {
-          await Axios.post(`http://${process.env.REACT_APP_SERVER}/api/user/register`, {
+          await Axios.post(`http://${env.REACT_APP_SERVER}/api/user/register`, {
             name: formValue.name,
             email: formValue.email,
             password: formValue.password,

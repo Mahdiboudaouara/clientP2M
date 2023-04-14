@@ -17,8 +17,9 @@ import DisplayByCategory from "./components/DisplayByCategory";
 import Shop from "./components/shop";
 import About from "./components/About";
 import * as io from "socket.io-client";
+import env from "react-dotenv";
 function App() {
-  const socket = io.connect(`http://${process.env.REACT_APP_SERVER}/api`);
+  const socket = io.connect(`http://${env.REACT_APP_SERVER}/api`);
   const navigate = useNavigate();
   const [isAuthenticated, setIsAuthenticated] = React.useState(false);
   const [userId, setUserId] = React.useState(0);

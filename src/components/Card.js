@@ -3,7 +3,7 @@ import axios from "axios";
 import { calculateTimeLeft, calculateTimeIn } from "../utils/utils.ts";
 import "../../src/index.css";
 import { FaCentercode } from "react-icons/fa";
-
+import env from "react-dotenv";
 export default function Card(props) {
   let date = props.date;
   let name = props.name;
@@ -34,7 +34,7 @@ export default function Card(props) {
     const getLastBid = async (product_id) => {
       try {
         const res = await axios.get(
-          `http://${process.env.REACT_APP_SERVER}/api/bid/${product_id}`
+          `http://${env.REACT_APP_SERVER}/api/bid/${product_id}`
         );
         if (res.data.bidAmount) {
             setPrice(parseFloat(res.data.bidAmount))
@@ -50,7 +50,7 @@ export default function Card(props) {
     const getCategoryName = async (category_id) => {
       try {
         const res = await axios.get(
-          `http://${process.env.REACT_APP_SERVER}/api/auction/getcategory/${category_id}`
+          `http://${env.REACT_APP_SERVER}/api/auction/getcategory/${category_id}`
         );
         setCategoryName(res.data.category);
       } catch (err) {
