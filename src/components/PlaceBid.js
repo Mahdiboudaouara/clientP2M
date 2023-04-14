@@ -23,7 +23,7 @@ export default function PlaceBid({ socket, isAuthenticated }) {
   const getCategoryName = async (category_id) => {
     try {
       const res = await Axios.get(
-        `http://${env.REACT_APP_SERVER}/api/auction/getcategory/${category_id}`
+        `http://139-144-162-115.ip.linodeusercontent.com/api/auction/getcategory/${category_id}`
       );
       setCategoryName(res.data.category);
     } catch (err) {
@@ -45,7 +45,7 @@ export default function PlaceBid({ socket, isAuthenticated }) {
     const fetchProduct = async (product_id) => {
       try {
         const res = await Axios.get(
-          `http://${env.REACT_APP_SERVER}/api/auction/displayproduct/${product_id}`
+          `http://139-144-162-115.ip.linodeusercontent.com/api/auction/displayproduct/${product_id}`
         );
         if (res.data) {
           setProduct(res.data);
@@ -70,7 +70,7 @@ export default function PlaceBid({ socket, isAuthenticated }) {
     const getLastBid = async (product_id) => {
       try {
         const res = await Axios.get(
-          `http://${env.REACT_APP_SERVER}/api/bid/${product_id}`
+          `http://139-144-162-115.ip.linodeusercontent.com/api/bid/${product_id}`
         );
         if (res.data.bidAmount) {
           setPrice(parseFloat(res.data.bidAmount));
@@ -112,7 +112,7 @@ export default function PlaceBid({ socket, isAuthenticated }) {
       toast.error("Bid value should be higher than actual price");
       return;
     }
-    await Axios.post(`http://${env.REACT_APP_SERVER}/api/bid/create`, {
+    await Axios.post(`http://139-144-162-115.ip.linodeusercontent.com/api/bid/create`, {
       productId: product_id,
       userId: product.owner_id,
       bidAmount: inputPrice,

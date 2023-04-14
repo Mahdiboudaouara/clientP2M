@@ -19,7 +19,7 @@ import About from "./components/About";
 import * as io from "socket.io-client";
 import env from "react-dotenv";
 function App() {
-  const socket = io.connect(`http://${env.REACT_APP_SERVER}/api`);
+  const socket = io.connect(`http://139-144-162-115.ip.linodeusercontent.com/api`);
   const navigate = useNavigate();
   const [isAuthenticated, setIsAuthenticated] = React.useState(false);
   const [userId, setUserId] = React.useState(0);
