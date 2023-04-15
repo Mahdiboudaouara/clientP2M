@@ -12,6 +12,7 @@ import Footer from "./Footer";
 import { toast } from "react-hot-toast";
 
 export default function PlaceBid({ socket, isAuthenticated }) {
+  console.log("socket place bid",socket)
   const [product, setProduct] = useState([]);
   const [categoryName, setCategoryName] = useState([]);
   const [price, setPrice] = useState(0);
