@@ -91,8 +91,7 @@ pipeline {
     }
     post {
         always {
-            sh 'rm -rf node_modules' // Clean up after build
-            sh 'docker image prune -f --filter "until=2h"'
+            cleanWs()
         }
     }
 }
