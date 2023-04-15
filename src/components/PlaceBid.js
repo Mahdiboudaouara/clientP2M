@@ -10,7 +10,7 @@ import ReactDOM from "react-dom/client";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
 import { toast } from "react-hot-toast";
-import env from "react-dotenv";
+
 export default function PlaceBid({ socket, isAuthenticated }) {
   const [product, setProduct] = useState([]);
   const [categoryName, setCategoryName] = useState([]);

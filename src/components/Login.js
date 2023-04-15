@@ -2,7 +2,7 @@ import React from "react";
 import { useState } from "react";
 import Axios from "axios";
 import { toast } from "react-hot-toast";
-import env from "react-dotenv";
+
 import { MDBInput } from "mdb-react-ui-kit";
 
 export default function Login() {

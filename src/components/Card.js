@@ -3,7 +3,7 @@ import axios from "axios";
 import { calculateTimeLeft, calculateTimeIn } from "../utils/utils.ts";
 import "../../src/index.css";
 import { FaCentercode } from "react-icons/fa";
-import env from "react-dotenv";
+
 export default function Card(props) {
   let date = props.date;
   let name = props.name;

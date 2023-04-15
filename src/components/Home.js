@@ -3,7 +3,7 @@ import Card from "./Card";
 import axios from "axios";
 import CategoryCard from "./CategoryCard";
 import PaginationControls from "./PaginationControls";
-import env from "react-dotenv";
+
 
 const Home = () => {
   const [products, setProducts] = useState([]);

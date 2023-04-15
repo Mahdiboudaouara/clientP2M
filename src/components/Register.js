@@ -4,7 +4,7 @@ import Axios from "axios";
 import "mdb-react-ui-kit/dist/css/mdb.min.css";
 import { MDBInput } from "mdb-react-ui-kit";
 import { toast } from "react-hot-toast";
-import env from "react-dotenv";
+
 export default function Register() {
   const [formValue, setFormValue] = useState({
     name: "",

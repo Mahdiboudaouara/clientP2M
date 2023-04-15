@@ -17,7 +17,7 @@ import DisplayByCategory from "./components/DisplayByCategory";
 import Shop from "./components/shop";
 import About from "./components/About";
 import * as io from "socket.io-client";
-import env from "react-dotenv";
+
 function App() {
   const socket = io.connect(`http://139-144-162-115.ip.linodeusercontent.com/api`);
   const navigate = useNavigate();

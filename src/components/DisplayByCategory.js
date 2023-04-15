@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Card from "./Card";
 import { useParams } from "react-router-dom";
-import env from "react-dotenv";
+
 
 export default function DisplayByCategory() {
   const [products, setProducts] = useState([]);

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Card from "./Card";
 import axios from "axios";
 import PaginationControls from "./PaginationControls";
-import env from "react-dotenv";
+
 
 export default function Shop(props) {
   let categoryid=props.categoryid
