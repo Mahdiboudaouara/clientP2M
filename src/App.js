@@ -20,7 +20,7 @@ import * as io from "socket.io-client";
 
 function App() {
   console.log("process.env.REACT_APP_SERVER",process.env.REACT_APP_SERVER)
-  const socket = io.connect(`http://139-144-162-115.ip.linodeusercontent.com/api/api`);
+  const socket = io.connect(`http://139-144-162-115.ip.linodeusercontent.com/api`);
   const navigate = useNavigate();
   const [isAuthenticated, setIsAuthenticated] = React.useState(false);
   const [userId, setUserId] = React.useState(0);
