@@ -10,7 +10,7 @@ export default function Footer() {
 
   React.useEffect(() => {
     axios
-      .get(`http://139-144-162-115.ip.linodeusercontent.com/api/auction/categories`)
+      .get(`http://139-144-162-115.ip.linodeusercontent.com/backned/auction/categories`)
       .then((res) => setCategories(res.data))
       .catch((err) => setError(err));
   }, []);

@@ -20,7 +20,7 @@ import * as io from "socket.io-client";
 
 function App() {
 
-  const socket = io.connect(`http://139-144-162-115.ip.linodeusercontent.com/api`);
+  const socket = io.connect(`http://139-144-162-115.ip.linodeusercontent.com/backned`);
   console.log("socket",socket)
   const navigate = useNavigate();
   const [isAuthenticated, setIsAuthenticated] = React.useState(false);
