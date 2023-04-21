@@ -12,7 +12,7 @@ export default function DisplayByCategory() {
   const fetchProducts = async (category_id) => {
     try {
       const res = await axios.get(
-        `http://139-144-162-115.ip.linodeusercontent.com/backned/auction/displaybycategory/${category_id}`
+        `http://139-144-162-115.ip.linodeusercontent.com/api/auction/displaybycategory/${category_id}`
       );
       setProducts(res.data);
     } catch (err) {
