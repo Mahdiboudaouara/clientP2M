@@ -26,7 +26,11 @@ spec:
         ports:  
         - containerPort: 80
         env: 
-        - name: REACT_APP_SERVER
+        - name: REACT_APP_USER_SERVER
+          value: "139-144-162-115.ip.linodeusercontent.com"
+        - name: REACT_APP_AUCTION_SERVER
+          value: "139-144-162-115.ip.linodeusercontent.com"
+        - name: REACT_APP_BID_SERVER
           value: "139-144-162-115.ip.linodeusercontent.com"
         - name: REACT_APP_SERVER_PORT
           value: "3001"
