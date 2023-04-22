@@ -19,7 +19,7 @@ export default function Login() {
   const LoginUser = async (e) => {
     e.preventDefault();
     try {
-      const resp = await Axios.post(`http://139-144-162-115.ip.linodeusercontent.com/backend/user/login`, {
+      const resp = await Axios.post(`http://${process.env.REACT_APP_USER_SERVER}/backend/user/login`, {
         email: formValue.email,
         password: formValue.password,
       });
