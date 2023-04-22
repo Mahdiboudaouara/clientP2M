@@ -23,13 +23,13 @@ const Home = () => {
   };
 
   async function countData() {
-    const res = await axios.get(`http://139-144-162-115.ip.linodeusercontent.com/api/auction/count`);
+    const res = await axios.get(`http://139-144-162-115.ip.linodeusercontent.com/backend/auction/count`);
     setTotalPages(Math.ceil(res.data[0].count / limit));
   }
 
   useEffect(() => {
     axios
-      .get(`http://139-144-162-115.ip.linodeusercontent.com/api/auction/categories`)
+      .get(`http://139-144-162-115.ip.linodeusercontent.com/backend/auction/categories`)
       .then((res) => setCategories(res.data))
       .catch((err) => setError(err));
 
@@ -41,7 +41,7 @@ const Home = () => {
   useEffect(() => {
     axios
       .get(
-        `http://139-144-162-115.ip.linodeusercontent.com/api/auction/display?page=${currentPage}&limit=${limit}`
+        `http://139-144-162-115.ip.linodeusercontent.com/backend/auction/display?page=${currentPage}&limit=${limit}`
       )
       .then((res) => setProducts(res.data))
       .catch((err) => setError(err));
