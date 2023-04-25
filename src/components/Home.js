@@ -65,7 +65,7 @@ const Home = () => {
         <div className="container py-5">
           <div className="row text-center py-3">
             <div className="col-lg-6 m-auto">
-              <h1>Featured Products</h1>
+              <h1>Start Bedding Now!</h1>
             </div>
           </div>
 
