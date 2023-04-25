@@ -23,13 +23,13 @@ const Home = () => {
   };
 
   async function countData() {
-    const res = await axios.get(`http://139-144-162-115.ip.linodeusercontent.com/backend/auction/count`);
+    const res = await axios.get(`http://194-195-247-34.ip.linodeusercontent.com/backend/auction/count`);
     setTotalPages(Math.ceil(res.data[0].count / limit));
   }
 
   useEffect(() => {
     axios
-      .get(`http://139-144-162-115.ip.linodeusercontent.com/backend/auction/categories`)
+      .get(`http://194-195-247-34.ip.linodeusercontent.com/backend/auction/categories`)
       .then((res) => setCategories(res.data))
       .catch((err) => setError(err));
 
@@ -41,7 +41,7 @@ const Home = () => {
   useEffect(() => {
     axios
       .get(
-        `http://139-144-162-115.ip.linodeusercontent.com/backend/auction/display?page=${currentPage}&limit=${limit}`
+        `http://194-195-247-34.ip.linodeusercontent.com/backend/auction/display?page=${currentPage}&limit=${limit}`
       )
       .then((res) => setProducts(res.data))
       .catch((err) => setError(err));
@@ -65,7 +65,7 @@ const Home = () => {
         <div className="container py-5">
           <div className="row text-center py-3">
             <div className="col-lg-6 m-auto">
-              <h1>Start Bedding Now!</h1>
+              <h1>Start Bidding Now!</h1>
             </div>
           </div>
 
