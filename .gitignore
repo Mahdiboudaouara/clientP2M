@@ -24,3 +24,6 @@ yarn-error.log*
 
 # ignore .env file
 .env
+# Temporary env files
+/public/env-config.js
+env-config.js
