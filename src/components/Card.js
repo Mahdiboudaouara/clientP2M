@@ -34,7 +34,7 @@ export default function Card(props) {
     const getLastBid = async (product_id) => {
       try {
         const res = await axios.get(
-          `http://194-195-247-34.ip.linodeusercontent.com/backend/bid/${product_id}`
+          `http://${window._env_.REACT_APP_BID_SERVER}/backend/bid/${product_id}`
         );
         if (res.data.bidAmount) {
             setPrice(parseFloat(res.data.bidAmount))
@@ -50,7 +50,7 @@ export default function Card(props) {
     const getCategoryName = async (category_id) => {
       try {
         const res = await axios.get(
-          `http://194-195-247-34.ip.linodeusercontent.com/backend/auction/getcategory/${category_id}`
+          `http://${window._env_.REACT_APP_AUCTION_SERVER}/backend/auction/getcategory/${category_id}`
         );
         setCategoryName(res.data.category);
       } catch (err) {

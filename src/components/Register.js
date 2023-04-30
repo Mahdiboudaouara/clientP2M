@@ -26,7 +26,7 @@ export default function Register() {
     ) { 
       if (formValue.password === formValue.confirmPassword) {
         try {
-          await Axios.post(`http://194-195-247-34.ip.linodeusercontent.com/backend/user/register`, {
+          await Axios.post(`http://${window._env_.REACT_APP_AUCTION_SERVER}/backend/user/register`, {
             name: formValue.name,
             email: formValue.email,
             password: formValue.password,

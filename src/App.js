@@ -20,7 +20,7 @@ import * as io from "socket.io-client";
 
 function App() {
 
-  const socket = io.connect(`http://194-195-247-34.ip.linodeusercontent.com/backend/bid`);
+  const socket = io.connect(`http://${window._env_.REACT_APP_BID_SERVER}/backend/bid`);
   console.log("socket",socket)
   const navigate = useNavigate();
   const [isAuthenticated, setIsAuthenticated] = React.useState(false);
