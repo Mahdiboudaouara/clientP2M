@@ -32,8 +32,7 @@ pipeline {
         stage('Create .env file') {
             steps {
                 script {
-                    def envContent = "REACT_APP_USER_SERVER=194-195-247-90.ip.linodeusercontent.com\nREACT_APP_AUCTION_SERVER=194-195-247-90.ip.linodeusercontent.com\nREACT_APP_BID_SERVER=194-195-247-90.ip.linodeusercontent.com\nREACT_APP_CLIENT=194-195-247-90.ip.linodeusercontent.com"
-                    writeFile(file: '.env', text: envContent)
+                    writeFile(file: '.env', text: "")
                 }
             }
         }
