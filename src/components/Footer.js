@@ -5,12 +5,15 @@ import axios from "axios";
 import { BsFacebook, BsTwitter, BsInstagram } from "react-icons/bs";
 
 export default function Footer() {
+  const bidServer = window._env_ && window._env_.REACT_APP_BID_SERVER ? window._env_.REACT_APP_BID_SERVER : process.env.REACT_APP_BID_SERVER;
+  const auctionServer = window._env_ && window._env_.REACT_APP_AUCTION_SERVER ? window._env_.REACT_APP_AUCTION_SERVER : process.env.REACT_APP_AUCTION_SERVER;
+  const userServer = window._env_ && window._env_.REACT_APP_USER_SERVER ? window._env_.REACT_APP_USER_SERVER : process.env.REACT_APP_USER_SERVER;
   const [categories, setCategories] = useState([]);
   const [error, setError] = useState(null);
 
   React.useEffect(() => {
     axios
-      .get(`http://${window._env_.REACT_APP_AUCTION_SERVER}/backend/auction/categories`)
+      .get(`http://${auctionServer}/backend/auction/categories`)
       .then((res) => setCategories(res.data))
       .catch((err) => setError(err));
   }, []);

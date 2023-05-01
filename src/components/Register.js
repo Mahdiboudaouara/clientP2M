@@ -6,6 +6,9 @@ import { MDBInput } from "mdb-react-ui-kit";
 import { toast } from "react-hot-toast";
 
 export default function Register() {
+  const bidServer = window._env_ && window._env_.REACT_APP_BID_SERVER ? window._env_.REACT_APP_BID_SERVER : process.env.REACT_APP_BID_SERVER;
+  const auctionServer = window._env_ && window._env_.REACT_APP_AUCTION_SERVER ? window._env_.REACT_APP_AUCTION_SERVER : process.env.REACT_APP_AUCTION_SERVER;
+  const userServer = window._env_ && window._env_.REACT_APP_USER_SERVER ? window._env_.REACT_APP_USER_SERVER : process.env.REACT_APP_USER_SERVER;
   const [formValue, setFormValue] = useState({
     name: "",
     email: "",
@@ -26,7 +29,7 @@ export default function Register() {
     ) { 
       if (formValue.password === formValue.confirmPassword) {
         try {
-          await Axios.post(`http://${window._env_.REACT_APP_AUCTION_SERVER}/backend/user/register`, {
+          await Axios.post(`http://${userServer}/backend/user/register`, {
             name: formValue.name,
             email: formValue.email,
             password: formValue.password,

@@ -5,6 +5,9 @@ import { useParams } from "react-router-dom";
 
 
 export default function DisplayByCategory() {
+  const bidServer = window._env_ && window._env_.REACT_APP_BID_SERVER ? window._env_.REACT_APP_BID_SERVER : process.env.REACT_APP_BID_SERVER;
+  const auctionServer = window._env_ && window._env_.REACT_APP_AUCTION_SERVER ? window._env_.REACT_APP_AUCTION_SERVER : process.env.REACT_APP_AUCTION_SERVER;
+  const userServer = window._env_ && window._env_.REACT_APP_USER_SERVER ? window._env_.REACT_APP_USER_SERVER : process.env.REACT_APP_USER_SERVER;
   const [products, setProducts] = useState([]);
   const [error, setError] = useState(null);
   
@@ -12,7 +15,7 @@ export default function DisplayByCategory() {
   const fetchProducts = async (category_id) => {
     try {
       const res = await axios.get(
-        `http://${window._env_.REACT_APP_AUCTION_SERVER}/backend/auction/displaybycategory/${category_id}`
+        `http://${auctionServer}/backend/auction/displaybycategory/${category_id}`
       );
       setProducts(res.data);
     } catch (err) {

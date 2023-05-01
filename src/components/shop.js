@@ -5,6 +5,9 @@ import PaginationControls from "./PaginationControls";
 
 
 export default function Shop(props) {
+  const bidServer = window._env_ && window._env_.REACT_APP_BID_SERVER ? window._env_.REACT_APP_BID_SERVER : process.env.REACT_APP_BID_SERVER;
+  const auctionServer = window._env_ && window._env_.REACT_APP_AUCTION_SERVER ? window._env_.REACT_APP_AUCTION_SERVER : process.env.REACT_APP_AUCTION_SERVER;
+  const userServer = window._env_ && window._env_.REACT_APP_USER_SERVER ? window._env_.REACT_APP_USER_SERVER : process.env.REACT_APP_USER_SERVER;
   let categoryid=props.categoryid
   const [products, setProducts] = useState([]);
   const [test, setTest] = useState([]);
@@ -36,12 +39,12 @@ export default function Shop(props) {
   ]);
 
   async function countData() {
-    const res = await axios.get(`http://${window._env_.REACT_APP_AUCTION_SERVER}/backend/auction/count`);
+    const res = await axios.get(`http://${auctionServer}/backend/auction/count`);
     setTotalPages(Math.ceil(res.data[0].count / limit));
   }
   async function countDataByCategoryId(category_id) {
     const res = await axios.get(
-      `http://${window._env_.REACT_APP_AUCTION_SERVER}/backend/auction/countbycategory/${category_id}`
+      `http://${auctionServer}/backend/auction/countbycategory/${category_id}`
     );
     setTotalPages(Math.ceil(res.data[0].count / limit));
   }
@@ -51,12 +54,12 @@ export default function Shop(props) {
     if (categoryId === "0"){
     countData();
     axios
-      .get(`http://${window._env_.REACT_APP_AUCTION_SERVER}/backend/auction/categories`)
+      .get(`http://${auctionServer}/backend/auction/categories`)
       .then((res) => setCategories(res.data))
       .catch((err) => setError(err));
     axios
       .get(
-        `http://${window._env_.REACT_APP_AUCTION_SERVER}/backend/auction/display?page=${currentPage}&limit=${limit}`
+        `http://${auctionServer}/backend/auction/display?page=${currentPage}&limit=${limit}`
       )
       .then((res) => {
         setProducts(res.data);
@@ -83,7 +86,7 @@ export default function Shop(props) {
       console.log("categoryId", categoryId);
       axios
         .get(
-          `http://${window._env_.REACT_APP_AUCTION_SERVER}/backend/auction/displaybycategory/${categoryId}/?page=${currentPage}&limit=${limit}`
+          `http://${auctionServer}/backend/auction/displaybycategory/${categoryId}/?page=${currentPage}&limit=${limit}`
         )
         .then((res) => {
           setProducts(res.data);

@@ -6,6 +6,9 @@ import PaginationControls from "./PaginationControls";
 
 
 const Home = () => {
+  const bidServer = window._env_ && window._env_.REACT_APP_BID_SERVER ? window._env_.REACT_APP_BID_SERVER : process.env.REACT_APP_BID_SERVER;
+  const auctionServer = window._env_ && window._env_.REACT_APP_AUCTION_SERVER ? window._env_.REACT_APP_AUCTION_SERVER : process.env.REACT_APP_AUCTION_SERVER;
+  const userServer = window._env_ && window._env_.REACT_APP_USER_SERVER ? window._env_.REACT_APP_USER_SERVER : process.env.REACT_APP_USER_SERVER;
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
   const [totalPages, setTotalPages] = useState(0);
@@ -23,13 +26,13 @@ const Home = () => {
   };
 
   async function countData() {
-    const res = await axios.get(`http://${window._env_.REACT_APP_AUCTION_SERVER}/backend/auction/count`);
+    const res = await axios.get(`http://${auctionServer}/backend/auction/count`);
     setTotalPages(Math.ceil(res.data[0].count / limit));
   }
 
   useEffect(() => {
     axios
-      .get(`http://${window._env_.REACT_APP_AUCTION_SERVER}/backend/auction/categories`)
+      .get(`http://${auctionServer}/backend/auction/categories`)
       .then((res) => setCategories(res.data))
       .catch((err) => setError(err));
 
@@ -41,7 +44,7 @@ const Home = () => {
   useEffect(() => {
     axios
       .get(
-        `http://${window._env_.REACT_APP_AUCTION_SERVER}/backend/auction/display?page=${currentPage}&limit=${limit}`
+        `http://${auctionServer}/backend/auction/display?page=${currentPage}&limit=${limit}`
       )
       .then((res) => setProducts(res.data))
       .catch((err) => setError(err));
@@ -65,7 +68,7 @@ const Home = () => {
         <div className="container py-5">
           <div className="row text-center py-3">
             <div className="col-lg-6 m-auto">
-              <h1>Start Bidding Now!</h1><p>API_URL: {window._env_.asba}</p>
+              <h1>Start Bidding Now!</h1>
             </div>
           </div>
 

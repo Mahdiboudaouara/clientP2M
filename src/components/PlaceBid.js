@@ -12,6 +12,9 @@ import Footer from "./Footer";
 import { toast } from "react-hot-toast";
 
 export default function PlaceBid({ socket, isAuthenticated }) {
+  const bidServer = window._env_ && window._env_.REACT_APP_BID_SERVER ? window._env_.REACT_APP_BID_SERVER : process.env.REACT_APP_BID_SERVER;
+  const auctionServer = window._env_ && window._env_.REACT_APP_AUCTION_SERVER ? window._env_.REACT_APP_AUCTION_SERVER : process.env.REACT_APP_AUCTION_SERVER;
+  const userServer = window._env_ && window._env_.REACT_APP_USER_SERVER ? window._env_.REACT_APP_USER_SERVER : process.env.REACT_APP_USER_SERVER;
   console.log("socket place bid",socket)
   const [product, setProduct] = useState([]);
   const [categoryName, setCategoryName] = useState([]);
@@ -24,7 +27,7 @@ export default function PlaceBid({ socket, isAuthenticated }) {
   const getCategoryName = async (category_id) => {
     try {
       const res = await Axios.get(
-        `http://${window._env_.REACT_APP_AUCTION_SERVER}/backend/auction/getcategory/${category_id}`
+        `http://${auctionServer}/backend/auction/getcategory/${category_id}`
       );
       setCategoryName(res.data.category);
     } catch (err) {
@@ -46,7 +49,7 @@ export default function PlaceBid({ socket, isAuthenticated }) {
     const fetchProduct = async (product_id) => {
       try {
         const res = await Axios.get(
-          `http://${window._env_.REACT_APP_AUCTION_SERVER}/backend/auction/displayproduct/${product_id}`
+          `http://${auctionServer}/backend/auction/displayproduct/${product_id}`
         );
         if (res.data) {
           setProduct(res.data);
@@ -71,7 +74,7 @@ export default function PlaceBid({ socket, isAuthenticated }) {
     const getLastBid = async (product_id) => {
       try {
         const res = await Axios.get(
-          `http://${window._env_.REACT_APP_BID_SERVER}/backend/bid/${product_id}`
+          `http://${bidServer}/backend/bid/${product_id}`
         );
         if (res.data.bidAmount) {
           setPrice(parseFloat(res.data.bidAmount));
@@ -113,7 +116,7 @@ export default function PlaceBid({ socket, isAuthenticated }) {
       toast.error("Bid value should be higher than actual price");
       return;
     }
-    await Axios.post(`http://${window._env_.REACT_APP_BID_SERVER}/backend/bid/create`, {
+    await Axios.post(`http://${bidServer}/backend/bid/create`, {
       productId: product_id,
       userId: product.owner_id,
       bidAmount: inputPrice,

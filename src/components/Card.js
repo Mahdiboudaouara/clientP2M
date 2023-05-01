@@ -5,6 +5,9 @@ import "../../src/index.css";
 import { FaCentercode } from "react-icons/fa";
 
 export default function Card(props) {
+  const bidServer = window._env_ && window._env_.REACT_APP_BID_SERVER ? window._env_.REACT_APP_BID_SERVER : process.env.REACT_APP_BID_SERVER;
+  const auctionServer = window._env_ && window._env_.REACT_APP_AUCTION_SERVER ? window._env_.REACT_APP_AUCTION_SERVER : process.env.REACT_APP_AUCTION_SERVER;
+  const userServer = window._env_ && window._env_.REACT_APP_USER_SERVER ? window._env_.REACT_APP_USER_SERVER : process.env.REACT_APP_USER_SERVER;
   let date = props.date;
   let name = props.name;
   let description = props.description;
@@ -34,7 +37,7 @@ export default function Card(props) {
     const getLastBid = async (product_id) => {
       try {
         const res = await axios.get(
-          `http://${window._env_.REACT_APP_BID_SERVER}/backend/bid/${product_id}`
+          `http://${bidServer}/backend/bid/${product_id}`
         );
         if (res.data.bidAmount) {
             setPrice(parseFloat(res.data.bidAmount))
@@ -50,7 +53,7 @@ export default function Card(props) {
     const getCategoryName = async (category_id) => {
       try {
         const res = await axios.get(
-          `http://${window._env_.REACT_APP_AUCTION_SERVER}/backend/auction/getcategory/${category_id}`
+          `http://${auctionServer}/backend/auction/getcategory/${category_id}`
         );
         setCategoryName(res.data.category);
       } catch (err) {
