@@ -14,7 +14,7 @@ pipeline {
         PROJECT_NAME = 'clientservice'
         REPO_SERVER = '739761511001.dkr.ecr.eu-central-1.amazonaws.com'
         ECR_REGISTRY = '739761511001.dkr.ecr.eu-central-1.amazonaws.com/ecr-mahdi'
-        APP_URL = '194-195-247-90.ip.linodeusercontent.com'
+        APP_URL = '143-42-223-116.ip.linodeusercontent.com'
         AWS_REGION = 'eu-central-1'
     }
     stages {
@@ -32,7 +32,7 @@ pipeline {
         stage('Create .env file') {
             steps {
                 script {
-                    def envContent = "REACT_APP_USER_SERVER=194-195-247-90.ip.linodeusercontent.com\nREACT_APP_AUCTION_SERVER=194-195-247-90.ip.linodeusercontent.com\nREACT_APP_BID_SERVER=194-195-247-90.ip.linodeusercontent.com\nREACT_APP_CLIENT=194-195-247-90.ip.linodeusercontent.com"
+                    def envContent = "REACT_APP_USER_SERVER=143-42-223-116.ip.linodeusercontent.com\nREACT_APP_AUCTION_SERVER=143-42-223-116.ip.linodeusercontent.com\nREACT_APP_BID_SERVER=143-42-223-116.ip.linodeusercontent.com\nREACT_APP_CLIENT=143-42-223-116.ip.linodeusercontent.com"
                     writeFile(file: '.env', text: envContent)
                 }
             }
