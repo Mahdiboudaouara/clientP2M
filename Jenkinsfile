@@ -18,6 +18,11 @@ pipeline {
         AWS_REGION = 'eu-central-1'
     }
     stages {
+        stage('Install dependencies and testing') {
+            steps {
+                sh 'sleep 14'
+            }
+        }
         stage('increment version') {
             steps {
                 script {
